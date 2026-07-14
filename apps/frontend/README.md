@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sacred Walks — Frontend
 
-## Getting Started
+A [Next.js](https://nextjs.org) site with a built-in CMS. The public site
+(homepage + yatra pages) renders content stored in MongoDB, falling back to
+the defaults in `src/lib/content.ts` when no database is configured.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Enquiry form** — submissions are saved to the `enquiries` collection in MongoDB.
+- **Newsletter signup** (footer) — emails saved to the `subscribers` collection.
+- **WhatsApp button** — floating button on every page; the number and pre-filled
+  message are editable in the admin panel.
+- **Landing page video** — self-hosted video section on the homepage; upload an
+  MP4 through the admin panel (stored in MongoDB GridFS) or paste a video URL.
+- **Admin panel at `/admin`** — password-protected CMS to edit all site text,
+  images, video, WhatsApp settings, and the yatras (including itineraries), plus
+  tables of all enquiries and newsletter subscribers.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Copy the env template and fill it in:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   cp .env.example .env.local
+   ```
 
-## Learn More
+   | Variable               | Purpose                                                                                                                                                                |
+   | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | `MONGODB_URI`          | MongoDB connection string (e.g. from [MongoDB Atlas](https://www.mongodb.com/atlas) — a free M0 cluster works). Without it the site runs read-only on default content. |
+   | `MONGODB_DB`           | Database name (optional, default `sacredwalks`).                                                                                                                       |
+   | `ADMIN_PASSWORD`       | Password for `/admin`. Required for admin access.                                                                                                                      |
+   | `ADMIN_SESSION_SECRET` | Long random string used to sign admin session cookies (optional but recommended).                                                                                      |
 
-To learn more about Next.js, take a look at the following resources:
+2. Run the dev server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   pnpm dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Open [http://localhost:3000](http://localhost:3000) for the site and
+   [http://localhost:3000/admin](http://localhost:3000/admin) for the CMS.
 
-## Deploy on Vercel
+No seeding is needed — the site ships with default content, and the first
+"Save changes" in the admin panel writes the content document to MongoDB.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Uploaded media is stored in GridFS and served from `/api/media/<id>`.
+  Uploads are capped at 64 MB in the app; some hosts (e.g. Vercel) limit
+  request bodies to ~4.5 MB, in which case host large videos externally and
+  paste the URL in the admin panel instead.
+- Collections used: `content` (single site-content document), `enquiries`,
+  `subscribers`, `media.files` / `media.chunks` (GridFS).

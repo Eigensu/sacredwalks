@@ -2,15 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EnquireButton from '@/components/EnquireButton';
-import { yatras, getYatraBySlug } from '@/lib/yatras';
-
-export function generateStaticParams() {
-  return yatras.map((y) => ({ slug: y.slug }));
-}
+import { getSiteContent } from '@/lib/content';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const yatra = getYatraBySlug(slug);
+  const content = await getSiteContent();
+  const yatra = content.yatras.find((y) => y.slug === slug);
   if (!yatra) return {};
   return {
     title: `${yatra.name} — Sacred Walks`,
@@ -20,7 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function YatraDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const yatra = getYatraBySlug(slug);
+  const content = await getSiteContent();
+  const yatra = content.yatras.find((y) => y.slug === slug);
   if (!yatra) notFound();
 
   return (

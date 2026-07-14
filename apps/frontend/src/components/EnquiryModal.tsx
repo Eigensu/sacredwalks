@@ -6,12 +6,15 @@ import { yatras } from '@/lib/yatras';
 type Props = {
   onClose: () => void;
   yatraName?: string;
+  yatraNames?: string[];
 };
 
 type Status = 'idle' | 'submitting' | 'success';
 
-export default function EnquiryModal({ onClose, yatraName }: Props) {
+export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) {
+  const yatraOptions = yatraNames?.length ? yatraNames : yatras.map((y) => y.name);
   const [status, setStatus] = useState<Status>('idle');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -26,10 +29,32 @@ export default function EnquiryModal({ onClose, yatraName }: Props) {
     };
   }, [onClose]);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     setStatus('submitting');
-    window.setTimeout(() => setStatus('success'), 700);
+    setError('');
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          yatra: formData.get('yatra'),
+          message: formData.get('message'),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+      setStatus('success');
+    } catch (err) {
+      setStatus('idle');
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
   }
 
   return (
@@ -123,9 +148,9 @@ export default function EnquiryModal({ onClose, yatraName }: Props) {
               <Field label="Yatra">
                 <select name="yatra" defaultValue={yatraName ?? ''} className="scw-input">
                   <option value="">General enquiry</option>
-                  {yatras.map((y) => (
-                    <option key={y.slug} value={y.name}>
-                      {y.name}
+                  {yatraOptions.map((name) => (
+                    <option key={name} value={name}>
+                      {name}
                     </option>
                   ))}
                 </select>
@@ -139,6 +164,8 @@ export default function EnquiryModal({ onClose, yatraName }: Props) {
                   className="scw-input resize-none"
                 />
               </Field>
+
+              {error && <p className="text-[13px] leading-[1.6] text-[#A05B4C]">{error}</p>}
 
               <button
                 type="submit"
