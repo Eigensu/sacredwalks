@@ -3,8 +3,22 @@
 import Link from 'next/link';
 import { useEnquiry } from './EnquiryProvider';
 
-export default function Nav({ variant = 'dark' }: { variant?: 'dark' | 'light' }) {
+const defaultLinks = [
+  { label: 'Kailash', href: '/yatras/kailash-manasarovar' },
+  { label: 'Himalayas', href: '/yatras/himalayas' },
+  { label: 'Kashi', href: '/yatras/kashi-krama' },
+  { label: 'Southern Sojourn', href: '/yatras/southern-sojourn' },
+];
+
+export default function Nav({
+  variant = 'dark',
+  links,
+}: {
+  variant?: 'dark' | 'light';
+  links?: { label: string; href: string }[];
+}) {
   const { open } = useEnquiry();
+  const navLinks = links?.length ? links : defaultLinks;
   const textColor = variant === 'dark' ? 'text-[#F5F1E9]' : 'text-[#25241E]';
   const borderColor = variant === 'dark' ? 'border-[#F5F1E9]/60' : 'border-[#25241E]/60';
 
@@ -18,18 +32,11 @@ export default function Nav({ variant = 'dark' }: { variant?: 'dark' | 'light' }
         </span>
       </Link>
       <div className="hidden items-center gap-[34px] text-[12.5px] font-normal tracking-[0.14em] uppercase md:flex">
-        <Link href="/yatras/kailash-manasarovar" className="cursor-pointer hover:opacity-70">
-          Kailash
-        </Link>
-        <Link href="/yatras/himalayas" className="cursor-pointer hover:opacity-70">
-          Himalayas
-        </Link>
-        <Link href="/yatras/kashi-krama" className="cursor-pointer hover:opacity-70">
-          Kashi
-        </Link>
-        <Link href="/yatras/southern-sojourn" className="cursor-pointer hover:opacity-70">
-          Southern Sojourn
-        </Link>
+        {navLinks.map((link) => (
+          <Link key={link.href} href={link.href} className="cursor-pointer hover:opacity-70">
+            {link.label}
+          </Link>
+        ))}
       </div>
       <button
         onClick={() => open()}

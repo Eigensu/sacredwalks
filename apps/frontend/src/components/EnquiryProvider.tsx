@@ -9,7 +9,13 @@ type EnquiryContextValue = {
 
 const EnquiryContext = createContext<EnquiryContextValue | null>(null);
 
-export function EnquiryProvider({ children }: { children: React.ReactNode }) {
+export function EnquiryProvider({
+  children,
+  yatraNames,
+}: {
+  children: React.ReactNode;
+  yatraNames?: string[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [yatraName, setYatraName] = useState<string | undefined>(undefined);
 
@@ -25,7 +31,7 @@ export function EnquiryProvider({ children }: { children: React.ReactNode }) {
   return (
     <EnquiryContext.Provider value={value}>
       {children}
-      {isOpen && <EnquiryModal onClose={close} yatraName={yatraName} />}
+      {isOpen && <EnquiryModal onClose={close} yatraName={yatraName} yatraNames={yatraNames} />}
     </EnquiryContext.Provider>
   );
 }
