@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Marcellus, Hanken_Grotesk } from 'next/font/google'
 import { EnquiryProvider } from '@/components/EnquiryProvider';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { getSiteContent } from '@/lib/content';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 // Content is editable through /admin, so every page renders fresh.
@@ -52,6 +53,7 @@ export default async function RootLayout({
             message={content.settings.whatsappMessage}
           />
         </EnquiryProvider>
+        <Analytics />
       </body>
     </html>
   );
