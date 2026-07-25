@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   const db = await tryGetDb();
   if (!db) {
     return NextResponse.json(
-      { error: 'We could not record your enquiry right now. Please try again later.' },
+      { error: 'We could not record your application right now. Please try again later.' },
       { status: 503 },
     );
   }
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     name,
     email,
     phone,
-    yatra: yatra || 'General enquiry',
+    yatra: yatra || 'General application',
     message,
     createdAt: new Date(),
   });

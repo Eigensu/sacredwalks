@@ -26,307 +26,243 @@ export type Yatra = {
   itinerary: ItineraryDay[];
 };
 
+export type FutureDestination = {
+  name: string;
+  note?: string;
+};
+
 export const yatras: Yatra[] = [
   {
     n: '01',
-    slug: 'kailash-manasarovar',
-    name: 'Kailash Manasarovar',
-    days: '14 Days',
-    region: 'Tibet · Nepal',
-    route: 'Pashupatinath · Patan · Manasarovar · Kailash',
+    slug: 'two-jyotirlinga-journey',
+    name: 'The Two Jyotirlinga Journey',
+    days: '3 Days',
+    region: 'Madhya Pradesh',
+    route: 'Mahakaleshwar · Omkareshwar',
     heroImage:
-      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1800&q=80&auto=format&fit=crop',
-    heroPlaceholder: 'Mount Kailash — full bleed hero',
+      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1800&q=80&auto=format&fit=crop',
+    heroPlaceholder: 'Mahakal Lok corridor at dusk — full bleed hero',
     featureImage:
-      'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1800&q=80&auto=format&fit=crop',
-    featurePlaceholder: 'Lake Manasarovar at dawn — feature',
+      'https://images.unsplash.com/photo-1571536802807-30451e3955d8?w=1800&q=80&auto=format&fit=crop',
+    featurePlaceholder: 'Narmada Ghats at Omkareshwar — feature',
     overviewLead:
-      'To circle Kailash is to walk around the axis of the world — fourteen days that begin in Kathmandu and rise to the 5,630-metre Dolma La, the threshold of the inner mountain.',
+      "Discover two of Lord Shiva's most revered Jyotirlingas on a thoughtfully curated pilgrimage through Ujjain and Omkareshwar.",
     overviewBody:
-      'Pashupatinath, Patan, the still waters of Manasarovar, and the parikrama of Kailash itself — each step held by those who have walked it before. This is not a tour. It is a yatra.',
+      'From the spiritual energy of Mahakaal to the serenity of the Narmada, this journey is designed to offer deeper darshan, authentic rituals and moments of quiet reflection — without the burden of planning every detail yourself. Mahakaleshwar is one of the twelve Jyotirlingas and the only south-facing Jyotirlinga in India, revered as the Lord of Time. The journey traditionally begins by seeking blessings at Kal Bhairav, the guardian deity of Ujjain, before offering prayers at Mahakaleshwar. Omkareshwar, on the sacred Narmada River, is believed to embody the divine symbol Om and has welcomed pilgrims for centuries seeking peace, devotion and spiritual renewal.',
     specs: [
-      { k: 'Duration', v: '14 Days' },
-      { k: 'Region', v: 'Tibet & Nepal' },
-      { k: 'Highest point', v: 'Dolma La — 5,630 m' },
-      { k: 'Begins', v: 'Kathmandu' },
-      { k: 'Difficulty', v: 'Demanding' },
+      { k: 'Duration', v: '3 Days · 2 Nights' },
+      { k: 'Region', v: 'Madhya Pradesh' },
+      { k: 'Arrival & Departure', v: 'Indore' },
     ],
     itinerary: [
       {
-        day: 'Day 01',
-        place: 'Kathmandu',
-        note: 'Arrival in the Himalayan capital. Rest, briefing, and the first quieting of the mind.',
+        day: 'Day One',
+        place: 'Into the City of Mahakaal',
+        note: 'Arrival assistance at Indore Airport and private transfer to Ujjain. Visit Kal Bhairav Temple and Harsiddhi Mata Temple (Shakti Peeth), explore the Mahakal Lok Corridor, and receive Official Sheeghra Darshan Assistance at Mahakaleshwar Jyotirlinga before the Ram Ghat Evening Aarti. Dinner & overnight stay in Ujjain.',
       },
       {
-        day: 'Day 02',
-        place: 'Pashupatinath',
-        note: 'Darshan at the great abode of Shiva on the banks of the Bagmati.',
+        day: 'Day Two',
+        place: 'From Mahakaal to the Narmada',
+        note: 'Optional Bhasma Aarti, then breakfast and drive to Omkareshwar for Jyotirlinga darshan, Mamleshwar Temple, Siddhanath Temple and Gauri Somnath Temple, followed by sunset along the Narmada Ghats. Dinner & overnight stay in Omkareshwar.',
       },
       {
-        day: 'Day 03',
-        place: 'Patan',
-        note: 'Among the old courtyards and shrines — preparation and acclimatisation.',
-      },
-      {
-        day: 'Day 04',
-        place: 'Kerung',
-        note: 'The road climbs north; crossing the border into Tibet.',
-      },
-      {
-        day: 'Day 05',
-        place: 'Kerung',
-        note: 'A day held for the body to meet the altitude. Slow walks, stillness.',
-      },
-      {
-        day: 'Day 06',
-        place: 'Saga',
-        note: 'Across the vast plateau, the land opening wider with every mile.',
-      },
-      {
-        day: 'Day 07',
-        place: 'Manasarovar',
-        note: 'First sight of the sacred lake — turquoise under an enormous sky.',
-      },
-      {
-        day: 'Day 08',
-        place: 'Manasarovar',
-        note: 'A bath at first light, and time by the water before the parikrama.',
-      },
-      {
-        day: 'Day 09',
-        place: 'Darchen',
-        note: 'At the foot of Kailash. The mountain reveals itself.',
-      },
-      {
-        day: 'Day 10',
-        place: 'Dirapuk',
-        note: 'The parikrama begins at Yamadwar — the north face close above.',
-      },
-      {
-        day: 'Day 11',
-        place: 'Dolma La',
-        note: 'The high crossing at 5,630 m — the threshold of the journey.',
-      },
-      {
-        day: 'Day 12',
-        place: 'Zuthulpuk',
-        note: 'A long descent into stillness, the circle nearly complete.',
-      },
-      {
-        day: 'Day 13',
-        place: 'Kerung',
-        note: 'The return journey south, carrying the mountain within.',
-      },
-      {
-        day: 'Day 14',
-        place: 'Kathmandu',
-        note: 'Departure — and the quiet knowledge that something has shifted.',
+        day: 'Day Three',
+        place: 'A Journey That Stays With You',
+        note: 'Early morning darshan, visit Govindeshwar Cave, with an optional Omkareshwar Parikrama and a visit to Baglamukhi Temple, before returning to Indore for departure.',
       },
     ],
   },
   {
     n: '02',
-    slug: 'himalayas',
-    name: 'Himalayas',
-    days: '11 Days',
-    region: 'Uttarakhand',
-    route: 'Haridwar · Kedarnath · Badrinath · Gangotri',
+    slug: 'maharashtra-trinity',
+    name: 'The Maharashtra Trinity',
+    days: '4 Days',
+    region: 'Maharashtra',
+    route: 'Bhimashankar · Trimbakeshwar · Grishneshwar',
     heroImage:
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1800&q=80&auto=format&fit=crop',
-    heroPlaceholder: 'Himalayan ridgeline — full bleed hero',
+      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1800&q=80&auto=format&fit=crop',
+    heroPlaceholder: 'Sahyadri hills at Bhimashankar — full bleed hero',
     featureImage:
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=80&auto=format&fit=crop',
-    featurePlaceholder: 'Manasarovar-like alpine lake — feature',
+      'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1800&q=80&auto=format&fit=crop',
+    featurePlaceholder: 'Kailasa Temple, Ellora Caves — feature',
     overviewLead:
-      'Eleven days through the Char Dham of Uttarakhand — the Ganga at Haridwar, the shrine of Kedarnath cupped in its amphitheatre of snow, and the source waters of Gangotri.',
+      "Discover three of Maharashtra's sacred Jyotirlingas on a pilgrimage that winds through the Sahyadri hills, the birthplace of the Godavari, and the timeless heritage of Ellora.",
     overviewBody:
-      'This is a walk along the spine of the Himalaya, from riverbank ghats to glacier-fed shrines, each halt a place where the mountains have been worshipped for millennia.',
+      "Bhimashankar is nestled within the Sahyadris and marks the place where Lord Shiva is believed to have defeated the demon Bhima. Trimbakeshwar, at the source of the Godavari River, is one of India's most important centres for Vedic rituals and ancestral ceremonies. Grishneshwar, the twelfth Jyotirlinga, stands beside the magnificent Ellora Caves, completing one of India's most sacred pilgrimage circuits. Thoughtfully paced and seamlessly curated, this journey brings together devotion, history and nature.",
     specs: [
-      { k: 'Duration', v: '11 Days' },
-      { k: 'Region', v: 'Uttarakhand' },
-      { k: 'Highest point', v: 'Kedarnath — 3,583 m' },
-      { k: 'Begins', v: 'Haridwar' },
-      { k: 'Difficulty', v: 'Moderate' },
+      { k: 'Duration', v: '4 Days · 3 Nights' },
+      { k: 'Region', v: 'Maharashtra' },
+      { k: 'Arrival', v: 'Pune' },
+      { k: 'Departure', v: 'Chhatrapati Sambhajinagar' },
     ],
     itinerary: [
       {
-        day: 'Day 01',
-        place: 'Haridwar',
-        note: "Arrival at the gateway to the gods. Evening aarti on the Ganga's banks.",
+        day: 'Day One',
+        place: 'Into the Sahyadris',
+        note: 'Arrival assistance at Pune Airport and private transfer to Bhimashankar. Check in, Traditional Sattvic Lunch, Bhimashankar Jyotirlinga Darshan, and visits to Kamalaja Mata Temple and Sakshi Vinayak Temple, with a nature walk before dinner and overnight stay.',
       },
       {
-        day: 'Day 02',
-        place: 'Haridwar',
-        note: 'Rest and acclimatisation. A quiet morning by the river.',
+        day: 'Day Two',
+        place: 'At the Source of the Godavari',
+        note: 'Breakfast and drive to Trimbakeshwar for Official Darshan Assistance and Trimbakeshwar Jyotirlinga Darshan, followed by Kushavarta Kund and the Brahmagiri & Anjaneri Hills, with optional Narayan Nagbali / Tripindi Shradh rituals. Dinner & overnight stay in Nashik.',
       },
       {
-        day: 'Day 03',
-        place: 'Guptkashi',
-        note: 'The road rises into the hills, temples appearing at every bend.',
+        day: 'Day Three',
+        place: 'Across Sacred Maharashtra',
+        note: 'Breakfast and departure, visiting Shani Shingnapur before continuing to Chhatrapati Sambhajinagar for an evening at leisure, dinner and overnight stay.',
       },
       {
-        day: 'Day 04',
-        place: 'Kedarnath',
-        note: 'The climb to the shrine, snowbound peaks standing close overhead.',
-      },
-      {
-        day: 'Day 05',
-        place: 'Kedarnath',
-        note: 'A full day at the temple — darshan, stillness, the thin mountain air.',
-      },
-      {
-        day: 'Day 06',
-        place: 'Guptkashi',
-        note: "Descent from the shrine, the body carrying the altitude's quiet.",
-      },
-      {
-        day: 'Day 07',
-        place: 'Badrinath',
-        note: 'Onward through the Alaknanda valley to the abode of Vishnu.',
-      },
-      {
-        day: 'Day 08',
-        place: 'Badrinath',
-        note: 'Darshan and the hot springs of Tapt Kund at the foot of the temple.',
-      },
-      {
-        day: 'Day 09',
-        place: 'Gangotri',
-        note: 'West across the ranges to the source of the Ganga.',
-      },
-      {
-        day: 'Day 10',
-        place: 'Gangotri',
-        note: "A walk toward Gaumukh, the glacier's mouth, where the river begins.",
-      },
-      {
-        day: 'Day 11',
-        place: 'Haridwar',
-        note: 'Return journey, and departure — the mountains carried onward.',
+        day: 'Day Four',
+        place: 'The Final Jyotirlinga',
+        note: 'Grishneshwar Jyotirlinga Darshan and exploration of Kailasa Temple & the Ellora Caves, with an optional visit to Bhadra Maruti Temple, before airport transfer.',
       },
     ],
   },
   {
     n: '03',
-    slug: 'kashi-krama',
-    name: 'Kashi Krama',
-    days: '5 Days',
-    region: 'Varanasi',
-    route: 'Kashi Vishwanath · Vishalakshi · Kalabhairava',
+    slug: 'where-faith-meets-the-sea',
+    name: 'Where Faith Meets the Sea',
+    days: '4 Days',
+    region: 'Gujarat',
+    route: 'Somnath · Dwarka · Nageshwar',
     heroImage:
-      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1800&q=80&auto=format&fit=crop',
-    heroPlaceholder: 'Ghats of Varanasi at dusk — full bleed hero',
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1800&q=80&auto=format&fit=crop',
+    heroPlaceholder: 'Somnath Temple at the Arabian Sea — full bleed hero',
     featureImage:
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=80&auto=format&fit=crop',
-    featurePlaceholder: 'Temple steps at Kashi — feature',
+      'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1800&q=80&auto=format&fit=crop',
+    featurePlaceholder: 'Dwarkadhish Temple — feature',
     overviewLead:
-      "Five days in the oldest living city — a krama, a sequenced walk through Kashi's shrines, its ghats, and the particular stillness that gathers at the edge of the Ganga.",
+      "Follow Gujarat's sacred coastline through ancient temples, legendary cities and timeless stories of Lord Shiva and Lord Krishna.",
     overviewBody:
-      "Kashi Vishwanath, the Devi at Vishalakshi, and Kalabhairava, keeper of the city's threshold — a short yatra, but one that moves through the very heart of the sacred geography of India.",
+      "Somnath is believed to be the first of the twelve Jyotirlingas and has stood as a symbol of resilience and faith for centuries. Continue to Nageshwar Jyotirlinga, before exploring Dwarka, the legendary kingdom of Lord Krishna and one of Hinduism's Char Dham pilgrimage sites. From the first Jyotirlinga at Somnath to the holy city of Dwarka, every stop carries centuries of devotion.",
     specs: [
-      { k: 'Duration', v: '5 Days' },
-      { k: 'Region', v: 'Varanasi' },
-      { k: 'Highest point', v: '—' },
-      { k: 'Begins', v: 'Varanasi' },
-      { k: 'Difficulty', v: 'Easy' },
+      { k: 'Duration', v: '4 Days · 3 Nights' },
+      { k: 'Region', v: 'Gujarat' },
+      { k: 'Arrival', v: 'Rajkot' },
+      { k: 'Departure', v: 'Jamnagar / Rajkot' },
     ],
     itinerary: [
       {
-        day: 'Day 01',
-        place: 'Varanasi',
-        note: 'Arrival on the banks of the Ganga. Evening Ganga aarti at Dashashwamedh Ghat.',
+        day: 'Day One',
+        place: 'Where the Ocean Meets Shiva',
+        note: 'Arrival assistance at Rajkot Airport and private transfer to Somnath. Check-in, Somnath Jyotirlinga Darshan, sunset along the Arabian Sea and Evening Aarti, then dinner and overnight stay.',
       },
       {
-        day: 'Day 02',
-        place: 'Kashi Vishwanath',
-        note: "Darshan at the golden-spired heart of the city, before dawn's first light.",
+        day: 'Day Two',
+        place: 'The Sacred Story of Prabhas',
+        note: 'Morning darshan, visits to Triveni Sangam, Bhalka Tirth and Dehotsarg Tirth, then a drive to Dwarka for dinner and overnight stay.',
       },
       {
-        day: 'Day 03',
-        place: 'Vishalakshi',
-        note: "To the Devi's shrine, one of the Shakti Peethas, quiet amid the lanes.",
+        day: 'Day Three',
+        place: "In Krishna's Kingdom",
+        note: 'Nageshwar Jyotirlinga Darshan, Dwarkadhish Temple, Rukmini Temple and Gomti Ghat, followed by Evening Aarti, dinner and overnight stay.',
       },
       {
-        day: 'Day 04',
-        place: 'Kalabhairava',
-        note: "At the temple of the city's fierce guardian — the krama's turning point.",
-      },
-      {
-        day: 'Day 05',
-        place: 'Varanasi',
-        note: 'A final walk along the ghats at sunrise, and departure.',
+        day: 'Day Four',
+        place: 'A Blessing Before You Depart',
+        note: 'Optional early morning darshan, a visit to Bet Dwarka and Bhadkeshwar Mahadev, before airport transfer.',
       },
     ],
   },
   {
     n: '04',
-    slug: 'southern-sojourn',
-    name: 'Southern Sojourn',
-    days: '6 Days',
-    region: 'Tamil Nadu',
-    route: 'Thiruvannamalai · Thanjavur · Rameshwaram · Madurai',
+    slug: 'kashi-eternal-journey',
+    name: 'Kashi — The Eternal Journey',
+    days: '3 Days',
+    region: 'Varanasi',
+    route: 'Kashi Vishwanath · Vishalakshi · Kal Bhairav',
     heroImage:
-      'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1800&q=80&auto=format&fit=crop',
-    heroPlaceholder: 'South Indian temple gopuram — full bleed hero',
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1800&q=80&auto=format&fit=crop',
+    heroPlaceholder: 'Ghats of Varanasi at dusk — full bleed hero',
     featureImage:
-      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1800&q=80&auto=format&fit=crop',
-    featurePlaceholder: 'Temple lamp — feature',
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=80&auto=format&fit=crop',
+    featurePlaceholder: 'Ganga Aarti at Dashashwamedh Ghat — feature',
     overviewLead:
-      'Six days through the temple-country of Tamil Nadu — from the fire hill of Thiruvannamalai to the great Chola towers of Thanjavur and the island shrine of Rameshwaram.',
+      "Experience one of the world's oldest living cities through sacred temples, timeless rituals and the spiritual rhythm of the Ganga.",
     overviewBody:
-      "This is a walk among some of the oldest continuously worshipped temples on earth, each with its own reverberation, ending at Madurai's Meenakshi in the city's ancient heart.",
+      "Home to the Kashi Vishwanath Jyotirlinga, Varanasi is believed to be Lord Shiva's eternal abode. Pilgrims traditionally seek blessings at Kal Bhairav, the guardian of Kashi, while Vishalakshi Temple, one of the revered Shakti Peeths, completes this deeply significant pilgrimage. Every sunrise, every ghat and every prayer reveals why Kashi has drawn seekers for thousands of years.",
     specs: [
-      { k: 'Duration', v: '6 Days' },
-      { k: 'Region', v: 'Tamil Nadu' },
-      { k: 'Highest point', v: 'Arunachala — 813 m' },
-      { k: 'Begins', v: 'Thiruvannamalai' },
-      { k: 'Difficulty', v: 'Easy' },
+      { k: 'Duration', v: '3 Days · 2 Nights' },
+      { k: 'Region', v: 'Varanasi' },
+      { k: 'Arrival & Departure', v: 'Varanasi' },
     ],
     itinerary: [
       {
-        day: 'Day 01',
-        place: 'Thiruvannamalai',
-        note: 'Arrival at the foot of Arunachala. Evening girivalam around the sacred hill.',
+        day: 'Day One',
+        place: 'Along the Sacred Ganga',
+        note: 'Arrival assistance at Varanasi Airport and check-in at your heritage hotel, followed by a sunset boat ride on the Ganga and the Ganga Aarti, then dinner and overnight stay.',
       },
       {
-        day: 'Day 02',
-        place: 'Thiruvannamalai',
-        note: 'Darshan at Arunachaleswarar Temple, seat of the fire element.',
+        day: 'Day Two',
+        place: 'The City of Shiva',
+        note: 'Kashi Vishwanath Darshan, Annapurna Devi Temple, Vishalakshi Temple and Kal Bhairav Temple, followed by a walk through the old lanes of Kashi and an evening cultural experience.',
       },
       {
-        day: 'Day 03',
-        place: 'Thanjavur',
-        note: 'To the great Brihadeeswarar Temple, its Chola tower rising over the plains.',
+        day: 'Day Three',
+        place: 'Sunrise Over Eternity',
+        note: 'A sunrise boat ride, a visit to Mrityunjay Mahadev Temple with an optional stop at Sankat Mochan Hanuman Temple, before airport transfer.',
+      },
+    ],
+  },
+  {
+    n: '05',
+    slug: 'rameswaram-shiva-to-the-sea',
+    name: 'Rameswaram — From Shiva to the Sea',
+    days: '3 Days',
+    region: 'Tamil Nadu',
+    route: 'Madurai · Rameswaram',
+    heroImage:
+      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1800&q=80&auto=format&fit=crop',
+    heroPlaceholder: 'Ramanathaswamy Temple corridors — full bleed hero',
+    featureImage:
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=80&auto=format&fit=crop',
+    featurePlaceholder: 'Dhanushkodi shoreline — feature',
+    overviewLead:
+      'Begin in the temple city of Madurai before travelling to the sacred island of Rameswaram, where mythology, devotion and the sea come together.',
+    overviewBody:
+      "The journey begins at the magnificent Meenakshi Amman Temple, one of South India's greatest temple complexes, before continuing to Ramanathaswamy Temple, home to one of the twelve sacred Jyotirlingas. According to the Ramayana, Lord Rama worshipped Lord Shiva here before crossing to Lanka.",
+    specs: [
+      { k: 'Duration', v: '3 Days · 2 Nights' },
+      { k: 'Region', v: 'Tamil Nadu' },
+      { k: 'Arrival & Departure', v: 'Madurai' },
+    ],
+    itinerary: [
+      {
+        day: 'Day One',
+        place: 'In the Temple City of Madurai',
+        note: 'Arrival assistance at Madurai Airport, Meenakshi Amman Temple Darshan, the Thousand Pillar Hall and an evening temple ceremony, then dinner and overnight stay in Madurai.',
       },
       {
-        day: 'Day 04',
-        place: 'Rameshwaram',
-        note: 'East to the island shrine, corridors of stone opening toward the sea.',
+        day: 'Day Two',
+        place: 'Across the Sacred Island',
+        note: 'Drive to Rameswaram for Ramanathaswamy Jyotirlinga Darshan with an optional 22 Theertham Ritual, followed by Agni Theertham, Panchmukhi Hanuman Temple and sunset by the sea.',
       },
       {
-        day: 'Day 05',
-        place: 'Madurai',
-        note: 'The thousand-pillared halls of Meenakshi Amman, alive since before memory.',
-      },
-      {
-        day: 'Day 06',
-        place: 'Madurai',
-        note: 'A final dawn darshan, and departure — the south carried within.',
+        day: 'Day Three',
+        place: 'At the Edge of Bharat',
+        note: 'Visit Dhanushkodi, Kodandaramaswamy Temple and Jatayu Theertham, before returning to Madurai for airport transfer.',
       },
     ],
   },
 ];
 
+export const futureDestinations: FutureDestination[] = [
+  { name: 'Chidambaram', note: 'Tamil Nadu' },
+  { name: 'Arunachala', note: 'Tamil Nadu' },
+  { name: 'Nepal', note: 'Himalayan Circuit' },
+  { name: 'Kailash', note: 'Tibet' },
+];
+
 export const sideTestimonials = [
   {
     name: 'Shivali',
-    from: 'Kailash',
+    from: 'The Two Jyotirlinga Journey',
     quote:
-      'Seeing all the participants go through the 14 days with utmost bliss and devotion really touched me.',
+      'Seeing all the participants go through the journey with utmost bliss and devotion really touched me.',
   },
   {
     name: 'Sandesh',
-    from: 'Sacred Walks',
+    from: 'The Sacred Walks',
     quote: 'I am grateful that I got a chance to experience these reverberations in person.',
   },
 ];

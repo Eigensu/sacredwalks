@@ -21,9 +21,9 @@ export default async function AdminEnquiriesPage() {
     <div>
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="font-serif text-[34px] font-medium text-[#2C2A22]">Enquiries</h1>
+          <h1 className="font-serif text-[34px] font-medium text-[#2C2A22]">Applications</h1>
           <p className="mt-2 text-[14px] text-[#5F5C50]">
-            Everyone who has submitted the enquiry form, newest first.
+            Everyone who has applied for an invitation, newest first.
           </p>
         </div>
         <div className="text-[12px] tracking-[0.14em] text-[#9A917D] uppercase">
@@ -33,7 +33,9 @@ export default async function AdminEnquiriesPage() {
 
       {enquiries.length === 0 ? (
         <p className="mt-10 border border-dashed border-[#D8CFBD] p-10 text-center text-[14px] text-[#8A8471]">
-          {db ? 'No enquiries yet.' : 'MongoDB is not connected, so enquiries cannot be shown.'}
+          {db
+            ? 'No applications yet.'
+            : 'MongoDB is not connected, so applications cannot be shown.'}
         </p>
       ) : (
         <div className="mt-8 overflow-x-auto border border-[#D8CFBD] bg-[#FBF8F1]">

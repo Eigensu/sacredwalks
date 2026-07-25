@@ -3,12 +3,7 @@
 import Link from 'next/link';
 import { useEnquiry } from './EnquiryProvider';
 
-const defaultLinks = [
-  { label: 'Kailash', href: '/yatras/kailash-manasarovar' },
-  { label: 'Himalayas', href: '/yatras/himalayas' },
-  { label: 'Kashi', href: '/yatras/kashi-krama' },
-  { label: 'Southern Sojourn', href: '/yatras/southern-sojourn' },
-];
+const defaultLinks: { label: string; href: string }[] = [];
 
 export default function Nav({
   variant = 'dark',
@@ -42,7 +37,7 @@ export default function Nav({
         onClick={() => open()}
         className={`shrink-0 cursor-pointer rounded-full border ${borderColor} px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase sm:px-5 sm:py-[9px] sm:text-[11.5px]`}
       >
-        Enquire
+        Apply Now
       </button>
     </nav>
   );

@@ -49,7 +49,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
             yatraName={yatra.name}
             className="cursor-pointer rounded-full border border-[#F5F1E9]/60 px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase sm:px-5 sm:py-[9px] sm:text-[11.5px]"
           >
-            Enquire
+            Apply Now
           </EnquireButton>
         </nav>
 
@@ -93,7 +93,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
               yatraName={yatra.name}
               className="inline-block cursor-pointer rounded-full bg-[#25241E] px-[30px] py-[14px] text-[12px] tracking-[0.16em] text-[#F5F1E9] uppercase"
             >
-              Reserve a place
+              Apply for an Invitation
             </EnquireButton>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
             yatraName={yatra.name}
             className="inline-block cursor-pointer rounded-full bg-[#F5F1E9] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#25241E] uppercase sm:px-10"
           >
-            Enquire about {yatra.name}
+            Apply for an Invitation to {yatra.name}
           </EnquireButton>
         </div>
         <Link

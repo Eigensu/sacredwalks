@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import type { SiteContent } from '@/lib/content';
-import type { Yatra } from '@/lib/yatras';
+import type { Yatra, FutureDestination } from '@/lib/yatras';
 
 type Path = (string | number)[];
 
@@ -29,6 +29,8 @@ const SECTIONS = [
   { id: 'settings', label: 'WhatsApp' },
   { id: 'footer', label: 'Footer & Contact' },
   { id: 'yatras', label: 'Yatras' },
+  { id: 'futureDestinations', label: 'Future Destinations' },
+  { id: 'experience', label: 'Experience' },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]['id'];
@@ -114,6 +116,8 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
         {section === 'settings' && <SettingsSection {...fieldProps} />}
         {section === 'footer' && <FooterSection {...fieldProps} />}
         {section === 'yatras' && <YatrasSection {...fieldProps} />}
+        {section === 'futureDestinations' && <FutureDestinationsSection {...fieldProps} />}
+        {section === 'experience' && <ExperienceSection {...fieldProps} />}
       </div>
     </div>
   );
@@ -248,6 +252,39 @@ function MediaField({
             />
           ))}
       </div>
+    </div>
+  );
+}
+
+function StringList({
+  content,
+  update,
+  path,
+  label,
+  itemLabel,
+}: FieldProps & { path: Path; label: string; itemLabel: string }) {
+  const items = (getDeep(content, path) as string[] | undefined) ?? [];
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">{label}</div>
+      {items.map((_, i) => (
+        <div key={i} className="grid grid-cols-[1fr_auto] items-end gap-3">
+          <Text {...{ content, update }} path={[...path, i]} label={`${itemLabel} ${i + 1}`} />
+          <RowButton
+            onClick={() =>
+              update(
+                path,
+                items.filter((_, j) => j !== i),
+              )
+            }
+          >
+            Remove
+          </RowButton>
+        </div>
+      ))}
+      <RowButton onClick={() => update(path, [...items, ''])}>
+        + Add {itemLabel.toLowerCase()}
+      </RowButton>
     </div>
   );
 }
@@ -606,6 +643,144 @@ function YatrasSection(p: FieldProps) {
         </div>
       ))}
       <RowButton onClick={addYatra}>+ Add yatra</RowButton>
+    </>
+  );
+}
+
+function FutureDestinationsSection(p: FieldProps) {
+  const { content, update } = p;
+  return (
+    <Group title="Future Destinations">
+      {content.futureDestinations.map((d: FutureDestination, i: number) => (
+        <div key={i} className="grid grid-cols-1 items-end gap-4 sm:grid-cols-[1fr_1fr_auto]">
+          <Text {...p} path={['futureDestinations', i, 'name']} label="Name" />
+          <Text {...p} path={['futureDestinations', i, 'note']} label="Note (optional)" />
+          <RowButton
+            onClick={() =>
+              update(
+                ['futureDestinations'],
+                content.futureDestinations.filter((_, j) => j !== i),
+              )
+            }
+          >
+            Remove
+          </RowButton>
+        </div>
+      ))}
+      <RowButton
+        onClick={() =>
+          update(['futureDestinations'], [...content.futureDestinations, { name: '', note: '' }])
+        }
+      >
+        + Add destination
+      </RowButton>
+    </Group>
+  );
+}
+
+function ExperienceSection(p: FieldProps) {
+  return (
+    <>
+      <Group title="Introduction">
+        <Text {...p} path={['experience', 'eyebrow']} label="Section label" />
+        <Text {...p} path={['experience', 'heading']} label="Heading" />
+        <StringList
+          {...p}
+          path={['experience', 'intro']}
+          label="Intro paragraphs"
+          itemLabel="Paragraph"
+        />
+      </Group>
+
+      <Group title="Included Throughout Every Journey">
+        <StringList
+          {...p}
+          path={['experience', 'included']}
+          label="Included items"
+          itemLabel="Item"
+        />
+      </Group>
+
+      <Group title="Handpicked Stays">
+        <Text {...p} path={['experience', 'stays', 'heading']} label="Heading" />
+        <Text {...p} path={['experience', 'stays', 'body']} label="Body" multiline />
+        <Text {...p} path={['experience', 'stays', 'note']} label="Note" />
+      </Group>
+
+      <Group title="Personalised Rituals">
+        <Text {...p} path={['experience', 'rituals', 'heading']} label="Heading" />
+        <Text {...p} path={['experience', 'rituals', 'intro']} label="Intro" multiline />
+        <StringList
+          {...p}
+          path={['experience', 'rituals', 'general']}
+          label="General rituals"
+          itemLabel="Ritual"
+        />
+        <StringList
+          {...p}
+          path={['experience', 'rituals', 'destinationSpecific']}
+          label="Destination-specific rituals"
+          itemLabel="Ritual"
+        />
+      </Group>
+
+      <Group title="Optional Enhancements">
+        <Text {...p} path={['experience', 'enhancements', 'heading']} label="Heading" />
+        <Text {...p} path={['experience', 'enhancements', 'intro']} label="Intro" />
+        <StringList
+          {...p}
+          path={['experience', 'enhancements', 'items']}
+          label="Enhancements"
+          itemLabel="Enhancement"
+        />
+      </Group>
+
+      <Group title="The Sacred Walks Concierge">
+        <Text {...p} path={['experience', 'concierge', 'heading']} label="Heading" />
+        <StringList
+          {...p}
+          path={['experience', 'concierge', 'before']}
+          label="Before your journey"
+          itemLabel="Item"
+        />
+        <StringList
+          {...p}
+          path={['experience', 'concierge', 'during']}
+          label="During your journey"
+          itemLabel="Item"
+        />
+      </Group>
+
+      <Group title="Welcome Kit">
+        <Text {...p} path={['experience', 'welcomeKit', 'heading']} label="Heading" />
+        <Text {...p} path={['experience', 'welcomeKit', 'intro']} label="Intro" multiline />
+        <StringList
+          {...p}
+          path={['experience', 'welcomeKit', 'items']}
+          label="Kit items"
+          itemLabel="Item"
+        />
+      </Group>
+
+      <Group title="Why Travel With Sacred Walks">
+        <Text {...p} path={['experience', 'whyUs', 'heading']} label="Heading" />
+        <StringList
+          {...p}
+          path={['experience', 'whyUs', 'items']}
+          label="Reasons"
+          itemLabel="Reason"
+        />
+      </Group>
+
+      <Group title="Important Information">
+        <Text {...p} path={['experience', 'importantInfo', 'heading']} label="Heading" />
+        <StringList
+          {...p}
+          path={['experience', 'importantInfo', 'body']}
+          label="Paragraphs"
+          itemLabel="Paragraph"
+        />
+      </Group>
     </>
   );
 }
