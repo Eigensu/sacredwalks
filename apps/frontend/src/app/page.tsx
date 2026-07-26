@@ -87,34 +87,34 @@ export default async function Home() {
       </section>
 
       {/* APPLY FOR AN INVITE — 3 step flow */}
-      <section className="bg-[#25241E] px-[7vw] py-20 text-[#F0EADB] sm:py-[130px]">
-        <div className="mb-[26px] text-center text-[11.5px] tracking-[0.28em] text-[#9CA793] uppercase">
+      <section className="bg-[#25241E] px-[7vw] py-14 text-[#F0EADB] sm:py-20">
+        <div className="mb-[14px] text-center text-[10.5px] tracking-[0.28em] text-[#9CA793] uppercase">
           {applyInvite.eyebrow}
         </div>
-        <h2 className="mx-auto max-w-[900px] text-center font-serif text-[clamp(28px,4.4vw,58px)] leading-[1.1] font-medium">
+        <h2 className="mx-auto max-w-[900px] text-center font-serif text-[clamp(24px,3.6vw,44px)] leading-[1.1] font-medium">
           {applyInvite.heading}
         </h2>
 
-        <div className="mx-auto mt-16 flex max-w-[1000px] flex-col items-stretch gap-10 sm:mt-[70px] sm:flex-row sm:items-start sm:gap-6">
+        <div className="mx-auto mt-10 flex max-w-[900px] flex-col items-stretch gap-8 sm:mt-11 sm:flex-row sm:items-start sm:gap-6">
           {applyInvite.steps.map((step, i) => (
             <div key={step.title} className="flex flex-1 flex-col items-center text-center">
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[#F5F1E9]/30 font-serif text-[20px]">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-[#F5F1E9]/30 font-serif text-[16px]">
                 {i + 1}
               </div>
-              <p className="max-w-[220px] text-[14.5px] leading-[1.7] text-[#D8D2C2]">
+              <p className="max-w-[220px] text-[13.5px] leading-[1.6] text-[#D8D2C2]">
                 {step.body}
               </p>
-              {i < applyInvite.steps.length - 1 && (
-                <div className="mt-6 hidden text-[#9CA793] sm:block">→</div>
-              )}
             </div>
           ))}
         </div>
 
-        <div className="mt-14 text-center sm:mt-16">
-          <EnquireButton className="inline-block cursor-pointer rounded-full bg-[#F5F1E9] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#25241E] uppercase sm:px-10">
+        <div className="mt-9 text-center sm:mt-10">
+          <Link
+            href="/apply"
+            className="inline-block cursor-pointer rounded-full bg-[#F5F1E9] px-8 py-[13px] text-[12px] tracking-[0.18em] text-[#25241E] uppercase sm:px-10"
+          >
             {applyInvite.ctaText}
-          </EnquireButton>
+          </Link>
         </div>
       </section>
 
