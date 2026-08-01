@@ -121,35 +121,49 @@ export default async function Home() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 max-sm:grid-cols-2 max-sm:gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {yatras.map((y) => (
-            <Link
-              key={y.slug}
-              href={`/yatras/${y.slug}`}
-              className="group relative block aspect-[3/4] w-full cursor-pointer overflow-hidden rounded-[6px]"
-            >
-              <Image
-                src={y.heroImage}
-                alt={y.heroPlaceholder || y.name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(min-width: 1024px) 25vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.15)_0%,rgba(24,21,14,.05)_35%,rgba(24,21,14,.85)_100%)]" />
+          {yatras.map((y) => {
+            const statusLabel =
+              y.status === 'closed'
+                ? 'Registrations Closed'
+                : y.status === 'opening-soon'
+                  ? 'Coming Soon'
+                  : 'Open for Registrations';
+            return (
+              <Link
+                key={y.slug}
+                href={`/yatras/${y.slug}`}
+                className="group block w-full cursor-pointer"
+              >
+                <div className="relative aspect-[3/4] w-full overflow-hidden">
+                  <Image
+                    src={y.heroImage}
+                    alt={y.heroPlaceholder || y.name}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.15)_0%,rgba(24,21,14,.05)_35%,rgba(24,21,14,.85)_100%)]" />
 
-              <div className="absolute top-4 right-4 text-[13px] font-medium text-[#F5F1E9] max-sm:top-2.5 max-sm:right-2.5 max-sm:text-[11px]">
-                {y.days}
-              </div>
+                  <div className="absolute top-4 right-4 text-[13px] font-medium text-[#F5F1E9] max-sm:top-2.5 max-sm:right-2.5 max-sm:text-[11px]">
+                    {y.days}
+                  </div>
 
-              <div className="absolute right-5 bottom-5 left-5 max-sm:right-3 max-sm:bottom-3 max-sm:left-3">
-                <div className="font-serif text-[22px] font-medium text-[#F5F1E9] max-sm:text-[16px] max-sm:leading-[1.2] sm:text-[24px]">
-                  {y.name}
+                  <div className="absolute right-5 bottom-5 left-5 max-sm:right-3 max-sm:bottom-3 max-sm:left-3">
+                    <div className="font-serif text-[22px] font-medium text-[#F5F1E9] max-sm:text-[16px] max-sm:leading-[1.2] sm:text-[24px]">
+                      {y.name}
+                    </div>
+                    <div className="mt-1.5 text-[12.5px] leading-[1.5] text-[#F5F1E9]/85 max-sm:mt-1 max-sm:text-[10.5px] max-sm:leading-[1.45]">
+                      {y.route}
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-1.5 text-[12.5px] leading-[1.5] text-[#F5F1E9]/85 max-sm:mt-1 max-sm:text-[10.5px] max-sm:leading-[1.45]">
-                  {y.route}
+
+                <div className="mt-3 border border-[#25241E] bg-[#25241E] px-4 py-2.5 text-center text-[11.5px] tracking-[0.08em] text-[#F5F1E9] uppercase max-sm:px-2.5 max-sm:py-2 max-sm:text-[9.5px]">
+                  {statusLabel}
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </section>
 

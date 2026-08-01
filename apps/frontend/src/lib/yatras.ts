@@ -1,13 +1,20 @@
 export type ItineraryDay = {
   day: string;
   place: string;
-  note: string;
+  note: string | string[];
 };
 
 export type Spec = {
   k: string;
   v: string;
 };
+
+export type StayGroup = {
+  place: string;
+  options: string[];
+};
+
+export type YatraStatus = 'open' | 'closed' | 'opening-soon';
 
 export type Yatra = {
   n: string;
@@ -16,12 +23,17 @@ export type Yatra = {
   days: string;
   region: string;
   route: string;
+  status?: YatraStatus;
   heroImage: string;
   heroPlaceholder: string;
   featureImage: string;
   featurePlaceholder: string;
   overviewLead: string;
   overviewBody: string;
+  whyVisit?: string[];
+  highlights?: string[];
+  highlightsOptional?: string[];
+  stays?: StayGroup[];
   specs: Spec[];
   itinerary: ItineraryDay[];
 };
@@ -39,6 +51,7 @@ export const yatras: Yatra[] = [
     days: '3 Days',
     region: 'Madhya Pradesh',
     route: 'Mahakaleshwar · Omkareshwar',
+    status: 'open',
     heroImage:
       'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Mahakal Lok corridor at dusk — full bleed hero',
@@ -48,7 +61,34 @@ export const yatras: Yatra[] = [
     overviewLead:
       "Discover two of Lord Shiva's most revered Jyotirlingas on a thoughtfully curated pilgrimage through Ujjain and Omkareshwar.",
     overviewBody:
-      'From the spiritual energy of Mahakaal to the serenity of the Narmada, this journey is designed to offer deeper darshan, authentic rituals and moments of quiet reflection — without the burden of planning every detail yourself. Mahakaleshwar is one of the twelve Jyotirlingas and the only south-facing Jyotirlinga in India, revered as the Lord of Time. The journey traditionally begins by seeking blessings at Kal Bhairav, the guardian deity of Ujjain, before offering prayers at Mahakaleshwar. Omkareshwar, on the sacred Narmada River, is believed to embody the divine symbol Om and has welcomed pilgrims for centuries seeking peace, devotion and spiritual renewal.',
+      'From the spiritual energy of Mahakaal to the serenity of the Narmada, this journey is designed to offer deeper darshan, authentic rituals and moments of quiet reflection—without the burden of planning every detail yourself.',
+    whyVisit: [
+      'Mahakaleshwar is one of the twelve Jyotirlingas and the only south-facing Jyotirlinga in India, revered as the Lord of Time (Mahakaal). The journey traditionally begins by seeking blessings at Kal Bhairav, the guardian deity of Ujjain, before offering prayers at Mahakaleshwar.',
+      'Omkareshwar, situated on the sacred Narmada River, is believed to embody the divine symbol ‘Om’ and has welcomed pilgrims for centuries seeking peace, devotion and spiritual renewal.',
+    ],
+    highlights: [
+      'Mahakaleshwar Jyotirlinga',
+      'Omkareshwar Jyotirlinga',
+      'Mahakal Lok',
+      'Kal Bhairav Temple',
+      'Harsiddhi Shakti Peeth',
+      'Ram Ghat Evening Aarti',
+      'Mamleshwar Temple',
+      'Siddhanath Temple',
+      'Gauri Somnath Temple',
+      'Govindeshwar Cave',
+    ],
+    highlightsOptional: ['Baglamukhi Temple'],
+    stays: [
+      {
+        place: 'Ujjain',
+        options: ['MPT Samrat Vikramaditya – The Heritage', 'Hotel Abika Elite'],
+      },
+      {
+        place: 'Omkareshwar',
+        options: ['MPT Temple View', 'Narmada Hills Resort'],
+      },
+    ],
     specs: [
       { k: 'Duration', v: '3 Days · 2 Nights' },
       { k: 'Region', v: 'Madhya Pradesh' },
@@ -57,18 +97,45 @@ export const yatras: Yatra[] = [
     itinerary: [
       {
         day: 'Day One',
-        place: 'Into the City of Mahakaal',
-        note: 'Arrival assistance at Indore Airport and private transfer to Ujjain. Visit Kal Bhairav Temple and Harsiddhi Mata Temple (Shakti Peeth), explore the Mahakal Lok Corridor, and receive Official Sheeghra Darshan Assistance at Mahakaleshwar Jyotirlinga before the Ram Ghat Evening Aarti. Dinner & overnight stay in Ujjain.',
+        place: 'Into The City Of Mahakaal',
+        note: [
+          'Arrival assistance at Indore Airport',
+          'Private chauffeur transfer to Ujjain',
+          'Check-in at your handpicked premium hotel',
+          'Traditional Sattvic Lunch',
+          'Visit Kal Bhairav Temple, traditionally the first stop before Mahakaleshwar Darshan',
+          'Seek blessings at Harsiddhi Mata Temple (Shakti Peeth)',
+          'Explore the magnificent Mahakal Lok Corridor',
+          'Official Sheeghra Darshan Assistance at Mahakaleshwar Jyotirlinga',
+          'Witness the Ram Ghat Evening Aarti',
+          'Dinner & Overnight Stay in Ujjain',
+        ],
       },
       {
         day: 'Day Two',
-        place: 'From Mahakaal to the Narmada',
-        note: 'Optional Bhasma Aarti, then breakfast and drive to Omkareshwar for Jyotirlinga darshan, Mamleshwar Temple, Siddhanath Temple and Gauri Somnath Temple, followed by sunset along the Narmada Ghats. Dinner & overnight stay in Omkareshwar.',
+        place: 'From Mahakaal To The Narmada',
+        note: [
+          'Optional Bhasma Aarti (advance booking assistance available)',
+          'Breakfast & drive to Omkareshwar',
+          'Omkareshwar Jyotirlinga Darshan',
+          'Visit Mamleshwar Temple',
+          'Explore Siddhanath Temple',
+          'Visit Gauri Somnath Temple',
+          'Sunset along the Narmada Ghats',
+          'Dinner & Overnight Stay in Omkareshwar',
+        ],
       },
       {
         day: 'Day Three',
         place: 'A Journey That Stays With You',
-        note: 'Early morning darshan, visit Govindeshwar Cave, with an optional Omkareshwar Parikrama and a visit to Baglamukhi Temple, before returning to Indore for departure.',
+        note: [
+          'Early morning Darshan',
+          'Visit Govindeshwar Cave',
+          'Optional Omkareshwar Parikrama',
+          'Optional visit to Baglamukhi Temple',
+          'Return to Indore',
+          'Airport transfer',
+        ],
       },
     ],
   },
@@ -79,6 +146,7 @@ export const yatras: Yatra[] = [
     days: '4 Days',
     region: 'Maharashtra',
     route: 'Bhimashankar · Trimbakeshwar · Grishneshwar',
+    status: 'opening-soon',
     heroImage:
       'https://images.unsplash.com/photo-1548013146-72479768bada?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Sahyadri hills at Bhimashankar — full bleed hero',
@@ -125,6 +193,7 @@ export const yatras: Yatra[] = [
     days: '4 Days',
     region: 'Gujarat',
     route: 'Somnath · Dwarka · Nageshwar',
+    status: 'closed',
     heroImage:
       'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Somnath Temple at the Arabian Sea — full bleed hero',
@@ -171,6 +240,7 @@ export const yatras: Yatra[] = [
     days: '3 Days',
     region: 'Varanasi',
     route: 'Kashi Vishwanath · Vishalakshi · Kal Bhairav',
+    status: 'open',
     heroImage:
       'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Ghats of Varanasi at dusk — full bleed hero',
