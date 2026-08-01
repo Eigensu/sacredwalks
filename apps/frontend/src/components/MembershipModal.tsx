@@ -78,18 +78,18 @@ export default function MembershipModal({ onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-[5vw] py-8"
+      className="fixed inset-0 z-50 flex items-center justify-center px-[5vw] py-8 max-sm:px-4 max-sm:py-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="membership-modal-title"
     >
       <div className="absolute inset-0 bg-[#1B1A15]/70 backdrop-blur-[2px]" onClick={onClose} />
 
-      <div className="relative max-h-[92vh] w-full max-w-[820px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)]">
+      <div className="relative max-h-[92vh] w-full max-w-[820px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)] max-sm:max-h-[90dvh] max-sm:overscroll-contain">
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#5F5C50] transition hover:bg-[#25241E]/5"
+          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#5F5C50] transition max-sm:top-2 max-sm:right-2 max-sm:h-11 max-sm:w-11 hover:bg-[#25241E]/5"
         >
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
             <path
@@ -102,7 +102,7 @@ export default function MembershipModal({ onClose }: Props) {
         </button>
 
         {status === 'success' ? (
-          <div className="px-8 py-10 text-center sm:px-9 sm:py-12">
+          <div className="px-8 py-10 text-center max-sm:px-6 sm:px-9 sm:py-12">
             <div className="mb-4 text-[11px] tracking-[0.28em] text-[#7C8A72] uppercase">
               Welcome
             </div>
@@ -120,7 +120,7 @@ export default function MembershipModal({ onClose }: Props) {
             </button>
           </div>
         ) : (
-          <div className="px-7 py-6 sm:px-10 sm:py-8">
+          <div className="px-7 py-6 max-sm:px-6 max-sm:py-8 sm:px-10 sm:py-8">
             <div className="mb-1.5 text-[10.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
               Welcome
             </div>
@@ -181,7 +181,7 @@ export default function MembershipModal({ onClose }: Props) {
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
                         aria-label="Country code"
-                        className="shrink-0 cursor-pointer bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none"
+                        className="shrink-0 cursor-pointer bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none max-sm:py-[11px] max-sm:text-[16px]"
                       >
                         {COUNTRY_CODES.map((c) => (
                           <option key={c.code} value={c.code}>
@@ -194,7 +194,7 @@ export default function MembershipModal({ onClose }: Props) {
                         name="phone"
                         required
                         placeholder="98xxx xxxxx"
-                        className="w-full bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992]"
+                        className="w-full bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992] max-sm:py-[11px] max-sm:text-[16px]"
                       />
                     </div>
                   </Field>
@@ -229,7 +229,7 @@ export default function MembershipModal({ onClose }: Props) {
                   {['Curated Group Journey', 'Personalised Private Journey'].map((option) => (
                     <label
                       key={option}
-                      className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-[#25241E]"
+                      className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-[#25241E] max-sm:min-h-11 max-sm:text-[15px]"
                     >
                       <input
                         type="radio"
@@ -237,7 +237,7 @@ export default function MembershipModal({ onClose }: Props) {
                         value={option}
                         checked={journeyType === option}
                         onChange={(e) => setJourneyType(e.target.value)}
-                        className="h-[15px] w-[15px] cursor-pointer accent-[#25241E]"
+                        className="h-[15px] w-[15px] cursor-pointer accent-[#25241E] max-sm:h-[18px] max-sm:w-[18px]"
                       />
                       {option}
                     </label>
@@ -313,6 +313,13 @@ export default function MembershipModal({ onClose }: Props) {
         input[type='date'].scw-mem-input,
         input[type='month'].scw-mem-input {
           cursor: pointer;
+        }
+        /* iOS Safari zooms the viewport when a focused field is under 16px. */
+        @media (max-width: 639.98px) {
+          .scw-mem-input {
+            font-size: 16px;
+            padding: 11px 0;
+          }
         }
       `}</style>
     </div>

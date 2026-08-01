@@ -43,18 +43,19 @@ export default function NewsletterForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
       <div className="flex items-center gap-3 border-b border-[#D8CFBD] pb-2 focus-within:border-[#7C8A72]">
+        {/* 16px on phones stops iOS Safari zooming the page in on focus. */}
         <input
           type="email"
           name="email"
           required
           placeholder="you@example.com"
           aria-label="Email address"
-          className="w-full bg-transparent text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992]"
+          className="w-full bg-transparent text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992] max-sm:min-h-11 max-sm:text-[16px]"
         />
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="shrink-0 cursor-pointer text-[11px] tracking-[0.18em] text-[#25241E] uppercase transition hover:opacity-70 disabled:opacity-50"
+          className="shrink-0 cursor-pointer text-[11px] tracking-[0.18em] text-[#25241E] uppercase transition max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:opacity-70 disabled:opacity-50"
         >
           {status === 'submitting' ? 'Joining…' : 'Join →'}
         </button>

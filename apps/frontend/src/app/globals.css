@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme inline {
   --font-sans: var(--font-hanken);
@@ -17,6 +17,16 @@ body {
 ::selection {
   background: #7c8a72;
   color: #f5f1e9;
+}
+
+/* Hides the scrollbar on the swipeable mobile carousels; a no-op where the
+   same container is laid out as a grid and never overflows. */
+.scw-swipe {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scw-swipe::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes scwFade {
