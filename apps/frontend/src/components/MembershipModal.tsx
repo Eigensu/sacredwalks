@@ -18,10 +18,13 @@ const COUNTRY_CODES = [
 
 const GENDERS = ['Female', 'Male', 'Other', 'Prefer not to say'];
 
+const TRAVELLER_COUNTS = ['Solo', 'Couple', 'Family', 'Friends', 'Group'];
+
 export default function MembershipModal({ onClose }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
+  const [journeyType, setJourneyType] = useState('Curated Group Journey');
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -47,6 +50,9 @@ export default function MembershipModal({ onClose }: Props) {
         `Gender: ${formData.get('gender') || '—'}`,
         `Nationality: ${formData.get('nationality') || '—'}`,
         `City: ${formData.get('city') || '—'}`,
+        `Journey Type: ${journeyType}`,
+        `Travellers: ${formData.get('travellers') || '—'}`,
+        `Preferred Month: ${formData.get('travelMonth') || '—'}`,
       ].join(' | ');
       const res = await fetch('/api/enquiries', {
         method: 'POST',
@@ -79,7 +85,7 @@ export default function MembershipModal({ onClose }: Props) {
     >
       <div className="absolute inset-0 bg-[#1B1A15]/70 backdrop-blur-[2px]" onClick={onClose} />
 
-      <div className="relative w-full max-w-[560px] rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)]">
+      <div className="relative max-h-[92vh] w-full max-w-[820px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)]">
         <button
           onClick={onClose}
           aria-label="Close"
@@ -114,117 +120,168 @@ export default function MembershipModal({ onClose }: Props) {
             </button>
           </div>
         ) : (
-          <div className="px-7 py-6 sm:px-8 sm:py-7">
-            <div className="mb-1 text-[10.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
+          <div className="px-7 py-6 sm:px-10 sm:py-8">
+            <div className="mb-1.5 text-[10.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
               Welcome
             </div>
             <h2
               id="membership-modal-title"
-              className="font-serif text-[clamp(20px,3.2vw,24px)] leading-[1.1] font-medium text-[#2C2A22]"
+              className="font-serif text-[clamp(20px,2.8vw,25px)] leading-[1.15] font-medium text-[#2C2A22]"
             >
-              Let&apos;s get started
+              Begin Your Sacred Journey
             </h2>
-            <p className="mt-1.5 text-[13px] leading-[1.5] text-[#5F5C50]">
-              Tell us a bit about yourself so we can check if there&apos;s a spot for you.
+            <p className="mt-2 max-w-[600px] text-[13px] leading-[1.55] text-[#5F5C50]">
+              Complete your details below to register your interest. Our team will get in touch to
+              help you choose the journey that&apos;s right for you.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3">
-              <div className="text-[10px] tracking-[0.2em] text-[#9A917D] uppercase">
-                Personal Details
-              </div>
+            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-6">
+              <FormSection label="Personal Details">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <Field label="Full Name">
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Your full name"
+                      className="scw-mem-input"
+                    />
+                  </Field>
 
-              <div className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
-                <Field label="Full Name">
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Your full name"
-                    className="scw-mem-input"
-                  />
-                </Field>
+                  <Field label="Date of Birth">
+                    <input type="date" name="dob" required className="scw-mem-input" />
+                  </Field>
 
-                <Field label="Date of Birth">
-                  <input type="date" name="dob" required className="scw-mem-input" />
-                </Field>
-
-                <Field label="Gender">
-                  <select name="gender" defaultValue="" required className="scw-mem-input">
-                    <option value="" disabled>
-                      Select
-                    </option>
-                    {GENDERS.map((g) => (
-                      <option key={g} value={g}>
-                        {g}
+                  <Field label="Gender">
+                    <select name="gender" defaultValue="" required className="scw-mem-input">
+                      <option value="" disabled>
+                        Select
                       </option>
-                    ))}
-                  </select>
-                </Field>
-
-                <Field label="Email Address">
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="you@example.com"
-                    className="scw-mem-input"
-                  />
-                </Field>
-
-                <Field label="Phone Number">
-                  <div className="flex items-center gap-2 border-b border-[#D8CFBD] focus-within:border-[#7C8A72]">
-                    <select
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                      aria-label="Country code"
-                      className="shrink-0 bg-transparent py-1.5 text-[13.5px] text-[#25241E] outline-none"
-                    >
-                      {COUNTRY_CODES.map((c) => (
-                        <option key={c.code} value={c.code}>
-                          {c.flag} {c.code}
+                      {GENDERS.map((g) => (
+                        <option key={g} value={g}>
+                          {g}
                         </option>
                       ))}
                     </select>
+                  </Field>
+
+                  <Field label="Email Address">
                     <input
-                      type="tel"
-                      name="phone"
+                      type="email"
+                      name="email"
                       required
-                      placeholder="98xxx xxxxx"
-                      className="w-full bg-transparent py-1.5 text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992]"
+                      placeholder="you@example.com"
+                      className="scw-mem-input"
                     />
-                  </div>
-                </Field>
+                  </Field>
 
-                <Field label="Nationality">
-                  <input
-                    type="text"
-                    name="nationality"
-                    required
-                    placeholder="e.g. Indian"
-                    className="scw-mem-input"
-                  />
-                </Field>
+                  <Field label="Phone Number">
+                    <div className="flex items-center gap-2 border-b border-[#D8CFBD] focus-within:border-[#7C8A72]">
+                      <select
+                        value={countryCode}
+                        onChange={(e) => setCountryCode(e.target.value)}
+                        aria-label="Country code"
+                        className="shrink-0 cursor-pointer bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none"
+                      >
+                        {COUNTRY_CODES.map((c) => (
+                          <option key={c.code} value={c.code}>
+                            {c.flag} {c.code}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        placeholder="98xxx xxxxx"
+                        className="w-full bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992]"
+                      />
+                    </div>
+                  </Field>
 
-                <Field label="City">
-                  <input
-                    type="text"
-                    name="city"
-                    required
-                    placeholder="Your city"
-                    className="scw-mem-input"
-                  />
-                </Field>
-              </div>
+                  <Field label="Nationality">
+                    <input
+                      type="text"
+                      name="nationality"
+                      required
+                      placeholder="e.g. Indian"
+                      className="scw-mem-input"
+                    />
+                  </Field>
+
+                  <Field label="City of Residence">
+                    <input
+                      type="text"
+                      name="city"
+                      required
+                      placeholder="Your city"
+                      className="scw-mem-input"
+                    />
+                  </Field>
+                </div>
+              </FormSection>
+
+              <FormSection label="Journey Type">
+                <p className="-mt-1 text-[13px] leading-[1.5] text-[#5F5C50]">
+                  How would you like to travel?
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">
+                  {['Curated Group Journey', 'Personalised Private Journey'].map((option) => (
+                    <label
+                      key={option}
+                      className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-[#25241E]"
+                    >
+                      <input
+                        type="radio"
+                        name="journeyType"
+                        value={option}
+                        checked={journeyType === option}
+                        onChange={(e) => setJourneyType(e.target.value)}
+                        className="h-[15px] w-[15px] cursor-pointer accent-[#25241E]"
+                      />
+                      {option}
+                    </label>
+                  ))}
+                </div>
+              </FormSection>
+
+              <FormSection label="Travel Preferences">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <Field label="Number Of Travellers">
+                    <select name="travellers" defaultValue="" required className="scw-mem-input">
+                      <option value="" disabled>
+                        Select
+                      </option>
+                      {TRAVELLER_COUNTS.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+
+                  <Field label="Preferred Month Of Travel">
+                    <input type="month" name="travelMonth" required className="scw-mem-input" />
+                  </Field>
+                </div>
+              </FormSection>
 
               {error && <p className="text-[13px] leading-[1.6] text-[#A05B4C]">{error}</p>}
 
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="mt-2 inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25241E] px-8 py-[12px] text-[12px] tracking-[0.18em] text-[#F5F1E9] uppercase transition disabled:opacity-60"
-              >
-                {status === 'submitting' ? 'Submitting…' : 'Become A Member →'}
-              </button>
+              <div className="mt-2 flex flex-col items-center gap-2.5">
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25241E] px-9 py-[13px] text-[12px] tracking-[0.18em] text-[#F5F1E9] uppercase transition hover:bg-[#3a382e] disabled:opacity-60"
+                >
+                  {status === 'submitting' ? 'Submitting…' : 'Become A Member →'}
+                </button>
+
+                <p className="text-center text-[11.5px] leading-[1.4] text-[#9A917D] italic">
+                  A Journey Curator will personally connect with you to guide you through the next
+                  steps.
+                </p>
+              </div>
             </form>
           </div>
         )}
@@ -236,7 +293,7 @@ export default function MembershipModal({ onClose }: Props) {
           background: transparent;
           border: none;
           border-bottom: 1px solid #d8cfbd;
-          padding: 6px 0;
+          padding: 8px 0;
           font-family: var(--font-hanken), sans-serif;
           font-size: 13.5px;
           color: #25241e;
@@ -253,7 +310,8 @@ export default function MembershipModal({ onClose }: Props) {
           appearance: none;
           cursor: pointer;
         }
-        input[type='date'].scw-mem-input {
+        input[type='date'].scw-mem-input,
+        input[type='month'].scw-mem-input {
           cursor: pointer;
         }
       `}</style>
@@ -261,9 +319,18 @@ export default function MembershipModal({ onClose }: Props) {
   );
 }
 
+function FormSection({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="text-[10px] tracking-[0.2em] text-[#9A917D] uppercase">{label}</div>
+      {children}
+    </div>
+  );
+}
+
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <label className="flex flex-col gap-1">
+    <label className="flex flex-col gap-1.5">
       <span className="text-[10px] tracking-[0.16em] text-[#9A917D] uppercase">{label}</span>
       {children}
     </label>

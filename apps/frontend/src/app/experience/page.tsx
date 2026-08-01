@@ -28,7 +28,12 @@ export default async function ExperiencePage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.5)_0%,rgba(24,21,14,.1)_40%,rgba(24,21,14,.68)_100%)]" />
-        <Nav variant="dark" />
+        <Nav
+          variant="dark"
+          whatsappNumber={content.settings.whatsappNumber}
+          whatsappMessage={content.settings.whatsappMessage}
+          phoneNumber={content.footer.phone}
+        />
         <div className="absolute right-[5vw] bottom-[8vh] left-[5vw] z-[3] text-[#F5F1E9] sm:right-[7vw] sm:left-[7vw]">
           <div className="mb-4 text-[11px] tracking-[0.3em] uppercase opacity-85 sm:mb-5 sm:text-[12px]">
             {experience.eyebrow}

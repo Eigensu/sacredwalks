@@ -80,7 +80,7 @@ export const yatras: Yatra[] = [
     region: 'Maharashtra',
     route: 'Bhimashankar · Trimbakeshwar · Grishneshwar',
     heroImage:
-      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1800&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1548013146-72479768bada?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Sahyadri hills at Bhimashankar — full bleed hero',
     featureImage:
       'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1800&q=80&auto=format&fit=crop',
@@ -126,7 +126,7 @@ export const yatras: Yatra[] = [
     region: 'Gujarat',
     route: 'Somnath · Dwarka · Nageshwar',
     heroImage:
-      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1800&q=80&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=1800&q=80&auto=format&fit=crop',
     heroPlaceholder: 'Somnath Temple at the Arabian Sea — full bleed hero',
     featureImage:
       'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=1800&q=80&auto=format&fit=crop',

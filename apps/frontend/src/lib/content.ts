@@ -39,6 +39,12 @@ export type SiteContent = {
       linkText: string;
       image: string;
     };
+    philosophy: {
+      eyebrow: string;
+      lead: string;
+      body: string;
+      image: string;
+    };
     applyInvite: {
       eyebrow: string;
       heading: string;
@@ -144,7 +150,7 @@ export const GALLERY_LAYOUT = [
 
 export const defaultContent: SiteContent = {
   settings: {
-    whatsappNumber: '918144123123',
+    whatsappNumber: '918976090623',
     whatsappMessage: 'Namaskaram, I would like to know more about Sacred Walks yatras.',
   },
   home: {
@@ -159,12 +165,19 @@ export const defaultContent: SiteContent = {
         'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1800&q=80&auto=format&fit=crop',
     },
     pilgrimage: {
-      eyebrow: 'More Than A Journey',
-      lead: 'The Sacred Walks was created from a simple belief — that sacred journeys are meant to be experienced, not hurried.',
-      body: "Every destination carries centuries of stories, traditions and living wisdom. We bring them together through thoughtfully curated journeys that invite you to slow down, understand more deeply and experience Bharat's spiritual heritage with greater presence. Because some journeys change the places we visit. The meaningful ones change the way we see.",
+      eyebrow: 'About The Journey',
+      lead: 'Every Sacred Walk is thoughtfully curated to offer more than a pilgrimage, it is an opportunity to pause, reconnect, and experience India’s sacred heritage with intention.',
+      body: 'From ancient Jyotirlingas and revered Shakti Peeths to timeless rituals and meaningful conversations, each journey is designed to help you experience these sacred places without the burden of planning every detail yourself.\n\nWith small groups, personalised guidance, carefully selected stays, and seamless logistics, we create the space for what truly matters—a deeper connection with the Divine, with tradition, and with yourself.',
       linkText: 'Why pilgrimage →',
       image:
         'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80&auto=format&fit=crop',
+    },
+    philosophy: {
+      eyebrow: 'Our Philosophy',
+      lead: 'We believe that every pilgrimage should be as personal as the intention behind it.',
+      body: 'Whether your journey is one of gratitude, healing, remembrance, celebration or quiet reflection, we thoughtfully curate each experience around what matters most to you.\n\nOur role is not simply to organise travel, but to create the space for a deeper, more meaningful connection with India’s sacred heritage.',
+      image:
+        'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80&auto=format&fit=crop',
     },
     applyInvite: {
       eyebrow: 'Apply For An Invite',
@@ -251,7 +264,7 @@ export const defaultContent: SiteContent = {
   footer: {
     tagline:
       'Journeys to places of divine connection, where the veil between the physical and the spiritual grows thin.',
-    phone: '+91 8144 123 123',
+    phone: '+91 89760 90623',
     email: 'info@sacredwalks.org',
     address: 'Velliangiri Foothills, Coimbatore',
     copyright: '© 2026 The Sacred Walks',

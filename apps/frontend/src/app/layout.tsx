@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Marcellus, Hanken_Grotesk } from 'next/font/google';
 import { EnquiryProvider } from '@/components/EnquiryProvider';
 import { MembershipProvider } from '@/components/MembershipProvider';
-import WhatsAppButton from '@/components/WhatsAppButton';
 import { getSiteContent } from '@/lib/content';
 import './globals.css';
 
@@ -47,13 +46,7 @@ export default async function RootLayout({
     >
       <body className="bg-[#F5F1E9] font-sans text-[#25241E] antialiased">
         <EnquiryProvider yatraNames={content.yatras.map((y) => y.name)}>
-          <MembershipProvider>
-            {children}
-            <WhatsAppButton
-              number={content.settings.whatsappNumber}
-              message={content.settings.whatsappMessage}
-            />
-          </MembershipProvider>
+          <MembershipProvider>{children}</MembershipProvider>
         </EnquiryProvider>
       </body>
     </html>

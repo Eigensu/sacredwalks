@@ -6,7 +6,12 @@ export default async function TermsPage() {
   const content = await getSiteContent();
   return (
     <div className="bg-[#F5F1E9] text-[#25241E]">
-      <Nav variant="light" />
+      <Nav
+        variant="light"
+        whatsappNumber={content.settings.whatsappNumber}
+        whatsappMessage={content.settings.whatsappMessage}
+        phoneNumber={content.footer.phone}
+      />
       <section className="px-[7vw] py-20 sm:py-[130px]">
         <h1 className="font-serif text-[clamp(32px,5vw,64px)] font-medium">
           Terms &amp; Conditions

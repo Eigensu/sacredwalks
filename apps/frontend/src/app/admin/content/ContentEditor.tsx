@@ -324,6 +324,13 @@ function HomeSection(p: FieldProps) {
         <MediaField {...p} path={['home', 'pilgrimage', 'image']} label="Image" kind="image" />
       </Group>
 
+      <Group title="Our Philosophy">
+        <Text {...p} path={['home', 'philosophy', 'eyebrow']} label="Section label" />
+        <Text {...p} path={['home', 'philosophy', 'lead']} label="Lead paragraph" multiline />
+        <Text {...p} path={['home', 'philosophy', 'body']} label="Body paragraph" multiline />
+        <MediaField {...p} path={['home', 'philosophy', 'image']} label="Image" kind="image" />
+      </Group>
+
       <Group title="Quote / Sharings">
         <Text {...p} path={['home', 'quote', 'eyebrow']} label="Section label" />
         <Text {...p} path={['home', 'quote', 'text']} label="Quote text" multiline />

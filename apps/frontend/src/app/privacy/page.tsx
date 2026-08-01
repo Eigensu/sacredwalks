@@ -6,7 +6,12 @@ export default async function PrivacyPage() {
   const content = await getSiteContent();
   return (
     <div className="bg-[#F5F1E9] text-[#25241E]">
-      <Nav variant="light" />
+      <Nav
+        variant="light"
+        whatsappNumber={content.settings.whatsappNumber}
+        whatsappMessage={content.settings.whatsappMessage}
+        phoneNumber={content.footer.phone}
+      />
       <section className="px-[7vw] py-20 sm:py-[130px]">
         <h1 className="font-serif text-[clamp(32px,5vw,64px)] font-medium">Privacy Policy</h1>
         <p className="mt-8 max-w-[640px] text-[15.5px] leading-[1.85] text-[#5F5C50]">

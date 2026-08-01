@@ -13,7 +13,12 @@ export default async function ApplyPage() {
 
   return (
     <div className="bg-[#F5F1E9]">
-      <Nav variant="light" />
+      <Nav
+        variant="light"
+        whatsappNumber={content.settings.whatsappNumber}
+        whatsappMessage={content.settings.whatsappMessage}
+        phoneNumber={content.footer.phone}
+      />
       <ApplyForm />
       <Footer content={content} />
     </div>
