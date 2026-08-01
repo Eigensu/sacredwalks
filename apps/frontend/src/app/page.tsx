@@ -14,7 +14,7 @@ export default async function Home() {
     <div className="bg-[#F5F1E9]">
       {/* HERO */}
       {/* svh keeps the hero from resizing as mobile browser toolbars collapse. */}
-      <section className="relative h-[58vh] min-h-[370px] overflow-hidden max-sm:h-[58svh] max-sm:min-h-[330px] sm:min-h-[420px]">
+      <section className="relative h-[78vh] min-h-[370px] overflow-hidden max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
         <Image
           src={hero.image}
           alt="Kailash peak at first light"

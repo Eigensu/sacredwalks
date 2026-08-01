@@ -59,9 +59,10 @@ export default function Nav({
     <nav
       className={`relative z-20 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-[5vw] py-6 max-sm:flex max-sm:items-center max-sm:justify-between max-sm:gap-2 max-sm:px-4 max-sm:py-4 sm:px-[7vw] sm:py-[30px] ${textColor}`}
     >
-      {/* Phones pair WhatsApp with the menu button so the two flanks stay even
-          around the centred wordmark; `sm:contents` restores the original
-          layout, where the menu button is absolutely positioned. */}
+      {/* Phones pair the call button with the menu button on the left;
+          WhatsApp stays on the right, next to Apply Now. `sm:contents`
+          restores the original layout, where the menu button is absolutely
+          positioned and the call button sits on the right. */}
       <div className="flex shrink-0 items-center gap-0.5 sm:contents">
         <button
           type="button"
@@ -69,12 +70,44 @@ export default function Nav({
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(true)}
           className="absolute top-1/2 left-4 flex -translate-y-1/2 shrink-0 cursor-pointer flex-col items-start justify-center gap-[5px] p-1 max-sm:static max-sm:h-11 max-sm:w-11 max-sm:translate-none max-sm:p-0 sm:left-5"
+          suppressHydrationWarning
         >
           <span className="block h-px w-6 bg-current" />
           <span className="block h-px w-6 bg-current" />
           <span className="block h-px w-4 bg-current" />
         </button>
-        {whatsappUrl && <span className="shrink-0 sm:hidden">{whatsappIcon}</span>}
+        {phoneNumber && (
+          <div className="relative sm:hidden">
+            <button
+              type="button"
+              onClick={() => setCallPopoverOpen((v) => !v)}
+              aria-label="Show phone number"
+              aria-expanded={callPopoverOpen}
+              className="flex shrink-0 cursor-pointer items-center justify-center p-1 opacity-90 transition-opacity max-sm:h-11 max-sm:w-11 hover:opacity-100"
+              suppressHydrationWarning
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z" />
+              </svg>
+            </button>
+            {callPopoverOpen && (
+              <>
+                <div className="fixed inset-0 z-30" onClick={() => setCallPopoverOpen(false)} />
+                <div className="absolute top-full left-0 z-40 mt-3 whitespace-nowrap rounded-[4px] bg-[#25241E] px-4 py-2.5 text-[12.5px] tracking-[0.04em] text-[#F5F1E9] shadow-[0_8px_28px_rgba(20,18,12,.28)]">
+                  <a href={`tel:${phoneNumber.replace(/[^\d+]/g, '')}`} className="cursor-pointer">
+                    {phoneNumber}
+                  </a>
+                </div>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <span aria-hidden className="shrink-0 justify-self-start max-sm:hidden" />
@@ -90,8 +123,7 @@ export default function Nav({
       </Link>
 
       <div className="-mr-8 flex shrink-0 items-center gap-4 justify-self-end max-sm:mr-0 max-sm:gap-0.5 sm:-mr-10">
-        {whatsappUrl && <span className="shrink-0 max-sm:hidden">{whatsappIcon}</span>}
-        {/* Phones get the number as a tappable row in the drawer instead. */}
+        {whatsappUrl && <span className="shrink-0">{whatsappIcon}</span>}
         {phoneNumber && (
           <div className="relative max-sm:hidden">
             <button
@@ -100,6 +132,7 @@ export default function Nav({
               aria-label="Show phone number"
               aria-expanded={callPopoverOpen}
               className="flex shrink-0 cursor-pointer items-center justify-center p-1 opacity-90 transition-opacity hover:opacity-100"
+              suppressHydrationWarning
             >
               <svg
                 width="20"
@@ -126,6 +159,7 @@ export default function Nav({
         <button
           onClick={() => open()}
           className={`group relative shrink-0 cursor-pointer overflow-hidden border ${borderColor} px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-3 max-sm:text-[9.5px] max-sm:tracking-[0.08em] hover:text-[#25241E] sm:px-5 sm:py-[9px] sm:text-[11.5px]`}
+          suppressHydrationWarning
         >
           <span className="absolute inset-0 origin-center scale-x-0 bg-[#F5F1E9] transition-transform duration-300 group-hover:scale-x-100" />
           <span className="relative">Apply Now</span>
@@ -141,11 +175,12 @@ export default function Nav({
               aria-label="Close menu"
               onClick={() => setMenuOpen(false)}
               className="absolute top-4 left-4 cursor-pointer p-1 text-2xl leading-none max-sm:top-2 max-sm:left-2 max-sm:flex max-sm:h-11 max-sm:w-11 max-sm:items-center max-sm:justify-center sm:top-5 sm:left-5"
+              suppressHydrationWarning
             >
               &times;
             </button>
 
-            <div className="mt-13 flex flex-col gap-6 text-[13px] font-normal tracking-[0.14em] uppercase max-sm:gap-1">
+            <div className="mt-13 flex flex-col gap-6 text-[13px] font-normal tracking-[0.14em] uppercase max-sm:gap-6 max-sm:text-[20px]">
               {menuItems.map((link) => (
                 <Link
                   key={link.label}
@@ -163,6 +198,7 @@ export default function Nav({
                   onClick={() => setTripsOpen((v) => !v)}
                   aria-expanded={tripsOpen}
                   className="flex w-full cursor-pointer items-center justify-between gap-4 max-sm:min-h-11 hover:opacity-70"
+                  suppressHydrationWarning
                 >
                   CURATED TRIPS
                   <span
@@ -176,7 +212,7 @@ export default function Nav({
                     tripsOpen ? 'grid-rows-[1fr] mt-5' : 'grid-rows-[0fr]'
                   }`}
                 >
-                  <div className="flex flex-col gap-5 overflow-hidden border-l border-[#25241E]/20 pl-5 text-[11.5px] normal-case tracking-[0.04em] max-sm:gap-0">
+                  <div className="flex flex-col gap-5 overflow-hidden border-l border-[#25241E]/20 pl-5 text-[11.5px] normal-case tracking-[0.04em] max-sm:gap-7 max-sm:text-[21px]">
                     {yatras.map((yatra) => (
                       <Link
                         key={yatra.slug}
@@ -201,16 +237,6 @@ export default function Nav({
                   {link.label}
                 </Link>
               ))}
-
-              {/* The bar drops the phone icon on phones, so surface it here. */}
-              {phoneNumber && (
-                <a
-                  href={`tel:${phoneNumber.replace(/[^\d+]/g, '')}`}
-                  className="mt-2 hidden cursor-pointer border-t border-[#25241E]/15 pt-5 normal-case tracking-[0.04em] max-sm:flex max-sm:min-h-11 max-sm:items-center hover:opacity-70"
-                >
-                  Call {phoneNumber}
-                </a>
-              )}
             </div>
           </div>
         </div>

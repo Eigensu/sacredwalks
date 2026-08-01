@@ -51,11 +51,13 @@ export default function NewsletterForm() {
           placeholder="you@example.com"
           aria-label="Email address"
           className="w-full bg-transparent text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992] max-sm:min-h-11 max-sm:text-[16px]"
+          suppressHydrationWarning
         />
         <button
           type="submit"
           disabled={status === 'submitting'}
           className="shrink-0 cursor-pointer text-[11px] tracking-[0.18em] text-[#25241E] uppercase transition max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:opacity-70 disabled:opacity-50"
+          suppressHydrationWarning
         >
           {status === 'submitting' ? 'Joining…' : 'Join →'}
         </button>

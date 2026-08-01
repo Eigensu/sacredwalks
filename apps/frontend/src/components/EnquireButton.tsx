@@ -13,7 +13,7 @@ export default function EnquireButton({
 }) {
   const { open } = useEnquiry();
   return (
-    <button onClick={() => open(yatraName)} className={className}>
+    <button onClick={() => open(yatraName)} className={className} suppressHydrationWarning>
       {children}
     </button>
   );
