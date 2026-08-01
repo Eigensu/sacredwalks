@@ -13,7 +13,8 @@ export default async function Home() {
   return (
     <div className="bg-[#F5F1E9]">
       {/* HERO */}
-      <section className="relative h-[58vh] min-h-[370px] overflow-hidden sm:min-h-[420px]">
+      {/* svh keeps the hero from resizing as mobile browser toolbars collapse. */}
+      <section className="relative h-[58vh] min-h-[370px] overflow-hidden max-sm:h-[58svh] max-sm:min-h-[330px] sm:min-h-[420px]">
         <Image
           src={hero.image}
           alt="Kailash peak at first light"
@@ -33,11 +34,11 @@ export default async function Home() {
       </section>
 
       {/* INTRO STRIP */}
-      <div className="flex flex-col items-center gap-3 pt-4 text-center">
+      <div className="flex flex-col items-center gap-3 pt-4 text-center max-sm:gap-5 max-sm:px-6 max-sm:pt-8">
         <p className="max-w-[700px] font-serif text-[clamp(20px,2.4vw,32px)] leading-[1.32] font-normal text-[#2C2A22]">
           &ldquo;Lorem ipsum dolor sit amet consectetur.&rdquo;
         </p>
-        <EnquireButton className="group relative cursor-pointer overflow-hidden border border-[#25241E]/60 px-7 py-3 text-[11.5px] tracking-[0.2em] text-[#25241E] uppercase transition-colors duration-300 hover:text-[#F5F1E9]">
+        <EnquireButton className="group relative cursor-pointer overflow-hidden border border-[#25241E]/60 px-7 py-3 text-[11.5px] tracking-[0.2em] text-[#25241E] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-6 hover:text-[#F5F1E9]">
           <span className="absolute inset-0 origin-center scale-x-0 bg-[#25241E] transition-transform duration-300 group-hover:scale-x-100" />
           <span className="relative">Apply Now For Invitation</span>
         </EnquireButton>
@@ -58,7 +59,7 @@ export default async function Home() {
           {pilgrimage.body.split('\n\n').map((para, i) => (
             <p
               key={i}
-              className="mt-[26px] max-w-[520px] text-[15.5px] leading-[1.85] text-[#5F5C50]"
+              className="mt-[26px] max-w-[520px] text-[15.5px] leading-[1.85] text-[#5F5C50] max-sm:mt-5 max-sm:text-[16px] max-sm:leading-[1.75]"
             >
               {para}
             </p>
@@ -80,7 +81,8 @@ export default async function Home() {
         id="our-philosophy"
         className="grid scroll-mt-24 grid-cols-1 items-center gap-10 px-[7vw] pt-6 pb-12 sm:gap-[7vw] sm:pt-8 sm:pb-16 md:grid-cols-[0.85fr_1.15fr]"
       >
-        <div className="relative aspect-square w-full max-w-[420px] overflow-hidden md:order-1">
+        {/* On phones the copy leads, so the two section photos aren't back to back. */}
+        <div className="relative aspect-square w-full max-w-[420px] overflow-hidden max-sm:order-2 md:order-1">
           <Image
             src={philosophy.image}
             alt="A quiet moment on the path"
@@ -89,7 +91,7 @@ export default async function Home() {
             sizes="(min-width: 768px) 40vw, 100vw"
           />
         </div>
-        <div className="md:order-2">
+        <div className="max-sm:order-1 md:order-2">
           <div className="mb-[30px] text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
             {philosophy.eyebrow}
           </div>
@@ -99,7 +101,7 @@ export default async function Home() {
           {philosophy.body.split('\n\n').map((para, i) => (
             <p
               key={i}
-              className="mt-[26px] max-w-[520px] text-[15.5px] leading-[1.85] text-[#5F5C50]"
+              className="mt-[26px] max-w-[520px] text-[15.5px] leading-[1.85] text-[#5F5C50] max-sm:mt-5 max-sm:text-[16px] max-sm:leading-[1.75]"
             >
               {para}
             </p>
@@ -109,8 +111,8 @@ export default async function Home() {
 
       {/* UPCOMING JOURNEYS */}
       <section className="px-[7vw] pt-10 pb-10 sm:pt-10 sm:pb-16">
-        <div className="mb-10 flex items-end justify-between gap-4 border-b border-[#D8CFBD] pb-[26px] sm:mb-14">
-          <h2 className="font-serif text-[clamp(30px,4vw,60px)] leading-none font-medium">
+        <div className="mb-10 flex items-end justify-between gap-4 border-b border-[#D8CFBD] pb-[26px] max-sm:mb-7 max-sm:gap-3 max-sm:pb-4 sm:mb-14">
+          <h2 className="font-serif text-[clamp(30px,4vw,60px)] leading-none font-medium max-sm:text-[26px]">
             Upcoming Journeys
           </h2>
           <div className="text-right text-[10px] tracking-[0.2em] text-[#7C8A72] uppercase sm:text-[11.5px] sm:tracking-[0.26em]">
@@ -118,33 +120,33 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 max-sm:grid-cols-2 max-sm:gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {yatras
             .filter((y) => y.slug !== 'rameswaram-shiva-to-the-sea')
             .map((y) => (
               <Link
                 key={y.slug}
                 href={`/yatras/${y.slug}`}
-                className="group relative block aspect-[3/4] w-full overflow-hidden rounded-[6px] cursor-pointer"
+                className="group relative block aspect-[3/4] w-full cursor-pointer overflow-hidden rounded-[6px]"
               >
                 <Image
                   src={y.heroImage}
                   alt={y.heroPlaceholder || y.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 1024px) 25vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.15)_0%,rgba(24,21,14,.05)_35%,rgba(24,21,14,.85)_100%)]" />
 
-                <div className="absolute top-4 right-4 text-[13px] font-medium text-[#F5F1E9]">
+                <div className="absolute top-4 right-4 text-[13px] font-medium text-[#F5F1E9] max-sm:top-2.5 max-sm:right-2.5 max-sm:text-[11px]">
                   {y.days}
                 </div>
 
-                <div className="absolute right-5 bottom-5 left-5">
-                  <div className="font-serif text-[22px] font-medium text-[#F5F1E9] sm:text-[24px]">
+                <div className="absolute right-5 bottom-5 left-5 max-sm:right-3 max-sm:bottom-3 max-sm:left-3">
+                  <div className="font-serif text-[22px] font-medium text-[#F5F1E9] max-sm:text-[16px] max-sm:leading-[1.2] sm:text-[24px]">
                     {y.name}
                   </div>
-                  <div className="mt-1.5 text-[12.5px] leading-[1.5] text-[#F5F1E9]/85">
+                  <div className="mt-1.5 text-[12.5px] leading-[1.5] text-[#F5F1E9]/85 max-sm:mt-1 max-sm:text-[10.5px] max-sm:leading-[1.45]">
                     {y.route}
                   </div>
                 </div>
@@ -155,26 +157,32 @@ export default async function Home() {
 
       {/* GALLERY MOSAIC */}
       <section className="px-[7vw] pt-10 pb-10 sm:pt-12 sm:pb-16">
-        <div className="mb-10 flex items-end justify-between gap-4 sm:mb-[40px]">
-          <h2 className="font-serif text-[clamp(26px,3.4vw,52px)] font-medium">
+        <div className="mb-10 flex items-end justify-between gap-4 max-sm:mb-6 max-sm:gap-3 sm:mb-[40px]">
+          <h2 className="font-serif text-[clamp(26px,3.4vw,52px)] font-medium max-sm:text-[26px]">
             {gallery.heading}
           </h2>
           <div className="text-right text-[10px] tracking-[0.2em] text-[#7C8A72] uppercase sm:text-[11.5px] sm:tracking-[0.26em]">
             {gallery.label}
           </div>
         </div>
-        <div className="grid auto-rows-[130px] grid-cols-4 gap-[10px] sm:auto-rows-[200px] sm:grid-cols-6 sm:gap-[14px]">
+        {/* Mosaic from 640px up; a snap-scrolling strip on phones, where the
+            mosaic would shrink some tiles to ~76px wide. */}
+        <div
+          className="scw-swipe grid auto-rows-[130px] grid-cols-4 gap-[10px] max-sm:-mr-[7vw] max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:overflow-x-auto max-sm:overscroll-x-contain max-sm:pr-[7vw] sm:auto-rows-[200px] sm:grid-cols-6 sm:gap-[14px]"
+          role="group"
+          aria-label={`${gallery.heading} — swipe to browse on mobile`}
+        >
           {gallery.images.map((img, i) => (
             <div
               key={`${img.src}-${i}`}
-              className={`relative ${GALLERY_LAYOUT[i % GALLERY_LAYOUT.length]}`}
+              className={`relative ${GALLERY_LAYOUT[i % GALLERY_LAYOUT.length]} max-sm:aspect-[4/5] max-sm:w-[74%] max-sm:shrink-0 max-sm:snap-start`}
             >
               <Image
                 src={img.src}
                 alt={img.alt}
                 fill
                 className="object-cover"
-                sizes="(min-width: 640px) 33vw, 50vw"
+                sizes="(min-width: 640px) 33vw, 74vw"
               />
             </div>
           ))}
@@ -182,15 +190,15 @@ export default async function Home() {
       </section>
 
       {/* CTA */}
-      <section className="px-[7vw] pt-6 text-center sm:pt-8">
-        <div className="mb-[26px] text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
+      <section className="px-[7vw] pt-6 text-center max-sm:pt-10 sm:pt-8">
+        <div className="mb-[26px] text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase max-sm:mb-5 max-sm:text-[10.5px] max-sm:tracking-[0.22em]">
           {cta.eyebrow}
         </div>
-        <h2 className="mx-auto max-w-[1000px] font-serif text-[clamp(32px,6vw,92px)] leading-[1.02] font-medium">
+        <h2 className="mx-auto max-w-[1000px] font-serif text-[clamp(32px,6vw,92px)] leading-[1.02] font-medium max-sm:leading-[1.14]">
           &ldquo;{cta.heading}&rdquo;
         </h2>
-        <div className="mt-[46px]">
-          <EnquireButton className="inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#F5F1E9] uppercase sm:px-10">
+        <div className="mt-[46px] max-sm:mt-8">
+          <EnquireButton className="inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#F5F1E9] uppercase max-sm:px-7 max-sm:text-[11.5px] max-sm:tracking-[0.14em] sm:px-10">
             {cta.buttonText}
           </EnquireButton>
         </div>

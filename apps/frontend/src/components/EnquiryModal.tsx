@@ -59,18 +59,18 @@ export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center px-[5vw] py-8"
+      className="fixed inset-0 z-50 flex items-center justify-center px-[5vw] py-8 max-sm:px-4 max-sm:py-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="enquiry-modal-title"
     >
       <div className="absolute inset-0 bg-[#1B1A15]/70 backdrop-blur-[2px]" onClick={onClose} />
 
-      <div className="relative max-h-[88vh] w-full max-w-[520px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)]">
+      <div className="relative max-h-[88vh] w-full max-w-[520px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)] max-sm:max-h-[90dvh] max-sm:overscroll-contain">
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#5F5C50] transition hover:bg-[#25241E]/5"
+          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#5F5C50] transition max-sm:top-2 max-sm:right-2 max-sm:h-11 max-sm:w-11 hover:bg-[#25241E]/5"
         >
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
             <path
@@ -83,7 +83,7 @@ export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) 
         </button>
 
         {status === 'success' ? (
-          <div className="px-8 py-16 text-center sm:px-12 sm:py-20">
+          <div className="px-8 py-16 text-center max-sm:px-6 max-sm:py-12 sm:px-12 sm:py-20">
             <div className="mb-6 text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
               Received
             </div>
@@ -101,7 +101,7 @@ export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) 
             </button>
           </div>
         ) : (
-          <div className="px-8 py-12 sm:px-12 sm:py-14">
+          <div className="px-8 py-12 max-sm:px-6 max-sm:py-10 sm:px-12 sm:py-14">
             <div className="mb-2 text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
               Begin
             </div>
@@ -115,7 +115,10 @@ export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) 
               Share a few details and we&apos;ll help you find the right journey.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-9 flex flex-col gap-6">
+            <form
+              onSubmit={handleSubmit}
+              className="mt-9 flex flex-col gap-6 max-sm:mt-7 max-sm:gap-5"
+            >
               <Field label="Name">
                 <input
                   type="text"
@@ -201,6 +204,13 @@ export default function EnquiryModal({ onClose, yatraName, yatraNames }: Props) 
         select.scw-input {
           appearance: none;
           cursor: pointer;
+        }
+        /* iOS Safari zooms the viewport when a focused field is under 16px. */
+        @media (max-width: 639.98px) {
+          .scw-input {
+            font-size: 16px;
+            padding: 11px 0;
+          }
         }
       `}</style>
     </div>
