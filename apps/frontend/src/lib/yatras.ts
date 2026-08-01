@@ -204,46 +204,6 @@ export const yatras: Yatra[] = [
       },
     ],
   },
-  {
-    n: '05',
-    slug: 'rameswaram-shiva-to-the-sea',
-    name: 'Rameswaram — From Shiva to the Sea',
-    days: '3 Days',
-    region: 'Tamil Nadu',
-    route: 'Madurai · Rameswaram',
-    heroImage:
-      'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1800&q=80&auto=format&fit=crop',
-    heroPlaceholder: 'Ramanathaswamy Temple corridors — full bleed hero',
-    featureImage:
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=80&auto=format&fit=crop',
-    featurePlaceholder: 'Dhanushkodi shoreline — feature',
-    overviewLead:
-      'Begin in the temple city of Madurai before travelling to the sacred island of Rameswaram, where mythology, devotion and the sea come together.',
-    overviewBody:
-      "The journey begins at the magnificent Meenakshi Amman Temple, one of South India's greatest temple complexes, before continuing to Ramanathaswamy Temple, home to one of the twelve sacred Jyotirlingas. According to the Ramayana, Lord Rama worshipped Lord Shiva here before crossing to Lanka.",
-    specs: [
-      { k: 'Duration', v: '3 Days · 2 Nights' },
-      { k: 'Region', v: 'Tamil Nadu' },
-      { k: 'Arrival & Departure', v: 'Madurai' },
-    ],
-    itinerary: [
-      {
-        day: 'Day One',
-        place: 'In the Temple City of Madurai',
-        note: 'Arrival assistance at Madurai Airport, Meenakshi Amman Temple Darshan, the Thousand Pillar Hall and an evening temple ceremony, then dinner and overnight stay in Madurai.',
-      },
-      {
-        day: 'Day Two',
-        place: 'Across the Sacred Island',
-        note: 'Drive to Rameswaram for Ramanathaswamy Jyotirlinga Darshan with an optional 22 Theertham Ritual, followed by Agni Theertham, Panchmukhi Hanuman Temple and sunset by the sea.',
-      },
-      {
-        day: 'Day Three',
-        place: 'At the Edge of Bharat',
-        note: 'Visit Dhanushkodi, Kodandaramaswamy Temple and Jatayu Theertham, before returning to Madurai for airport transfer.',
-      },
-    ],
-  },
 ];
 
 export const futureDestinations: FutureDestination[] = [

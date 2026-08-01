@@ -11,10 +11,10 @@ const menuItems: { label: string; href: string }[] = [
 ];
 
 const trailingMenuItems: { label: string; href: string }[] = [
-  { label: 'Programme Guide', href: '#' },
-  { label: 'Dates & Registration', href: '#' },
-  { label: 'Customised Itineraries', href: '#' },
-  { label: 'Frequently Asked Questions', href: '#' },
+  { label: 'Programme Guide', href: '/experience#programme-guide' },
+  { label: 'Dates & Registration', href: '/experience#dates-registration' },
+  { label: 'Customised Itineraries', href: '/experience#customised-itineraries' },
+  { label: 'Frequently Asked Questions', href: '/experience#faq' },
 ];
 
 export default function Nav({

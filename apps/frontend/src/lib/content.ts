@@ -98,42 +98,36 @@ export type SiteContent = {
   experience: {
     eyebrow: string;
     heading: string;
-    intro: string[];
-    included: string[];
-    stays: {
+    programmeGuide: {
       heading: string;
-      body: string;
+      intro: string;
+      items: string[];
+      closing: string;
+    };
+    datesRegistration: {
+      heading: string;
+      intro: string;
+      groupSizeHeading: string;
+      groupSize: string;
+      departuresHeading: string;
+      departures: string;
       note: string;
+      privateNote: string;
     };
-    rituals: {
-      heading: string;
-      intro: string;
-      general: string[];
-      destinationSpecific: string[];
-    };
-    enhancements: {
+    customisedItineraries: {
       heading: string;
       intro: string;
       items: string[];
+      closing: string;
     };
-    concierge: {
+    allInclusions: {
       heading: string;
-      before: string[];
-      during: string[];
+      includedHeading: string;
+      included: string[];
+      onRequestHeading: string;
+      onRequest: string[];
     };
-    welcomeKit: {
-      heading: string;
-      intro: string;
-      items: string[];
-    };
-    importantInfo: {
-      heading: string;
-      body: string[];
-    };
-    whyUs: {
-      heading: string;
-      items: string[];
-    };
+    faq: { question: string; answer: string }[];
   };
 };
 
@@ -277,128 +271,121 @@ export const defaultContent: SiteContent = {
   experience: {
     eyebrow: 'The Sacred Walks Experience',
     heading: 'Travel Differently. Journey Meaningfully.',
-    intro: [
-      'Every Sacred Walk begins long before you arrive at the first temple.',
-      'From your initial consultation to your final darshan, every detail is thoughtfully curated to create a seamless pilgrimage — allowing you to remain fully present while we take care of everything else.',
-      'Whether your journey is one of gratitude, healing, remembrance or new beginnings, each experience is designed around your personal intention, ensuring no two pilgrimages are ever the same.',
-    ],
-    included: [
-      'Personal Journey Consultation before departure',
-      'Dedicated Sacred Walks Journey Curator',
-      'Dedicated Temple Coordinator',
-      'Official Darshan & Temple Protocol Assistance',
-      'Pre-booked Aarti & Ritual Assistance (where available)',
-      'Dedicated Vedic Pandit for personalised rituals (on request)',
-      'Chauffeur-driven Premium Vehicle',
-      'Handpicked Heritage, Boutique & Luxury Hotels',
-      'Daily Sattvic Breakfast & Dinner',
-      'Evening Tea & Refreshments',
-      'Airport & Railway Meet-and-Greet',
-      'Luggage Assistance',
-      'Concierge Support Before & During Your Journey',
-      'Sacred Walks Welcome Kit',
-    ],
-    stays: {
-      heading: 'Handpicked Stays',
-      body: 'Every hotel is personally selected for its hospitality, comfort, location and proximity to the sacred destination. Rather than standard accommodations, Sacred Walks offers a carefully curated collection of heritage properties, boutique hotels and premium retreats that complement the pace and purpose of your pilgrimage.',
-      note: 'Destination-wise hotel selections are listed on each journey.',
-    },
-    rituals: {
-      heading: 'Personalised Rituals',
+    programmeGuide: {
+      heading: 'Programme Guide',
       intro:
-        'Every spiritual journey is deeply personal. Should you wish to perform special rituals during your pilgrimage, our team coordinates every detail through authorised temple procedures and experienced Vedic priests. Available upon request:',
-      general: [
-        'Rudrabhishekam',
-        'Maha Mrityunjaya Jaap',
-        'Laghu Rudra',
-        'Ekadash Rudra',
-        'Sankalp Puja',
-        'Special Archana',
-        'Navagraha Shanti',
-        'Chandi Path',
-        'Devi Pujas',
-        'Personalised Gotra-based Rituals',
-      ],
-      destinationSpecific: [
-        'Daiva Kola & Bhuta Kola (Mangalore)',
-        'Pitru Tarpan (Varanasi)',
-        'Rudrabhishekam at Kedarnath Temple (Kedarnath)',
-      ],
-    },
-    enhancements: {
-      heading: 'Optional Enhancements',
-      intro: 'For guests seeking an even more personalised experience.',
+        'Each Sacred Walk follows a thoughtfully designed rhythm, allowing enough time for darshan, rituals, reflection and rest.',
       items: [
-        'Helicopter Transfers',
-        'Charter Aircraft',
-        'Luxury SUV Fleet',
-        'VIP Airport Assistance',
-        'Temple Scholars & Spiritual Historians',
-        'Sanskrit Chanting Sessions',
-        'Guided Meditation & Breathwork',
-        'Vedic Astrology Consultation',
-        'Rudraksha Consultation',
-        'Ayurvedic Wellness Experiences',
-        'Private Photography (on request)',
+        'Guided visits to sacred temples and heritage sites',
+        'Official Darshan Assistance (where available)',
+        'Aarti experiences',
+        'Optional Vedic rituals and personalised pujas',
+        'Spiritual storytelling and historical insights',
+        'Time for personal prayer and reflection',
+        'Carefully planned travel with minimal rush',
+        'Daily Sattvic meals',
+        'Evening leisure to absorb the experience',
       ],
+      closing:
+        'Every itinerary is paced to ensure the journey feels meaningful rather than hurried.',
     },
-    concierge: {
-      heading: 'The Sacred Walks Concierge',
-      before: [
-        'Dedicated Relationship Curator',
-        'Personal Travel Consultation',
-        'Flight & Railway Booking Assistance',
-        'Temple Registration Support',
-        'Ritual Consultation',
-        'Personalised Packing Guide',
-        'Travel Documentation Assistance',
+    datesRegistration: {
+      heading: 'Dates & Registration',
+      intro:
+        'Our journeys are intentionally limited to small groups, ensuring a more personal and immersive experience.',
+      groupSizeHeading: 'Group Size',
+      groupSize: '10–15 Guests',
+      departuresHeading: 'Upcoming Departures',
+      departures:
+        'Seasonal departures throughout the year, with special journeys during Shravan, Mahashivratri, Kartik, Navratri and other spiritually significant periods.',
+      note: 'To maintain the quality of every journey, registrations close once the group reaches capacity.',
+      privateNote:
+        'Private departures for families, couples and small groups are available on request.',
+    },
+    customisedItineraries: {
+      heading: 'Customised Itineraries',
+      intro: 'No two spiritual journeys are the same.',
+      items: [
+        'Private family pilgrimages',
+        'Senior citizen-friendly itineraries',
+        'Luxury spiritual holidays',
+        'Temple circuits across India',
+        'Jyotirlinga journeys',
+        'Char Dham and Panch Kedar pilgrimages',
+        'Shakti Peeth circuits',
+        'Ritual-focused journeys',
+        'Corporate spiritual retreats',
       ],
-      during: [
+      closing: 'Every itinerary is personally designed by a Sacred Walks Journey Curator.',
+    },
+    allInclusions: {
+      heading: 'All Inclusions',
+      includedHeading: 'Every Sacred Walk includes',
+      included: [
         'Dedicated Journey Curator',
         'Personal Temple Coordinator',
-        'Chauffeur-driven Vehicle',
-        'Local Destination Expert',
-        'Dedicated Vedic Priest (on request)',
-        '24/7 Concierge Assistance',
+        'Official Darshan Assistance (where available)',
+        'Airport & Railway Meet-and-Greet',
+        'Luxury Chauffeur-driven Transfers',
+        'Handpicked Premium Hotels',
+        'Daily Sattvic Breakfast & Dinner',
+        'Evening Tea & Refreshments',
+        'Guided Temple Visits',
+        'Concierge Support Before & During the Journey',
+        'Sacred Walks Welcome Kit',
+      ],
+      onRequestHeading: 'Available on Request',
+      onRequest: [
+        'Rudrabhishekam & Special Rituals',
+        'Dedicated Vedic Pandit',
+        'Helicopter Transfers',
+        'Charter Aircraft',
+        'VIP Airport Assistance',
+        'Luxury SUV Upgrades',
+        'Spiritual Scholars & Historians',
       ],
     },
-    welcomeKit: {
-      heading: 'Sacred Walks Welcome Kit',
-      intro:
-        'Every guest receives a thoughtfully curated welcome kit designed to accompany them throughout their pilgrimage.',
-      items: [
-        'Sacred Walks Journey Journal',
-        'Destination Guide',
-        'Temple Etiquette Handbook',
-        'Rudraksha',
-        'Prayer Essentials',
-        'Sacred Walks Travel Pouch',
-        'Emergency Contact Card',
-      ],
-    },
-    importantInfo: {
-      heading: 'Important Information',
-      body: [
-        'Sacred Walks facilitates official bookings for Darshan, Aartis and temple rituals through authorised temple channels wherever available.',
-        'While every effort is made to secure preferred timings and access, all bookings remain subject to temple regulations, seasonal demand and administrative approvals. During festivals and the holy month of Shravan, availability may be limited and cannot be guaranteed.',
-        'Our role is to thoughtfully coordinate every authorised booking and temple procedure in advance, allowing you to focus entirely on the spiritual significance of your journey.',
-      ],
-    },
-    whyUs: {
-      heading: 'Why Travel With Sacred Walks',
-      items: [
-        'Thoughtfully Curated Spiritual Journeys',
-        'Small, Intimate Groups',
-        'Seamless End-to-End Planning',
-        'Handpicked Luxury Stays',
-        'Dedicated Journey Curator',
-        'Temple Experts & Vedic Guidance',
-        'Official Darshan Assistance',
-        'Authentic Ritual Experiences',
-        'Personalised Pilgrimage Planning',
-        'Luxury with Spiritual Purpose',
-      ],
-    },
+    faq: [
+      {
+        question: 'Who are these journeys designed for?',
+        answer:
+          'Our journeys are ideal for individuals, families and small groups seeking a more meaningful and thoughtfully curated pilgrimage experience.',
+      },
+      {
+        question: 'What is the group size?',
+        answer: 'To ensure a personalised experience, most departures are limited to 10–15 guests.',
+      },
+      {
+        question: 'Can I book a private journey?',
+        answer:
+          'Yes. We curate private journeys for individuals, couples, families and small groups.',
+      },
+      {
+        question: 'Are rituals included?',
+        answer:
+          'Temple darshan is included. Personalised rituals such as Rudrabhishekam, Maha Mrityunjaya Jaap and Sankalp Pujas can be arranged on request through authorised temple procedures.',
+      },
+      {
+        question: 'Are flights included?',
+        answer:
+          'Flights and train tickets are available as an optional concierge service unless specifically mentioned in your chosen itinerary.',
+      },
+      {
+        question: 'What kind of hotels do you select?',
+        answer:
+          'We stay at carefully chosen heritage, boutique and premium properties that offer comfort, hospitality and convenient access to the sacred destination.',
+      },
+      {
+        question: 'Is this suitable for senior citizens?',
+        answer:
+          'Yes. Many of our journeys are designed keeping senior travellers in mind. Private assistance and customised arrangements can also be organised wherever possible.',
+      },
+      {
+        question: 'Do you arrange VIP or Priority Darshan?',
+        answer:
+          'Where officially available, we coordinate authorised Priority Darshan and temple protocols. All arrangements remain subject to temple administration and prevailing regulations.',
+      },
+    ],
   },
 };
 
