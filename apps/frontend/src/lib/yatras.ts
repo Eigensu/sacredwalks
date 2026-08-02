@@ -30,6 +30,7 @@ export type Yatra = {
   featurePlaceholder: string;
   overviewLead: string;
   overviewBody: string;
+  whyVisitQuote?: string;
   whyVisit?: string[];
   highlights?: string[];
   highlightsOptional?: string[];
@@ -62,6 +63,8 @@ export const yatras: Yatra[] = [
       "Discover two of Lord Shiva's most revered Jyotirlingas on a thoughtfully curated pilgrimage through Ujjain and Omkareshwar.",
     overviewBody:
       'From the spiritual energy of Mahakaal to the serenity of the Narmada, this journey is designed to offer deeper darshan, authentic rituals and moments of quiet reflection—without the burden of planning every detail yourself.',
+    whyVisitQuote:
+      'Experience a deeply spiritual journey to Mahakaleshwar and Omkareshwar, two sacred Jyotirlingas that have inspired devotion for generations.',
     whyVisit: [
       'Mahakaleshwar is one of the twelve Jyotirlingas and the only south-facing Jyotirlinga in India, revered as the Lord of Time (Mahakaal). The journey traditionally begins by seeking blessings at Kal Bhairav, the guardian deity of Ujjain, before offering prayers at Mahakaleshwar.',
       'Omkareshwar, situated on the sacred Narmada River, is believed to embody the divine symbol ‘Om’ and has welcomed pilgrims for centuries seeking peace, devotion and spiritual renewal.',
@@ -156,7 +159,27 @@ export const yatras: Yatra[] = [
     overviewLead:
       "Discover three of Maharashtra's sacred Jyotirlingas on a pilgrimage that winds through the Sahyadri hills, the birthplace of the Godavari, and the timeless heritage of Ellora.",
     overviewBody:
-      "Bhimashankar is nestled within the Sahyadris and marks the place where Lord Shiva is believed to have defeated the demon Bhima. Trimbakeshwar, at the source of the Godavari River, is one of India's most important centres for Vedic rituals and ancestral ceremonies. Grishneshwar, the twelfth Jyotirlinga, stands beside the magnificent Ellora Caves, completing one of India's most sacred pilgrimage circuits. Thoughtfully paced and seamlessly curated, this journey brings together devotion, history and nature.",
+      'Thoughtfully paced and seamlessly curated, this journey brings together devotion, history and nature.',
+    whyVisitQuote:
+      'Experience a deeply spiritual journey to Bhimashankar, Trimbakeshwar and Grishneshwar, three sacred Jyotirlingas woven through the hills, rivers and heritage of Maharashtra.',
+    whyVisit: [
+      'Bhimashankar is nestled within the Sahyadris and marks the place where Lord Shiva is believed to have defeated the demon Bhima.',
+      "Trimbakeshwar, at the source of the Godavari River, is one of India's most important centres for Vedic rituals and ancestral ceremonies.",
+      "Grishneshwar, the twelfth Jyotirlinga, stands beside the magnificent Ellora Caves, completing one of India's most sacred pilgrimage circuits.",
+    ],
+    highlights: [
+      'Bhimashankar Jyotirlinga',
+      'Trimbakeshwar Jyotirlinga',
+      'Grishneshwar Jyotirlinga',
+      'Kamalaja Mata Temple',
+      'Sakshi Vinayak Temple',
+      'Kushavarta Kund',
+      'Brahmagiri Hills',
+      'Anjaneri Hills',
+      'Shani Shingnapur',
+      'Kailasa Temple, Ellora',
+    ],
+    highlightsOptional: ['Narayan Nagbali', 'Tripindi Shradh', 'Rudrabhishekam'],
     specs: [
       { k: 'Duration', v: '4 Days · 3 Nights' },
       { k: 'Region', v: 'Maharashtra' },
@@ -166,23 +189,52 @@ export const yatras: Yatra[] = [
     itinerary: [
       {
         day: 'Day One',
-        place: 'Into the Sahyadris',
-        note: 'Arrival assistance at Pune Airport and private transfer to Bhimashankar. Check in, Traditional Sattvic Lunch, Bhimashankar Jyotirlinga Darshan, and visits to Kamalaja Mata Temple and Sakshi Vinayak Temple, with a nature walk before dinner and overnight stay.',
+        place: 'Into The Sahyadris',
+        note: [
+          'Arrival assistance at Pune Airport',
+          'Private chauffeur transfer to Bhimashankar',
+          'Check-in at your premium hotel',
+          'Traditional Sattvic Lunch',
+          'Bhimashankar Jyotirlinga Darshan',
+          'Visit Kamalaja Mata Temple',
+          'Visit Sakshi Vinayak Temple',
+          'Nature walk (subject to time)',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Two',
-        place: 'At the Source of the Godavari',
-        note: 'Breakfast and drive to Trimbakeshwar for Official Darshan Assistance and Trimbakeshwar Jyotirlinga Darshan, followed by Kushavarta Kund and the Brahmagiri & Anjaneri Hills, with optional Narayan Nagbali / Tripindi Shradh rituals. Dinner & overnight stay in Nashik.',
+        place: 'At The Source Of The Godavari',
+        note: [
+          'Breakfast & drive to Trimbakeshwar',
+          'Official Darshan Assistance',
+          'Trimbakeshwar Jyotirlinga Darshan',
+          'Visit Kushavarta Kund',
+          'Explore Brahmagiri & Anjaneri Hills',
+          'Optional Narayan Nagbali / Tripindi Shradh',
+          'Dinner & Overnight Stay in Nashik',
+        ],
       },
       {
         day: 'Day Three',
         place: 'Across Sacred Maharashtra',
-        note: 'Breakfast and departure, visiting Shani Shingnapur before continuing to Chhatrapati Sambhajinagar for an evening at leisure, dinner and overnight stay.',
+        note: [
+          'Breakfast & departure',
+          'Visit Shani Shingnapur',
+          'Continue to Chhatrapati Sambhajinagar',
+          'Evening at leisure',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Four',
         place: 'The Final Jyotirlinga',
-        note: 'Grishneshwar Jyotirlinga Darshan and exploration of Kailasa Temple & the Ellora Caves, with an optional visit to Bhadra Maruti Temple, before airport transfer.',
+        note: [
+          'Grishneshwar Jyotirlinga Darshan',
+          'Explore Kailasa Temple & Ellora Caves',
+          'Optional Bhadra Maruti Temple',
+          'Airport transfer',
+        ],
       },
     ],
   },
@@ -203,7 +255,25 @@ export const yatras: Yatra[] = [
     overviewLead:
       "Follow Gujarat's sacred coastline through ancient temples, legendary cities and timeless stories of Lord Shiva and Lord Krishna.",
     overviewBody:
-      "Somnath is believed to be the first of the twelve Jyotirlingas and has stood as a symbol of resilience and faith for centuries. Continue to Nageshwar Jyotirlinga, before exploring Dwarka, the legendary kingdom of Lord Krishna and one of Hinduism's Char Dham pilgrimage sites. From the first Jyotirlinga at Somnath to the holy city of Dwarka, every stop carries centuries of devotion.",
+      'From the first Jyotirlinga at Somnath to the holy city of Dwarka, every stop carries centuries of devotion.',
+    whyVisitQuote:
+      "Experience a deeply spiritual journey to Somnath, Dwarka and Nageshwar, following Gujarat's sacred coastline through timeless stories of Lord Shiva and Lord Krishna.",
+    whyVisit: [
+      'Somnath is believed to be the first of the twelve Jyotirlingas and has stood as a symbol of resilience and faith for centuries.',
+      "Continue to Nageshwar Jyotirlinga, before exploring Dwarka, the legendary kingdom of Lord Krishna and one of Hinduism's Char Dham pilgrimage sites.",
+    ],
+    highlights: [
+      'Somnath Jyotirlinga',
+      'Nageshwar Jyotirlinga',
+      'Dwarkadhish Temple',
+      'Bet Dwarka',
+      'Rukmini Temple',
+      'Gomti Ghat',
+      'Triveni Sangam',
+      'Bhalka Tirth',
+      'Dehotsarg Tirth',
+      'Bhadkeshwar Mahadev',
+    ],
     specs: [
       { k: 'Duration', v: '4 Days · 3 Nights' },
       { k: 'Region', v: 'Gujarat' },
@@ -213,23 +283,50 @@ export const yatras: Yatra[] = [
     itinerary: [
       {
         day: 'Day One',
-        place: 'Where the Ocean Meets Shiva',
-        note: 'Arrival assistance at Rajkot Airport and private transfer to Somnath. Check-in, Somnath Jyotirlinga Darshan, sunset along the Arabian Sea and Evening Aarti, then dinner and overnight stay.',
+        place: 'Where The Ocean Meets Shiva',
+        note: [
+          'Arrival assistance at Rajkot Airport',
+          'Private transfer to Somnath',
+          'Check-in',
+          'Somnath Jyotirlinga Darshan',
+          'Sunset along the Arabian Sea',
+          'Evening Aarti',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Two',
-        place: 'The Sacred Story of Prabhas',
-        note: 'Morning darshan, visits to Triveni Sangam, Bhalka Tirth and Dehotsarg Tirth, then a drive to Dwarka for dinner and overnight stay.',
+        place: 'The Sacred Story Of Prabhas',
+        note: [
+          'Morning Darshan',
+          'Visit Triveni Sangam',
+          'Bhalka Tirth',
+          'Dehotsarg Tirth',
+          'Drive to Dwarka',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Three',
         place: "In Krishna's Kingdom",
-        note: 'Nageshwar Jyotirlinga Darshan, Dwarkadhish Temple, Rukmini Temple and Gomti Ghat, followed by Evening Aarti, dinner and overnight stay.',
+        note: [
+          'Nageshwar Jyotirlinga Darshan',
+          'Dwarkadhish Temple',
+          'Rukmini Temple',
+          'Gomti Ghat',
+          'Evening Aarti',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Four',
         place: 'A Blessing Before You Depart',
-        note: 'Optional early morning darshan, a visit to Bet Dwarka and Bhadkeshwar Mahadev, before airport transfer.',
+        note: [
+          'Optional early morning Darshan',
+          'Visit Bet Dwarka',
+          'Bhadkeshwar Mahadev',
+          'Airport transfer',
+        ],
       },
     ],
   },
@@ -250,7 +347,23 @@ export const yatras: Yatra[] = [
     overviewLead:
       "Experience one of the world's oldest living cities through sacred temples, timeless rituals and the spiritual rhythm of the Ganga.",
     overviewBody:
-      "Home to the Kashi Vishwanath Jyotirlinga, Varanasi is believed to be Lord Shiva's eternal abode. Pilgrims traditionally seek blessings at Kal Bhairav, the guardian of Kashi, while Vishalakshi Temple, one of the revered Shakti Peeths, completes this deeply significant pilgrimage. Every sunrise, every ghat and every prayer reveals why Kashi has drawn seekers for thousands of years.",
+      'Every sunrise, every ghat and every prayer reveals why Kashi has drawn seekers for thousands of years.',
+    whyVisitQuote:
+      'Experience a deeply spiritual journey through Kashi, where sacred temples, timeless rituals and the eternal rhythm of the Ganga have drawn seekers for thousands of years.',
+    whyVisit: [
+      "Home to the Kashi Vishwanath Jyotirlinga, Varanasi is believed to be Lord Shiva's eternal abode.",
+      'Pilgrims traditionally seek blessings at Kal Bhairav, the guardian of Kashi, while Vishalakshi Temple, one of the revered Shakti Peeths, completes this deeply significant pilgrimage.',
+    ],
+    highlights: [
+      'Kashi Vishwanath Jyotirlinga',
+      'Kal Bhairav Temple',
+      'Vishalakshi Shakti Peeth',
+      'Annapurna Devi Temple',
+      'Dashashwamedh Ghat',
+      'Sunrise Boat Ride',
+      'Ganga Aarti',
+      'Mrityunjay Mahadev Temple',
+    ],
     specs: [
       { k: 'Duration', v: '3 Days · 2 Nights' },
       { k: 'Region', v: 'Varanasi' },
@@ -259,18 +372,37 @@ export const yatras: Yatra[] = [
     itinerary: [
       {
         day: 'Day One',
-        place: 'Along the Sacred Ganga',
-        note: 'Arrival assistance at Varanasi Airport and check-in at your heritage hotel, followed by a sunset boat ride on the Ganga and the Ganga Aarti, then dinner and overnight stay.',
+        place: 'Along The Sacred Ganga',
+        note: [
+          'Arrival assistance at Varanasi Airport',
+          'Check-in at your heritage hotel',
+          'Sunset Boat Ride on the Ganga',
+          'Witness the Ganga Aarti',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Two',
-        place: 'The City of Shiva',
-        note: 'Kashi Vishwanath Darshan, Annapurna Devi Temple, Vishalakshi Temple and Kal Bhairav Temple, followed by a walk through the old lanes of Kashi and an evening cultural experience.',
+        place: 'The City Of Shiva',
+        note: [
+          'Kashi Vishwanath Darshan',
+          'Annapurna Devi Temple',
+          'Vishalakshi Temple',
+          'Kal Bhairav Temple',
+          'Walk through the old lanes of Kashi',
+          'Evening cultural experience',
+          'Dinner & Overnight Stay',
+        ],
       },
       {
         day: 'Day Three',
         place: 'Sunrise Over Eternity',
-        note: 'A sunrise boat ride, a visit to Mrityunjay Mahadev Temple with an optional stop at Sankat Mochan Hanuman Temple, before airport transfer.',
+        note: [
+          'Sunrise Boat Ride',
+          'Visit Mrityunjay Mahadev Temple',
+          'Optional Sankat Mochan Hanuman Temple',
+          'Airport transfer',
+        ],
       },
     ],
   },

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useEnquiry } from './EnquiryProvider';
@@ -22,11 +23,13 @@ export default function Nav({
   whatsappNumber,
   whatsappMessage,
   phoneNumber,
+  logoImage,
 }: {
   variant?: 'dark' | 'light';
   whatsappNumber?: string;
   whatsappMessage?: string;
   phoneNumber?: string;
+  logoImage?: string;
 }) {
   const { open } = useEnquiry();
   const waDigits = whatsappNumber?.replace(/[^\d]/g, '');
@@ -57,7 +60,7 @@ export default function Nav({
 
   return (
     <nav
-      className={`relative z-20 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-[5vw] py-6 max-sm:flex max-sm:items-center max-sm:justify-between max-sm:gap-2 max-sm:px-4 max-sm:py-4 sm:px-[7vw] sm:py-[30px] ${textColor}`}
+      className={`absolute top-0 right-0 left-0 z-20 grid grid-cols-[1fr_auto_1fr] items-start gap-4 px-[5vw] py-4 max-sm:flex max-sm:items-start max-sm:justify-between max-sm:gap-2 max-sm:px-4 max-sm:py-3 sm:px-[7vw] sm:py-4 ${textColor}`}
     >
       {/* Phones pair the call button with the menu button on the left;
           WhatsApp stays on the right, next to Apply Now. `sm:contents`
@@ -69,7 +72,7 @@ export default function Nav({
           aria-label="Open menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(true)}
-          className="absolute top-1/2 left-4 flex -translate-y-1/2 shrink-0 cursor-pointer flex-col items-start justify-center gap-[5px] p-1 max-sm:static max-sm:h-11 max-sm:w-11 max-sm:translate-none max-sm:p-0 sm:left-5"
+          className="absolute top-4 left-4 flex shrink-0 cursor-pointer flex-col items-start justify-center gap-[5px] p-1 max-sm:static max-sm:top-0 max-sm:h-11 max-sm:w-11 max-sm:p-0 sm:top-4 sm:left-5"
           suppressHydrationWarning
         >
           <span className="block h-px w-6 bg-current" />
@@ -112,14 +115,22 @@ export default function Nav({
 
       <span aria-hidden className="shrink-0 justify-self-start max-sm:hidden" />
 
-      {/* Centred over the bar on phones so the flanking controls can size freely. */}
-      <Link
-        href="/"
-        className="shrink-0 justify-self-center max-sm:absolute max-sm:top-1/2 max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:-translate-y-1/2 max-sm:py-2.5"
-      >
-        <span className="font-display text-[15px] tracking-[0.32em] uppercase max-sm:text-[11.5px] max-sm:tracking-[0.12em] sm:text-[19px]">
-          Sacred Walks
-        </span>
+      {/* Hidden on phones; the hamburger menu covers navigation there. */}
+      <Link href="/" className="shrink-0 justify-self-center max-sm:hidden">
+        {logoImage ? (
+          <Image
+            src={logoImage}
+            alt="Sacred Walks"
+            width={380}
+            height={520}
+            priority
+            className="h-[110px] w-auto object-contain max-sm:h-[64px] sm:h-[110px]"
+          />
+        ) : (
+          <span className="font-display text-[15px] tracking-[0.32em] uppercase max-sm:text-[11.5px] max-sm:tracking-[0.12em] sm:text-[19px]">
+            Sacred Walks
+          </span>
+        )}
       </Link>
 
       <div className="-mr-8 flex shrink-0 items-center gap-4 justify-self-end max-sm:mr-0 max-sm:gap-0.5 sm:-mr-10">

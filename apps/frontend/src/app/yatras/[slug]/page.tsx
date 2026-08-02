@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import EnquireButton from '@/components/EnquireButton';
 import Footer from '@/components/Footer';
+import YatraConstantSections, { SacredWalksExperience } from '@/components/YatraConstantSections';
 import { getSiteContent } from '@/lib/content';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -86,10 +87,11 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
               <div className="mb-7 text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
                 Why Visit?
               </div>
-              <blockquote className="mb-10 border-l-2 border-[#7C8A72]/50 pl-6 font-serif text-[clamp(20px,2.6vw,30px)] leading-[1.45] font-normal text-[#2C2A22]">
-                &ldquo;Experience a deeply spiritual journey to Mahakaleshwar and Omkareshwar, two
-                sacred Jyotirlingas that have inspired devotion for generations.&rdquo;
-              </blockquote>
+              {yatra.whyVisitQuote && (
+                <blockquote className="mb-10 border-l-2 border-[#7C8A72]/50 pl-6 font-serif text-[clamp(20px,2.6vw,30px)] leading-[1.45] font-normal text-[#2C2A22]">
+                  &ldquo;{yatra.whyVisitQuote}&rdquo;
+                </blockquote>
+              )}
               <div className="flex flex-col gap-6">
                 {yatra.whyVisit.map((p, i) => (
                   <p key={i} className="text-[15.5px] leading-[1.85] text-[#5F5C50]">
@@ -184,8 +186,10 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
         </section>
       )}
 
+      <SacredWalksExperience />
+
       {/* FEATURE IMAGE */}
-      <div className="relative mx-auto mt-20 mb-20 h-[42vh] w-[92vw] max-w-[1280px] sm:mt-[120px] sm:mb-[120px] sm:h-[62vh] sm:w-[86vw]">
+      <div className="relative mx-auto mt-8 mb-10 h-[42vh] w-[92vw] max-w-[1280px] sm:mt-10 sm:mb-14 sm:h-[62vh] sm:w-[86vw]">
         <Image
           src={yatra.featureImage}
           alt={yatra.featurePlaceholder}
@@ -230,86 +234,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
         ))}
       </section>
 
-      {/* RITUALS & ENHANCEMENTS */}
-      <section className="bg-[#25241E] px-[7vw] py-16 text-[#F0EADB] sm:py-20">
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-2 md:gap-0 md:divide-x md:divide-[#F5F1E9]/14">
-          <div className="md:pr-[7vw]">
-            <h2 className="font-serif text-[clamp(24px,3vw,38px)] font-medium">
-              Personalised Rituals
-            </h2>
-            <p className="mt-3 text-[13px] tracking-[0.06em] text-[#9CA793] uppercase">
-              Available upon request
-            </p>
-            <div className="mt-7 grid grid-cols-2 gap-2.5">
-              {[
-                'Rudrabhishekam',
-                'Maha Mrityunjaya Jaap',
-                'Laghu Rudra',
-                'Sankalp Puja',
-                'Special Archana',
-                'Personalised Vedic Rituals',
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="flex items-center justify-center border border-[#F5F1E9]/25 px-4 py-3 text-center text-[13px] text-[#D8D2C2] transition-colors hover:border-[#F5F1E9]/50"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="md:pl-[7vw]">
-            <h2 className="font-serif text-[clamp(24px,3vw,38px)] font-medium">
-              Optional Enhancements
-            </h2>
-            <p className="mt-3 text-[13px] tracking-[0.06em] text-[#9CA793] uppercase">
-              Elevate your journey
-            </p>
-            <div className="mt-7 grid grid-cols-2 gap-2.5">
-              {[
-                'Helicopter Transfers',
-                'Charter Aircraft',
-                'Luxury SUV Upgrade',
-                'Temple Scholars',
-                'Meditation Sessions',
-                'Vedic Astrology Consultation',
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="flex items-center justify-center border border-[#F5F1E9]/25 px-4 py-3 text-center text-[13px] text-[#D8D2C2] transition-colors hover:border-[#F5F1E9]/50"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-[#F5F1E9] px-[7vw] py-20 text-center text-[#25241E] sm:py-[120px]">
-        <div className="mb-[26px] text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
-          Walk with us
-        </div>
-        <h2 className="mx-auto max-w-[900px] font-serif text-[clamp(14px,3.6vw,36px)] leading-[1.15] font-medium whitespace-nowrap">
-          &ldquo;Some journeys ask for your whole being.&rdquo;
-        </h2>
-        <div className="mt-11">
-          <EnquireButton
-            yatraName={yatra.name}
-            className="inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#F5F1E9] uppercase sm:px-10"
-          >
-            Apply for an Invitation to {yatra.name}
-          </EnquireButton>
-        </div>
-        <Link
-          href="/"
-          className="mt-[30px] block cursor-pointer text-[12px] tracking-[0.16em] text-[#9A917D] uppercase"
-        >
-          ← Back to all journeys
-        </Link>
-      </section>
+      <YatraConstantSections yatraName={yatra.name} />
 
       <Footer content={content} />
     </div>

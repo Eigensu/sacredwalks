@@ -14,14 +14,22 @@ export default async function Home() {
     <div className="bg-[#F5F1E9]">
       {/* HERO */}
       {/* svh keeps the hero from resizing as mobile browser toolbars collapse. */}
-      <section className="relative h-[78vh] min-h-[370px] overflow-hidden max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
-        <Image
-          src={hero.image}
-          alt="Kailash peak at first light"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
+      <section className="relative h-[83vh] min-h-[370px] overflow-hidden max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
+        <video
+          src="/IMG_7788.MP4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 hidden h-full w-full object-cover max-sm:block"
+        />
+        <video
+          src="/DJI_0502-web.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 hidden h-full w-full object-cover max-sm:hidden sm:block"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.42)_0%,rgba(24,21,14,.06)_34%,rgba(24,21,14,.62)_100%)]" />
 
@@ -30,15 +38,16 @@ export default async function Home() {
           whatsappNumber={content.settings.whatsappNumber}
           whatsappMessage={content.settings.whatsappMessage}
           phoneNumber={content.footer.phone}
+          logoImage="/44-trimmed.png"
         />
       </section>
 
       {/* INTRO STRIP */}
       <div className="flex flex-col items-center gap-3 pt-4 text-center max-sm:gap-5 max-sm:px-6 max-sm:pt-8">
-        <p className="max-w-[700px] font-serif text-[clamp(20px,2.4vw,32px)] leading-[1.32] font-normal text-[#2C2A22]">
+        <p className="max-w-[700px] font-serif text-[clamp(14px,1.6vw,21px)] leading-[1.32] font-normal text-[#2C2A22]">
           &ldquo;Lorem ipsum dolor sit amet consectetur.&rdquo;
         </p>
-        <EnquireButton className="group relative cursor-pointer overflow-hidden border border-[#25241E]/60 px-7 py-3 text-[11.5px] tracking-[0.2em] text-[#25241E] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-6 hover:text-[#F5F1E9]">
+        <EnquireButton className="group relative cursor-pointer overflow-hidden border border-[#25241E]/60 px-5 py-2 text-[9px] tracking-[0.18em] text-[#25241E] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-4 hover:text-[#F5F1E9]">
           <span className="absolute inset-0 origin-center scale-x-0 bg-[#25241E] transition-transform duration-300 group-hover:scale-x-100" />
           <span className="relative">Apply Now For Invitation</span>
         </EnquireButton>
@@ -213,6 +222,284 @@ export default async function Home() {
           <EnquireButton className="inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-4 text-[12.5px] tracking-[0.18em] text-[#F5F1E9] uppercase max-sm:px-7 max-sm:text-[11.5px] max-sm:tracking-[0.14em] sm:px-10">
             {cta.buttonText}
           </EnquireButton>
+        </div>
+      </section>
+
+      {/* BEFORE & AFTER — REDESIGN SHOWCASE */}
+      <section className="px-[7vw] pt-10 pb-16 sm:pt-14 sm:pb-24">
+        <div className="mb-10 flex items-end justify-between gap-4 border-b border-[#D8CFBD] pb-[26px] max-sm:mb-7 max-sm:gap-3 max-sm:pb-4 sm:mb-14">
+          <h2 className="font-serif text-[clamp(30px,4vw,60px)] leading-none font-medium max-sm:text-[26px]">
+            The Redesign
+          </h2>
+          <div className="text-right text-[10px] tracking-[0.2em] text-[#7C8A72] uppercase sm:text-[11.5px] sm:tracking-[0.26em]">
+            Before &amp; After
+          </div>
+        </div>
+
+        {/* BEFORE / AFTER PANELS */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          {/* BEFORE */}
+          <div className="overflow-hidden rounded-sm border border-[#D8CFBD] bg-[#F5F1E9]">
+            <div className="flex items-center justify-between border-b border-[#D8CFBD] px-6 py-4">
+              <span className="text-[11px] font-medium tracking-[0.2em] text-[#7C8A72] uppercase">
+                Before
+              </span>
+              <span className="text-[10px] tracking-[0.16em] text-[#5F5C50] uppercase">
+                Current Styling
+              </span>
+            </div>
+            <div className="space-y-6 p-6 sm:p-8">
+              <div className="text-[10px] tracking-[0.28em] text-[#7C8A72] uppercase">
+                The Offerings
+              </div>
+              <p className="font-serif text-[clamp(20px,2.4vw,28px)] leading-[1.3] font-normal text-[#2C2A22]">
+                A journey shaped by presence.
+              </p>
+              <p className="text-[14px] leading-[1.75] text-[#5F5C50]">
+                Muted sage accents, warm cream, and a soft brown ink carry the copy and calls to
+                action.
+              </p>
+              <button className="cursor-pointer border border-[#25241E]/60 px-6 py-2.5 text-[11px] tracking-[0.18em] text-[#25241E] uppercase">
+                Apply Now
+              </button>
+            </div>
+          </div>
+
+          {/* AFTER */}
+          <div className="overflow-hidden rounded-sm border border-[#4A3226] bg-[#E8D9C4]">
+            <div className="flex items-center justify-between border-b border-[#4A3226]/15 px-6 py-4">
+              <span className="text-[11px] font-medium tracking-[0.2em] text-[#B85C2E] uppercase">
+                After
+              </span>
+              <span className="text-[10px] tracking-[0.16em] text-[#4A3226] uppercase">
+                New Design Language
+              </span>
+            </div>
+            <div className="space-y-6 p-6 sm:p-8">
+              <div className="text-[10px] tracking-[0.28em] text-[#B85C2E] uppercase">
+                The Offerings
+              </div>
+              <p className="font-serif text-[clamp(20px,2.4vw,28px)] leading-[1.3] font-normal text-[#4A3226]">
+                A journey shaped by presence.
+              </p>
+              <p className="text-[14px] leading-[1.75] text-[#4A3226]/75">
+                A confident rust accent, deep navy ink, and a warmer cream ground the copy and calls
+                to action.
+              </p>
+              <button className="cursor-pointer bg-[#B85C2E] px-6 py-2.5 text-[11px] tracking-[0.18em] text-[#E8D9C4] uppercase transition-transform duration-300 hover:scale-[1.03]">
+                Apply Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* COMPONENT SHOWCASE — BEFORE / AFTER, SIDE BY SIDE */}
+        <div className="mt-14 sm:mt-20">
+          <div className="mb-8 text-[10px] tracking-[0.2em] text-[#B85C2E] uppercase sm:mb-10 sm:text-[11.5px] sm:tracking-[0.26em]">
+            Design System — Before &amp; After
+          </div>
+
+          <div className="space-y-6">
+            {/* Buttons */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="rounded-sm border border-[#D8CFBD] bg-[#F5F1E9] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#5F5C50] uppercase">
+                    Buttons
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Before
+                  </span>
+                </div>
+                <div className="flex flex-col items-start gap-3">
+                  <button className="cursor-pointer border border-[#25241E]/60 px-6 py-2.5 text-[11px] tracking-[0.16em] text-[#25241E] uppercase">
+                    Primary
+                  </button>
+                  <button className="cursor-pointer border border-[#7C8A72]/60 px-6 py-2.5 text-[11px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Secondary
+                  </button>
+                  <button className="cursor-pointer text-[11px] tracking-[0.16em] text-[#7C8A72] uppercase underline underline-offset-4">
+                    Text Link
+                  </button>
+                </div>
+              </div>
+              <div className="rounded-sm border border-[#4A3226]/15 bg-[#E8D9C4] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#4A3226]/60 uppercase">
+                    Buttons
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#B85C2E] uppercase">
+                    After
+                  </span>
+                </div>
+                <div className="flex flex-col items-start gap-3">
+                  <button className="cursor-pointer bg-[#B85C2E] px-6 py-2.5 text-[11px] tracking-[0.16em] text-[#E8D9C4] uppercase transition-colors duration-300 hover:bg-[#4A3226]">
+                    Primary
+                  </button>
+                  <button className="cursor-pointer border border-[#4A3226] px-6 py-2.5 text-[11px] tracking-[0.16em] text-[#4A3226] uppercase transition-colors duration-300 hover:bg-[#4A3226] hover:text-[#E8D9C4]">
+                    Secondary
+                  </button>
+                  <button className="cursor-pointer text-[11px] tracking-[0.16em] text-[#C6874F] uppercase underline underline-offset-4 transition-colors duration-300 hover:text-[#4A3226]">
+                    Text Link
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Quote Card */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="rounded-sm border border-[#D8CFBD] bg-[#25241E] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#D8CFBD] uppercase">
+                    Quote Card
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Before
+                  </span>
+                </div>
+                <p className="font-serif text-[clamp(18px,2vw,24px)] leading-[1.4] text-[#F5F1E9]">
+                  &ldquo;The path asks nothing of you but presence.&rdquo;
+                </p>
+                <div className="mt-4 text-[11px] tracking-[0.12em] text-[#D8CFBD]/70 uppercase">
+                  — A Pilgrim, Kailash Yatra
+                </div>
+              </div>
+              <div className="rounded-sm border border-[#4A3226]/15 bg-[#4A3226] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#E9C17E] uppercase">
+                    Quote Card
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#B85C2E] uppercase">
+                    After
+                  </span>
+                </div>
+                <p className="font-serif text-[clamp(18px,2vw,24px)] leading-[1.4] text-[#E8D9C4]">
+                  &ldquo;The path asks nothing of you but presence.&rdquo;
+                </p>
+                <div className="mt-4 text-[11px] tracking-[0.12em] text-[#E9C17E]/80 uppercase">
+                  — A Pilgrim, Kailash Yatra
+                </div>
+              </div>
+            </div>
+
+            {/* Badges */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="rounded-sm border border-[#D8CFBD] bg-[#F5F1E9] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#5F5C50] uppercase">
+                    Badges
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Before
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="border border-[#25241E] bg-[#25241E] px-3 py-1 text-[10px] tracking-[0.1em] text-[#F5F1E9] uppercase">
+                    Open
+                  </span>
+                  <span className="border border-[#7C8A72] px-3 py-1 text-[10px] tracking-[0.1em] text-[#7C8A72] uppercase">
+                    Coming Soon
+                  </span>
+                  <span className="border border-[#5F5C50]/40 px-3 py-1 text-[10px] tracking-[0.1em] text-[#5F5C50] uppercase">
+                    Closed
+                  </span>
+                </div>
+              </div>
+              <div className="rounded-sm border border-[#4A3226]/15 bg-[#E8D9C4] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#4A3226]/60 uppercase">
+                    Badges
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#B85C2E] uppercase">
+                    After
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="rounded-full bg-[#C6874F] px-3 py-1 text-[10px] tracking-[0.1em] text-[#E8D9C4] uppercase">
+                    Open
+                  </span>
+                  <span className="rounded-full bg-[#E9C17E] px-3 py-1 text-[10px] tracking-[0.1em] text-[#4A3226] uppercase">
+                    Coming Soon
+                  </span>
+                  <span className="rounded-full border border-[#4A3226]/40 px-3 py-1 text-[10px] tracking-[0.1em] text-[#4A3226] uppercase">
+                    Closed
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Text Box */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="rounded-sm border border-[#D8CFBD] bg-[#F5F1E9] p-6">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#5F5C50] uppercase">
+                    Text Box
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Before
+                  </span>
+                </div>
+                <p className="text-[14px] leading-[1.75] text-[#5F5C50]">
+                  Body copy sits on cream with a soft brown ink, and sage green carries emphasis and
+                  interactive states.
+                </p>
+              </div>
+              <div className="rounded-sm border border-[#4A3226]/15 bg-[#E8D9C4] p-6">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#4A3226]/60 uppercase">
+                    Text Box
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#B85C2E] uppercase">
+                    After
+                  </span>
+                </div>
+                <p className="text-[14px] leading-[1.75] text-[#4A3226]/80">
+                  Body copy sits on a warm cream ground with deep navy ink for contrast, while rust
+                  and teal carry emphasis and interactive states.
+                </p>
+              </div>
+            </div>
+
+            {/* CTA Block */}
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              <div className="rounded-sm border border-[#D8CFBD] bg-[#F5F1E9] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#5F5C50] uppercase">
+                    CTA Section
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#7C8A72] uppercase">
+                    Before
+                  </span>
+                </div>
+                <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="font-serif text-[20px] leading-[1.3] text-[#2C2A22]">
+                    Begin your journey.
+                  </p>
+                  <button className="cursor-pointer bg-[#25241E] px-7 py-3 text-[11.5px] tracking-[0.18em] text-[#F5F1E9] uppercase">
+                    Apply Now
+                  </button>
+                </div>
+              </div>
+              <div className="rounded-sm border border-[#4A3226]/15 bg-[#E8D9C4] p-6">
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="text-[10px] tracking-[0.2em] text-[#4A3226]/60 uppercase">
+                    CTA Section
+                  </span>
+                  <span className="text-[9.5px] tracking-[0.16em] text-[#B85C2E] uppercase">
+                    After
+                  </span>
+                </div>
+                <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="font-serif text-[20px] leading-[1.3] text-[#4A3226]">
+                    Begin your journey.
+                  </p>
+                  <button className="cursor-pointer bg-[#E8935A] px-7 py-3 text-[11.5px] tracking-[0.18em] text-[#4A3226] uppercase transition-colors duration-300 hover:bg-[#4A3226] hover:text-[#E8D9C4]">
+                    Apply Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
