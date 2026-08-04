@@ -40,16 +40,13 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
         <nav className="relative z-[3] flex items-center justify-between gap-4 px-[5vw] py-6 text-surface sm:px-[7vw] sm:py-[30px]">
           <Link
             href="/"
-            className="cursor-pointer text-[12px] tracking-[0.16em] uppercase opacity-90"
+            className="cursor-pointer text-[12px] tracking-[0.16em] whitespace-nowrap uppercase opacity-90"
           >
             ← All journeys
           </Link>
-          <span className="font-display text-[14px] tracking-[0.32em] uppercase sm:text-[17px]">
-            Sacred Walks
-          </span>
           <EnquireButton
             yatraName={yatra.name}
-            className="cursor-pointer rounded-full border border-surface/60 px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase sm:px-5 sm:py-[9px] sm:text-[11.5px]"
+            className="cursor-pointer border border-surface/60 px-4 py-2 text-[10.5px] tracking-[0.18em] whitespace-nowrap uppercase sm:px-5 sm:py-[9px] sm:text-[11.5px]"
           >
             Apply Now
           </EnquireButton>
@@ -64,7 +61,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
 
       {/* ROUTE STRIP */}
       <div className="px-[7vw] pt-6 sm:pt-8">
-        <div className="font-serif text-[clamp(24px,3.4vw,44px)] font-semibold tracking-[0.1em] text-ink uppercase">
+        <div className="font-serif text-[clamp(24px,3.4vw,44px)] font-semibold tracking-[0.1em] text-ink uppercase max-sm:text-[20px] max-sm:tracking-[0.01em]">
           {yatra.route.replace(/·/g, '•')}
         </div>
       </div>
@@ -140,7 +137,7 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
             </div>
           ))}
 
-          <div className="mt-[30px]">
+          <div className="mt-[30px] text-center">
             <EnquireButton
               yatraName={yatra.name}
               className="inline-block cursor-pointer bg-accent px-[30px] py-[14px] text-[12px] tracking-[0.16em] text-white uppercase"

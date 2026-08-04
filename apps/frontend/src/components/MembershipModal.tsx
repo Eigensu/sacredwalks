@@ -191,7 +191,7 @@ export default function MembershipModal({ onClose }: Props) {
                         name="phone"
                         required
                         placeholder="98xxx xxxxx"
-                        className="w-full bg-transparent py-2 text-[13.5px] text-ink outline-none placeholder:text-muted max-sm:py-[11px] max-sm:text-[16px]"
+                        className="w-full bg-transparent py-2 text-[13.5px] text-ink outline-none placeholder:text-ink max-sm:py-[11px] max-sm:text-[16px]"
                       />
                     </div>
                   </Field>
@@ -264,7 +264,7 @@ export default function MembershipModal({ onClose }: Props) {
                   {status === 'submitting' ? 'Submitting…' : 'Become A Member →'}
                 </button>
 
-                <p className="text-center text-[11.5px] leading-[1.4] text-muted italic">
+                <p className="text-center text-[11.5px] leading-[1.4] text-label italic">
                   A Journey Curator will personally connect with you to guide you through the next
                   steps.
                 </p>
@@ -288,7 +288,7 @@ export default function MembershipModal({ onClose }: Props) {
           transition: border-color 0.2s;
         }
         .scw-mem-input::placeholder {
-          color: var(--color-muted);
+          color: var(--color-ink);
         }
         .scw-mem-input:focus {
           border-color: var(--color-accent);
@@ -325,7 +325,7 @@ function FormSection({
   return (
     <div className="flex flex-col gap-4">
       <div
-        className={`text-[10px] tracking-[0.2em] uppercase ${bold ? 'font-extrabold text-ink' : 'text-muted'}`}
+        className={`text-center text-[13px] tracking-[0.2em] uppercase ${bold ? 'font-extrabold text-label' : 'text-muted'}`}
       >
         {label}
       </div>
@@ -337,7 +337,7 @@ function FormSection({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-[10px] tracking-[0.16em] text-muted uppercase">{label}</span>
+      <span className="text-[10px] tracking-[0.16em] text-ink uppercase">{label}</span>
       {children}
     </label>
   );

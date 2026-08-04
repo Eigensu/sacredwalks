@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useMembership } from './MembershipProvider';
@@ -114,24 +113,7 @@ export default function Nav({
       </div>
 
       <span aria-hidden className="shrink-0 justify-self-start max-sm:hidden" />
-
-      {/* Hidden on phones; the hamburger menu covers navigation there. */}
-      <Link href="/" className="shrink-0 justify-self-center max-sm:hidden">
-        {logoImage ? (
-          <Image
-            src={logoImage}
-            alt="Sacred Walks"
-            width={380}
-            height={520}
-            priority
-            className="h-[110px] w-auto object-contain max-sm:h-[64px] sm:h-[110px]"
-          />
-        ) : (
-          <span className="font-display text-[15px] tracking-[0.32em] uppercase max-sm:text-[11.5px] max-sm:tracking-[0.12em] sm:text-[19px]">
-            Sacred Walks
-          </span>
-        )}
-      </Link>
+      <span aria-hidden className="shrink-0 justify-self-center max-sm:hidden" />
 
       <div className="-mr-8 flex shrink-0 items-center gap-4 justify-self-end max-sm:mr-0 max-sm:gap-0.5 sm:-mr-10">
         {whatsappUrl && <span className="shrink-0">{whatsappIcon}</span>}

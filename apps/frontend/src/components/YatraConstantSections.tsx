@@ -45,7 +45,7 @@ export function SacredWalksExperience() {
         <div className="mb-7 text-[11.5px] tracking-[0.28em] text-accent uppercase">
           The Sacred Walks Experience
         </div>
-        <blockquote className="mb-10 border-l-4 border-accent pl-6 font-serif text-[clamp(20px,2.6vw,30px)] leading-[1.45] font-normal text-heading italic max-sm:text-[16px]">
+        <blockquote className="mb-10 border-l-4 border-accent pl-6 font-serif text-[clamp(20px,2.6vw,30px)] leading-[1.45] font-normal text-heading italic max-sm:text-[24px]">
           <span className="text-label">&ldquo;</span>
           Every Sacred Walk has been thoughtfully designed to let you focus entirely on the
           spiritual experience while we take care of everything else.
@@ -145,7 +145,7 @@ export function YatraClosingCta({ yatraName }: { yatraName: string }) {
       <div className="mb-[26px] text-[11.5px] tracking-[0.28em] text-accent uppercase">
         Walk with us
       </div>
-      <h2 className="mx-auto max-w-[900px] font-serif text-[clamp(14px,3.6vw,36px)] leading-[1.15] font-medium whitespace-nowrap">
+      <h2 className="mx-auto max-w-[900px] font-serif text-[clamp(14px,3.6vw,36px)] leading-[1.15] font-medium whitespace-nowrap max-sm:text-[21px]">
         &ldquo;Some journeys ask for your whole being.&rdquo;
       </h2>
       <div className="mt-11">
@@ -153,7 +153,7 @@ export function YatraClosingCta({ yatraName }: { yatraName: string }) {
           yatraName={yatraName}
           className="inline-block cursor-pointer bg-accent px-8 py-4 text-[12.5px] tracking-[0.18em] text-white uppercase sm:px-10"
         >
-          Apply for an Invitation to {yatraName}
+          Apply for an Invitation
         </EnquireButton>
       </div>
       <Link

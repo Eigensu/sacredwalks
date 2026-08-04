@@ -14,7 +14,7 @@ export default async function Home() {
     <div className="bg-surface">
       {/* HERO */}
       {/* svh keeps the hero from resizing as mobile browser toolbars collapse. */}
-      <section className="relative h-[83vh] min-h-[370px] overflow-hidden max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
+      <section className="relative h-[83vh] min-h-[370px] overflow-hidden bg-surface max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
         <video
           src="/IMG_7788-web.mp4"
           autoPlay
@@ -29,12 +29,12 @@ export default async function Home() {
           muted
           loop
           playsInline
-          className="absolute inset-0 hidden h-full w-full object-cover max-sm:hidden sm:block"
+          className="absolute inset-0 hidden h-full w-full object-contain max-sm:hidden sm:block"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.42)_0%,rgba(24,21,14,.06)_34%,rgba(24,21,14,.62)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.42)_0%,rgba(24,21,14,.06)_34%,rgba(24,21,14,.62)_100%)] sm:hidden" />
 
         <Nav
-          variant="dark"
+          variant="light"
           whatsappNumber={content.settings.whatsappNumber}
           whatsappMessage={content.settings.whatsappMessage}
           phoneNumber={content.footer.phone}
