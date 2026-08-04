@@ -44,3 +44,4 @@ next-env.d.ts
 # compressed *-web.mp4 versions actually served by the site instead
 /public/IMG_7788.MP4
 /public/DJI_0502.MP4
+/public/Final 16x9.mp4

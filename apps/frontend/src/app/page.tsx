@@ -23,13 +23,13 @@ export default async function Home() {
           playsInline
           className="absolute inset-0 hidden h-full w-full object-cover max-sm:block"
         />
-        <Image
-          src={hero.image}
-          alt="Kailash peak at first light"
-          fill
-          priority
-          className="object-cover max-sm:hidden"
-          sizes="100vw"
+        <video
+          src="/Final-16x9-web.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 hidden h-full w-full object-cover max-sm:hidden sm:block"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.42)_0%,rgba(24,21,14,.06)_34%,rgba(24,21,14,.62)_100%)]" />
 
