@@ -11,8 +11,8 @@ export default function Footer({ content }: { content: SiteContent }) {
   }`;
   return (
     <>
-      <footer className="grid grid-cols-1 gap-10 border-t border-border px-[7vw] py-[36px] text-[13.5px] text-secondary max-sm:gap-8 max-sm:py-8 md:grid-cols-[1fr_1fr_1fr_1.4fr] md:gap-8">
-        <div className="max-sm:flex max-sm:flex-col max-sm:items-center">
+      <footer className="grid grid-cols-2 gap-10 border-t border-border px-[7vw] py-[36px] text-[13.5px] text-secondary max-sm:gap-y-8 max-sm:py-8 md:grid-cols-[1fr_1fr_1fr_1.4fr] md:gap-8">
+        <div className="max-sm:col-span-2 max-sm:flex max-sm:flex-col max-sm:items-center">
           <Image
             src="/44-trimmed.png"
             alt="Sacred Walks"
@@ -21,48 +21,42 @@ export default function Footer({ content }: { content: SiteContent }) {
             className="h-[160px] w-auto object-contain object-left [filter:brightness(0)_saturate(100%)_invert(31%)_sepia(87%)_saturate(1000%)_hue-rotate(147deg)_brightness(94%)_contrast(101%)] max-sm:h-[200px]"
           />
         </div>
-        <div className="max-sm:grid max-sm:grid-cols-2 max-sm:gap-4">
-          <div className="max-sm:text-center">
-            <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">
-              Yatras
-            </div>
-            <div className="flex flex-col gap-[9px] max-sm:gap-0">
-              {yatras.map((y) => (
-                <Link
-                  key={y.slug}
-                  href={`/yatras/${y.slug}`}
-                  className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:justify-center hover:text-ink"
-                >
-                  {y.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className="max-sm:text-center">
-            <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">
-              Contact
-            </div>
-            <div className="flex flex-col gap-[9px] max-sm:gap-0">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+        <div className="max-sm:text-center">
+          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">Yatras</div>
+          <div className="flex flex-col gap-[9px] max-sm:gap-0">
+            {yatras.map((y) => (
+              <Link
+                key={y.slug}
+                href={`/yatras/${y.slug}`}
                 className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:justify-center hover:text-ink"
               >
-                WhatsApp
-              </a>
-              <a
-                href={footer.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:justify-center hover:text-ink"
-              >
-                Instagram
-              </a>
-            </div>
+                {y.name}
+              </Link>
+            ))}
           </div>
         </div>
-        <div className="md:-ml-[35%]">
+        <div className="max-sm:text-center">
+          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">Contact</div>
+          <div className="flex flex-col gap-[9px] max-sm:gap-0">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:justify-center hover:text-ink"
+            >
+              WhatsApp
+            </a>
+            <a
+              href={footer.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:justify-center hover:text-ink"
+            >
+              Instagram
+            </a>
+          </div>
+        </div>
+        <div className="max-sm:col-span-2 md:-ml-[35%]">
           <blockquote className="max-w-[420px] border-l-4 border-accent pl-4 font-serif text-[22px] leading-[1.45] text-heading max-sm:mx-auto max-sm:text-left max-sm:text-[18px]">
             <span className="text-label">&ldquo;</span>
             The path to the sacred is walked one humble step at a time, in faith, in surrender, and
