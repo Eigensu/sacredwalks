@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useEnquiry } from './EnquiryProvider';
+import { useMembership } from './MembershipProvider';
 import { yatras } from '@/lib/yatras';
 
 const menuItems: { label: string; href: string }[] = [
@@ -31,7 +31,7 @@ export default function Nav({
   phoneNumber?: string;
   logoImage?: string;
 }) {
-  const { open } = useEnquiry();
+  const { open } = useMembership();
   const waDigits = whatsappNumber?.replace(/[^\d]/g, '');
   const whatsappUrl = waDigits
     ? `https://wa.me/${waDigits}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`
@@ -39,8 +39,8 @@ export default function Nav({
   const [menuOpen, setMenuOpen] = useState(false);
   const [tripsOpen, setTripsOpen] = useState(false);
   const [callPopoverOpen, setCallPopoverOpen] = useState(false);
-  const textColor = variant === 'dark' ? 'text-[#F5F1E9]' : 'text-[#25241E]';
-  const borderColor = variant === 'dark' ? 'border-[#F5F1E9]/60' : 'border-[#25241E]/60';
+  const textColor = variant === 'dark' ? 'text-surface' : 'text-ink';
+  const borderColor = variant === 'dark' ? 'border-surface/60' : 'border-ink/60';
 
   // Rendered on the left beside the menu button on phones, on the right from
   // 640px up; only one copy is ever visible.
@@ -102,7 +102,7 @@ export default function Nav({
             {callPopoverOpen && (
               <>
                 <div className="fixed inset-0 z-30" onClick={() => setCallPopoverOpen(false)} />
-                <div className="absolute top-full left-0 z-40 mt-3 whitespace-nowrap rounded-[4px] bg-[#25241E] px-4 py-2.5 text-[12.5px] tracking-[0.04em] text-[#F5F1E9] shadow-[0_8px_28px_rgba(20,18,12,.28)]">
+                <div className="absolute top-full left-0 z-40 mt-3 whitespace-nowrap rounded-[4px] bg-ink px-4 py-2.5 text-[12.5px] tracking-[0.04em] text-surface shadow-[0_8px_28px_rgba(20,18,12,.28)]">
                   <a href={`tel:${phoneNumber.replace(/[^\d+]/g, '')}`} className="cursor-pointer">
                     {phoneNumber}
                   </a>
@@ -158,7 +158,7 @@ export default function Nav({
             {callPopoverOpen && (
               <>
                 <div className="fixed inset-0 z-30" onClick={() => setCallPopoverOpen(false)} />
-                <div className="absolute top-full right-0 z-40 mt-3 whitespace-nowrap rounded-[4px] bg-[#25241E] px-4 py-2.5 text-[12.5px] tracking-[0.04em] text-[#F5F1E9] shadow-[0_8px_28px_rgba(20,18,12,.28)]">
+                <div className="absolute top-full right-0 z-40 mt-3 whitespace-nowrap rounded-[4px] bg-ink px-4 py-2.5 text-[12.5px] tracking-[0.04em] text-surface shadow-[0_8px_28px_rgba(20,18,12,.28)]">
                   <a href={`tel:${phoneNumber.replace(/[^\d+]/g, '')}`} className="cursor-pointer">
                     {phoneNumber}
                   </a>
@@ -169,18 +169,18 @@ export default function Nav({
         )}
         <button
           onClick={() => open()}
-          className={`group relative shrink-0 cursor-pointer overflow-hidden border ${borderColor} px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-3 max-sm:text-[9.5px] max-sm:tracking-[0.08em] hover:text-[#25241E] sm:px-5 sm:py-[9px] sm:text-[11.5px]`}
+          className={`group relative shrink-0 cursor-pointer overflow-hidden border ${borderColor} px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-3 max-sm:text-[9.5px] max-sm:tracking-[0.08em] hover:text-ink sm:px-5 sm:py-[9px] sm:text-[11.5px]`}
           suppressHydrationWarning
         >
-          <span className="absolute inset-0 origin-center scale-x-0 bg-[#F5F1E9] transition-transform duration-300 group-hover:scale-x-100" />
+          <span className="absolute inset-0 origin-center scale-x-0 bg-surface transition-transform duration-300 group-hover:scale-x-100" />
           <span className="relative">Apply Now</span>
         </button>
       </div>
 
       {menuOpen && (
         <div className="fixed inset-0 z-30 flex">
-          <div className="absolute inset-0 bg-[#18150E]/60" onClick={() => setMenuOpen(false)} />
-          <div className="relative flex h-full w-full max-w-[420px] flex-col overflow-y-auto bg-[#F5F1E9] px-[7vw] py-4 text-[#25241E] max-sm:overscroll-contain max-sm:px-6 max-sm:pb-10 sm:px-12">
+          <div className="absolute inset-0 bg-overlay/60" onClick={() => setMenuOpen(false)} />
+          <div className="relative flex h-full w-full max-w-[420px] flex-col overflow-y-auto bg-surface px-[7vw] py-4 text-ink max-sm:overscroll-contain max-sm:px-6 max-sm:pb-10 sm:px-12">
             <button
               type="button"
               aria-label="Close menu"
@@ -223,7 +223,7 @@ export default function Nav({
                     tripsOpen ? 'grid-rows-[1fr] mt-5' : 'grid-rows-[0fr]'
                   }`}
                 >
-                  <div className="flex flex-col gap-5 overflow-hidden border-l border-[#25241E]/20 pl-5 text-[11.5px] normal-case tracking-[0.04em] max-sm:gap-7 max-sm:text-[21px]">
+                  <div className="flex flex-col gap-5 overflow-hidden border-l border-ink/20 pl-5 text-[11.5px] normal-case tracking-[0.04em] max-sm:gap-7 max-sm:text-[21px]">
                     {yatras.map((yatra) => (
                       <Link
                         key={yatra.slug}

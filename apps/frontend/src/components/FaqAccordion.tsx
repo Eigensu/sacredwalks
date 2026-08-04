@@ -10,12 +10,12 @@ export default function FaqAccordion({ items }: { items: { question: string; ans
       {items.map((item, i) => {
         const isOpen = openIndex === i;
         return (
-          <div key={item.question} className="border-b border-[#D8CFBD]">
+          <div key={item.question} className="border-b border-border">
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : i)}
               aria-expanded={isOpen}
-              className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left font-serif text-[18px] font-medium text-[#25241E] sm:text-[21px]"
+              className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left font-serif text-[18px] font-medium text-ink sm:text-[21px]"
             >
               {item.question}
               <span
@@ -30,7 +30,7 @@ export default function FaqAccordion({ items }: { items: { question: string; ans
               }`}
             >
               <div className="overflow-hidden">
-                <p className="max-w-[720px] text-[15px] leading-[1.85] text-[#5F5C50]">
+                <p className="max-w-[720px] text-[15px] leading-[1.85] text-secondary">
                   {item.answer}
                 </p>
               </div>

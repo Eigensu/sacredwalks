@@ -106,19 +106,17 @@ export default function ApplyForm() {
   if (status === 'success') {
     return (
       <div className="mx-auto max-w-[560px] px-[5vw] py-24 text-center sm:py-[130px]">
-        <div className="mb-4 text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
-          Received
-        </div>
-        <h1 className="font-serif text-[clamp(28px,4.4vw,42px)] leading-[1.2] font-medium text-[#2C2A22]">
+        <div className="mb-4 text-[11.5px] tracking-[0.28em] text-accent uppercase">Received</div>
+        <h1 className="font-serif text-[clamp(28px,4.4vw,42px)] leading-[1.2] font-medium text-heading">
           Your application is on its way to us.
         </h1>
-        <p className="mx-auto mt-5 max-w-[420px] text-[14.5px] leading-[1.8] text-[#5F5C50]">
+        <p className="mx-auto mt-5 max-w-[420px] text-[14.5px] leading-[1.8] text-secondary">
           Our team will connect with you shortly to understand your interests and recommend the
           right Sacred Walk.
         </p>
         <Link
           href="/"
-          className="mt-9 inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-[13px] text-[12px] tracking-[0.16em] text-[#F5F1E9] uppercase"
+          className="mt-9 inline-block cursor-pointer rounded-full bg-ink px-8 py-[13px] text-[12px] tracking-[0.16em] text-surface uppercase"
         >
           Back to home
         </Link>
@@ -128,20 +126,20 @@ export default function ApplyForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto max-w-[640px] px-[5vw] py-16 sm:py-24">
-      <div className="mb-2 text-[11.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
+      <div className="mb-2 text-[11.5px] tracking-[0.28em] text-accent uppercase">
         Apply For An Invite
       </div>
-      <h1 className="font-serif text-[clamp(28px,4.4vw,44px)] leading-[1.15] font-medium text-[#2C2A22]">
+      <h1 className="font-serif text-[clamp(28px,4.4vw,44px)] leading-[1.15] font-medium text-heading">
         About You
       </h1>
-      <p className="mt-3 text-[14px] leading-[1.7] text-[#5F5C50]">
+      <p className="mt-3 text-[14px] leading-[1.7] text-secondary">
         Helps us curate the right mix of people and journeys for you.
       </p>
 
       <div className="mt-12 flex flex-col gap-12">
         {QUESTIONS.map((q, qi) => (
           <div key={q.key}>
-            <div className="mb-5 text-[15px] leading-[1.4] font-medium text-[#2C2A22]">
+            <div className="mb-5 text-[15px] leading-[1.4] font-medium text-heading">
               {qi + 1}. {q.question}
             </div>
             <div className="flex flex-col gap-2.5">
@@ -152,8 +150,8 @@ export default function ApplyForm() {
                     key={opt}
                     className={`flex cursor-pointer items-center gap-3 rounded-[6px] border px-4 py-3 text-[14px] transition ${
                       checked
-                        ? 'border-[#B4623F] bg-[#B4623F]/5 text-[#2C2A22]'
-                        : 'border-[#D8CFBD] text-[#3A382F] hover:border-[#B9AE97]'
+                        ? 'border-selected bg-selected/5 text-heading'
+                        : 'border-border text-muted hover:border-muted'
                     }`}
                   >
                     <input
@@ -162,7 +160,7 @@ export default function ApplyForm() {
                       value={opt}
                       checked={checked}
                       onChange={() => selectAnswer(q.key, opt)}
-                      className="accent-[#B4623F]"
+                      className="accent-selected"
                     />
                     {opt}
                   </label>
@@ -173,7 +171,7 @@ export default function ApplyForm() {
         ))}
 
         <div>
-          <div className="mb-5 text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">
+          <div className="mb-5 text-[11px] tracking-[0.2em] text-accent uppercase">
             Your Details
           </div>
           <div className="flex flex-col gap-6">
@@ -206,12 +204,12 @@ export default function ApplyForm() {
           </div>
         </div>
 
-        {error && <p className="text-[13px] leading-[1.6] text-[#A05B4C]">{error}</p>}
+        {error && <p className="text-[13px] leading-[1.6] text-danger">{error}</p>}
 
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="inline-flex cursor-pointer items-center justify-center rounded-full bg-[#25241E] px-8 py-[15px] text-[12.5px] tracking-[0.18em] text-[#F5F1E9] uppercase transition disabled:opacity-60"
+          className="inline-flex cursor-pointer items-center justify-center bg-accent px-8 py-[15px] text-[12.5px] tracking-[0.18em] text-white uppercase transition disabled:opacity-60"
         >
           {status === 'submitting' ? 'Submitting…' : 'Submit Application'}
         </button>
@@ -222,19 +220,19 @@ export default function ApplyForm() {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #d8cfbd;
+          border-bottom: 1px solid var(--color-border);
           padding: 8px 0;
           font-family: var(--font-hanken), sans-serif;
           font-size: 14.5px;
-          color: #25241e;
+          color: var(--color-ink);
           outline: none;
           transition: border-color 0.2s;
         }
         .scw-apply-input::placeholder {
-          color: #b0a992;
+          color: var(--color-muted);
         }
         .scw-apply-input:focus {
-          border-color: #7c8a72;
+          border-color: var(--color-accent);
         }
       `}</style>
     </form>
@@ -244,7 +242,7 @@ export default function ApplyForm() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-2">
-      <span className="text-[11px] tracking-[0.16em] text-[#9A917D] uppercase">{label}</span>
+      <span className="text-[11px] tracking-[0.16em] text-label uppercase">{label}</span>
       {children}
     </label>
   );

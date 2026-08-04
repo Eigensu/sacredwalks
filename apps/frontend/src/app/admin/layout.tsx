@@ -14,17 +14,17 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (!authed) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F5F1E9] px-6">
+      <div className="flex min-h-screen items-center justify-center bg-surface px-6">
         <AdminLogin configured={isAdminConfigured()} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F1E9]">
+    <div className="min-h-screen bg-surface">
       <AdminNav />
       {!isDbConfigured() && (
-        <div className="border-b border-[#E0C9A0] bg-[#F3E4C8] px-[5vw] py-3 text-[13px] text-[#6B5326]">
+        <div className="border-b border-warning-border bg-warning-bg px-[5vw] py-3 text-[13px] text-warning-text">
           MongoDB is not configured — set <code className="font-mono">MONGODB_URI</code> in your
           environment. Until then the site shows default content and nothing can be saved.
         </div>

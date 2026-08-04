@@ -4,6 +4,91 @@
   --font-sans: var(--font-hanken);
   --font-serif: var(--font-cormorant);
   --font-display: var(--font-marcellus);
+
+  /* ---- Semantic color tokens ----------------------------------------
+     Single source of truth for the brand palette. Change a value here
+     and it propagates everywhere the matching `bg-*`/`text-*`/`border-*`
+     utility is used (Tailwind v4 auto-generates utilities from these
+     `--color-*` custom properties). Do not hardcode hex values in
+     components — add or reuse a token instead. */
+
+  /* ==== Brand palette (Phase 2 — "After" redesign values) ====
+     Validated against the homepage's own Before/After showcase section
+     (see the "Yatra Page Components — Before & After" block in page.tsx),
+     which renders both palettes side by side using these exact hexes. */
+
+  /* Primary dark ink: default body/heading text, dark backgrounds & fills.
+     Was #25241E (warm near-black) -> now deep navy. */
+  --color-ink: #0a1024;
+  /* Page background (cream) — kept as-is; brand still uses a cream page
+     background for now, only the ink/accent/etc. are changing. */
+  --color-surface: #f5f1e9;
+  /* Primary brand accent: eyebrows, links, hovers, small accent marks.
+     Was sage #7C8A72 -> now burnt orange, the showcase's headline accent. */
+  --color-accent: #b7500d;
+  /* Secondary/body copy text, a step lighter than ink. Was #5F5C50 (warm
+     grey) -> now a lighter navy, matching the showcase's body-copy color. */
+  --color-secondary: #242946;
+  /* Serif heading text when not pure ink. Was #2C2A22 -> now equals ink;
+     the showcase renders headings in the same navy as body/ink, no
+     separate heading shade in the new palette. */
+  --color-heading: #0a1024;
+  /* Borders & dividers. Was warm tan #D8CFBD -> now a neutral light grey
+     (the showcase mostly uses ink/10% for hairline borders, but a flat
+     grey token is kept for places that need a solid, non-transparent
+     border, e.g. on white cards outside of an ink/navy context). */
+  --color-border: #d8d8db;
+  /* Small uppercase tracking labels/captions (muted). Was warm tan
+     #9A917D -> now teal, matching the showcase's eyebrow/label color
+     ("The Offerings", "Quick facts", spec-table keys, etc). */
+  --color-label: #02807c;
+  /* Dark gradient/scrim overlays over photos & modals. Reuses the new
+     navy ink so overlays stay tonally consistent with the rest of the
+     dark palette. */
+  --color-overlay: #0a1024;
+  /* Light card backgrounds distinct from the page background. Was warm
+     tan #F0EADB -> now plain white, per the showcase's "clean white
+     space" cards. */
+  --color-card: #ffffff;
+
+  /* Secondary/tertiary surface & border shades used for admin panels,
+     modal chrome and nested cards — follow --color-card to white, since
+     the new design language has no separate "raised tan" surface. */
+  --color-card-alt: #ffffff;
+  --color-raised: #ffffff;
+
+  /* Muted placeholder/disabled text and secondary borders. The showcase's
+     "After" column renders this role as ink at reduced opacity rather
+     than a dedicated hue; --color-border (#D8D8DB) is the closest solid
+     equivalent for a muted/neutral fill or border, so reuse it here. */
+  --color-muted: #d8d8db;
+
+  /* Status/feedback colors — consistent across forms sitewide. Not part
+     of the redesign showcase's brand swap; kept since they're already
+     independent status hues, not derived from the old ink/sage palette. */
+  --color-danger: #a05b4c;
+  /* Reuse the showcase's Status Badge "Open" green so success messaging
+     matches the new palette's status-color language. */
+  --color-success: #4c9a6a;
+
+  /* Status badge colors — the showcase's Status Badge example shows these
+     as distinct, deliberate hues (green family), not the accent color;
+     burnt-orange accent would read wrong for a status pill. */
+  --color-status-open: #4c9a6a;
+  --color-status-opening-soon: #1f5c3a;
+  --color-status-closed: #d8d8db;
+
+  /* Admin "DB not configured" warning banner. Not part of the redesign
+     showcase; kept as an independent amber warning color. */
+  --color-warning-bg: #f3e4c8;
+  --color-warning-border: #e0c9a0;
+  --color-warning-text: #6b5326;
+
+  /* ApplyForm selected-radio accent (distinct from --color-accent).
+     Was rust #B4623F, already close in hue to the new burnt-orange
+     accent; reuse --color-accent so selection state now aligns with the
+     brand accent instead of a one-off near-duplicate color. */
+  --color-selected: #b7500d;
 }
 
 * {
@@ -11,12 +96,12 @@
 }
 
 body {
-  background: #f5f1e9;
+  background: var(--color-surface);
 }
 
 ::selection {
-  background: #7c8a72;
-  color: #f5f1e9;
+  background: var(--color-accent);
+  color: var(--color-surface);
 }
 
 /* Hides the scrollbar on the swipeable mobile carousels; a no-op where the

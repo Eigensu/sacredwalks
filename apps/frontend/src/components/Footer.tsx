@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import NewsletterForm from './NewsletterForm';
+import { yatras } from '@/lib/yatras';
 import type { SiteContent } from '@/lib/content';
 
 export default function Footer({ content }: { content: SiteContent }) {
@@ -10,23 +11,38 @@ export default function Footer({ content }: { content: SiteContent }) {
   }`;
   return (
     <>
-      <footer className="grid grid-cols-1 gap-10 border-t border-[#D8CFBD] px-[7vw] py-[60px] text-[13.5px] text-[#5F5C50] max-sm:gap-8 max-sm:py-11 md:grid-cols-[2fr_1fr_1.2fr] md:gap-10">
+      <footer className="grid grid-cols-1 gap-10 border-t border-border px-[7vw] py-[36px] text-[13.5px] text-secondary max-sm:gap-8 max-sm:py-8 md:grid-cols-[1fr_1fr_1fr_1.4fr] md:gap-8">
         <div>
-          <div className="mb-[14px] font-display text-[18px] tracking-[0.3em] text-[#25241E] uppercase">
-            Sacred Walks
-          </div>
-          <div className="text-[10.5px] tracking-[0.2em] text-[#9A917D] uppercase">Invite Only</div>
+          <Image
+            src="/44-trimmed.png"
+            alt="Sacred Walks"
+            width={190}
+            height={260}
+            className="h-[160px] w-auto object-contain object-left [filter:brightness(0)_saturate(100%)_invert(31%)_sepia(87%)_saturate(1000%)_hue-rotate(147deg)_brightness(94%)_contrast(101%)]"
+          />
         </div>
         <div>
-          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-[#9A917D] uppercase">
-            Contact
+          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">Yatras</div>
+          <div className="flex flex-col gap-[9px] max-sm:gap-0">
+            {yatras.map((y) => (
+              <Link
+                key={y.slug}
+                href={`/yatras/${y.slug}`}
+                className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-ink"
+              >
+                {y.name}
+              </Link>
+            ))}
           </div>
+        </div>
+        <div>
+          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-label uppercase">Contact</div>
           <div className="flex flex-col gap-[9px] max-sm:gap-0">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-[#25241E]"
+              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-ink"
             >
               WhatsApp
             </a>
@@ -34,31 +50,28 @@ export default function Footer({ content }: { content: SiteContent }) {
               href={footer.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-[#25241E]"
+              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-ink"
             >
               Instagram
             </a>
-            <a
-              href={`mailto:${footer.email}`}
-              className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:text-[#25241E]"
-            >
-              {footer.email}
-            </a>
           </div>
         </div>
-        <div>
-          <div className="mb-[14px] text-[11px] tracking-[0.2em] text-[#9A917D] uppercase">
-            {footer.newsletterHeading}
-          </div>
-          <NewsletterForm />
+        <div className="md:-ml-[35%]">
+          <blockquote className="max-w-[420px] border-l-4 border-accent pl-4 font-serif text-[22px] leading-[1.45] text-heading">
+            <span className="text-label">&ldquo;</span>
+            The path to the sacred is walked one humble step at a time, in faith, in surrender, and
+            in stillness, where every temple bell, every sunrise over the ghats, and every quiet
+            prayer draws us closer to the divine within.
+            <span className="text-label">&rdquo;</span>
+          </blockquote>
         </div>
       </footer>
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[#E2D9C7] px-[7vw] py-6 text-[11px] tracking-[0.1em] text-[#9A917D] max-sm:justify-center max-sm:gap-x-6 max-sm:gap-y-0 max-sm:py-3">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-card-alt px-[7vw] py-6 text-[11px] tracking-[0.1em] text-label max-sm:justify-center max-sm:gap-x-6 max-sm:gap-y-0 max-sm:py-3">
         <div className="flex flex-wrap items-center gap-6 max-sm:hidden">
-          <Link href="/privacy" className="hover:text-[#25241E]">
+          <Link href="/privacy" className="hover:text-ink">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="hover:text-[#25241E]">
+          <Link href="/terms" className="hover:text-ink">
             Terms & Conditions
           </Link>
         </div>
@@ -66,7 +79,7 @@ export default function Footer({ content }: { content: SiteContent }) {
           href="http://eigensu.in/"
           target="_blank"
           rel="noopener noreferrer"
-          className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:text-[17px] hover:text-[#25241E]"
+          className="max-sm:inline-flex max-sm:min-h-11 max-sm:items-center max-sm:text-[17px] hover:text-ink"
         >
           Powered @ EIGENSU
         </a>

@@ -48,7 +48,6 @@ export default function MembershipModal({ onClose }: Props) {
       const details = [
         `DOB: ${formData.get('dob') || '—'}`,
         `Gender: ${formData.get('gender') || '—'}`,
-        `Nationality: ${formData.get('nationality') || '—'}`,
         `City: ${formData.get('city') || '—'}`,
         `Journey Type: ${journeyType}`,
         `Travellers: ${formData.get('travellers') || '—'}`,
@@ -83,13 +82,13 @@ export default function MembershipModal({ onClose }: Props) {
       aria-modal="true"
       aria-labelledby="membership-modal-title"
     >
-      <div className="absolute inset-0 bg-[#1B1A15]/70 backdrop-blur-[2px]" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay/70 backdrop-blur-[2px]" onClick={onClose} />
 
-      <div className="relative max-h-[92vh] w-full max-w-[820px] overflow-y-auto rounded-[2px] bg-[#F5F1E9] shadow-[0_24px_80px_rgba(20,18,12,.35)] max-sm:max-h-[90dvh] max-sm:overscroll-contain">
+      <div className="relative max-h-[92vh] w-full max-w-[820px] overflow-y-auto rounded-[2px] bg-surface shadow-[0_24px_80px_rgba(20,18,12,.35)] max-sm:max-h-[90dvh] max-sm:overscroll-contain">
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[#5F5C50] transition max-sm:top-2 max-sm:right-2 max-sm:h-11 max-sm:w-11 hover:bg-[#25241E]/5"
+          className="absolute top-5 right-5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-secondary transition max-sm:top-2 max-sm:right-2 max-sm:h-11 max-sm:w-11 hover:bg-ink/5"
         >
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
             <path
@@ -103,40 +102,38 @@ export default function MembershipModal({ onClose }: Props) {
 
         {status === 'success' ? (
           <div className="px-8 py-10 text-center max-sm:px-6 sm:px-9 sm:py-12">
-            <div className="mb-4 text-[11px] tracking-[0.28em] text-[#7C8A72] uppercase">
-              Welcome
-            </div>
-            <h2 className="font-serif text-[clamp(22px,3.6vw,26px)] leading-[1.2] font-medium text-[#2C2A22]">
+            <div className="mb-4 text-[11px] tracking-[0.28em] text-accent uppercase">Welcome</div>
+            <h2 className="font-serif text-[clamp(22px,3.6vw,26px)] leading-[1.2] font-medium text-heading">
               You&apos;re on your way to becoming a member.
             </h2>
-            <p className="mx-auto mt-4 max-w-[320px] text-[13.5px] leading-[1.7] text-[#5F5C50]">
+            <p className="mx-auto mt-4 max-w-[320px] text-[13.5px] leading-[1.7] text-secondary">
               Someone from Sacred Walks will reach out shortly to check availability for you.
             </p>
             <button
               onClick={onClose}
-              className="mt-7 inline-block cursor-pointer rounded-full bg-[#25241E] px-8 py-[12px] text-[12px] tracking-[0.16em] text-[#F5F1E9] uppercase"
+              className="mt-7 inline-block cursor-pointer bg-accent px-8 py-[12px] text-[12px] tracking-[0.16em] text-white uppercase"
             >
               Close
             </button>
           </div>
         ) : (
-          <div className="px-7 py-6 max-sm:px-6 max-sm:py-8 sm:px-10 sm:py-8">
-            <div className="mb-1.5 text-[10.5px] tracking-[0.28em] text-[#7C8A72] uppercase">
+          <div className="px-7 py-6 text-center max-sm:px-6 max-sm:py-8 sm:px-10 sm:py-8">
+            <div className="mb-1.5 text-[10.5px] tracking-[0.28em] text-accent uppercase">
               Welcome
             </div>
             <h2
               id="membership-modal-title"
-              className="font-serif text-[clamp(20px,2.8vw,25px)] leading-[1.15] font-medium text-[#2C2A22]"
+              className="font-serif text-[clamp(20px,2.8vw,25px)] leading-[1.15] font-medium text-heading"
             >
               Begin Your Sacred Journey
             </h2>
-            <p className="mt-2 max-w-[600px] text-[13px] leading-[1.55] text-[#5F5C50]">
+            <p className="mx-auto mt-2 max-w-[600px] text-[13px] leading-[1.55] text-secondary">
               Complete your details below to register your interest. Our team will get in touch to
               help you choose the journey that&apos;s right for you.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-6">
-              <FormSection label="Personal Details">
+            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-6 text-left">
+              <FormSection label="Personal Details" bold>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Full Name">
                     <input
@@ -176,12 +173,12 @@ export default function MembershipModal({ onClose }: Props) {
                   </Field>
 
                   <Field label="Phone Number">
-                    <div className="flex items-center gap-2 border-b border-[#D8CFBD] focus-within:border-[#7C8A72]">
+                    <div className="flex items-center gap-2 border-b border-border focus-within:border-accent">
                       <select
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
                         aria-label="Country code"
-                        className="shrink-0 cursor-pointer bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none max-sm:py-[11px] max-sm:text-[16px]"
+                        className="shrink-0 cursor-pointer bg-transparent py-2 text-[13.5px] text-ink outline-none max-sm:py-[11px] max-sm:text-[16px]"
                       >
                         {COUNTRY_CODES.map((c) => (
                           <option key={c.code} value={c.code}>
@@ -194,19 +191,9 @@ export default function MembershipModal({ onClose }: Props) {
                         name="phone"
                         required
                         placeholder="98xxx xxxxx"
-                        className="w-full bg-transparent py-2 text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992] max-sm:py-[11px] max-sm:text-[16px]"
+                        className="w-full bg-transparent py-2 text-[13.5px] text-ink outline-none placeholder:text-muted max-sm:py-[11px] max-sm:text-[16px]"
                       />
                     </div>
-                  </Field>
-
-                  <Field label="Nationality">
-                    <input
-                      type="text"
-                      name="nationality"
-                      required
-                      placeholder="e.g. Indian"
-                      className="scw-mem-input"
-                    />
                   </Field>
 
                   <Field label="City of Residence">
@@ -221,15 +208,15 @@ export default function MembershipModal({ onClose }: Props) {
                 </div>
               </FormSection>
 
-              <FormSection label="Journey Type">
-                <p className="-mt-1 text-[13px] leading-[1.5] text-[#5F5C50]">
+              <FormSection label="Journey Type" bold>
+                <p className="-mt-1 text-left text-[13px] leading-[1.5] text-secondary">
                   How would you like to travel?
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">
                   {['Curated Group Journey', 'Personalised Private Journey'].map((option) => (
                     <label
                       key={option}
-                      className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-[#25241E] max-sm:min-h-11 max-sm:text-[15px]"
+                      className="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-ink max-sm:min-h-11 max-sm:text-[15px]"
                     >
                       <input
                         type="radio"
@@ -237,7 +224,7 @@ export default function MembershipModal({ onClose }: Props) {
                         value={option}
                         checked={journeyType === option}
                         onChange={(e) => setJourneyType(e.target.value)}
-                        className="h-[15px] w-[15px] cursor-pointer accent-[#25241E] max-sm:h-[18px] max-sm:w-[18px]"
+                        className="h-[15px] w-[15px] cursor-pointer accent-ink max-sm:h-[18px] max-sm:w-[18px]"
                       />
                       {option}
                     </label>
@@ -245,7 +232,7 @@ export default function MembershipModal({ onClose }: Props) {
                 </div>
               </FormSection>
 
-              <FormSection label="Travel Preferences">
+              <FormSection label="Travel Preferences" bold>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Number Of Travellers">
                     <select name="travellers" defaultValue="" required className="scw-mem-input">
@@ -266,18 +253,18 @@ export default function MembershipModal({ onClose }: Props) {
                 </div>
               </FormSection>
 
-              {error && <p className="text-[13px] leading-[1.6] text-[#A05B4C]">{error}</p>}
+              {error && <p className="text-[13px] leading-[1.6] text-danger">{error}</p>}
 
               <div className="mt-2 flex flex-col items-center gap-2.5">
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25241E] px-9 py-[13px] text-[12px] tracking-[0.18em] text-[#F5F1E9] uppercase transition hover:bg-[#3a382e] disabled:opacity-60"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 bg-accent px-9 py-[13px] text-[12px] tracking-[0.18em] text-white uppercase transition hover:bg-ink disabled:opacity-60"
                 >
                   {status === 'submitting' ? 'Submitting…' : 'Become A Member →'}
                 </button>
 
-                <p className="text-center text-[11.5px] leading-[1.4] text-[#9A917D] italic">
+                <p className="text-center text-[11.5px] leading-[1.4] text-muted italic">
                   A Journey Curator will personally connect with you to guide you through the next
                   steps.
                 </p>
@@ -292,19 +279,19 @@ export default function MembershipModal({ onClose }: Props) {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid #d8cfbd;
+          border-bottom: 1px solid var(--color-border);
           padding: 8px 0;
           font-family: var(--font-hanken), sans-serif;
           font-size: 13.5px;
-          color: #25241e;
+          color: var(--color-ink);
           outline: none;
           transition: border-color 0.2s;
         }
         .scw-mem-input::placeholder {
-          color: #b0a992;
+          color: var(--color-muted);
         }
         .scw-mem-input:focus {
-          border-color: #7c8a72;
+          border-color: var(--color-accent);
         }
         select.scw-mem-input {
           appearance: none;
@@ -326,10 +313,22 @@ export default function MembershipModal({ onClose }: Props) {
   );
 }
 
-function FormSection({ label, children }: { label: string; children: React.ReactNode }) {
+function FormSection({
+  label,
+  bold,
+  children,
+}: {
+  label: string;
+  bold?: boolean;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-[10px] tracking-[0.2em] text-[#9A917D] uppercase">{label}</div>
+      <div
+        className={`text-[10px] tracking-[0.2em] uppercase ${bold ? 'font-extrabold text-ink' : 'text-muted'}`}
+      >
+        {label}
+      </div>
       {children}
     </div>
   );
@@ -338,7 +337,7 @@ function FormSection({ label, children }: { label: string; children: React.React
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-[10px] tracking-[0.16em] text-[#9A917D] uppercase">{label}</span>
+      <span className="text-[10px] tracking-[0.16em] text-muted uppercase">{label}</span>
       {children}
     </label>
   );

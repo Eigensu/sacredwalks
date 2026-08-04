@@ -71,15 +71,15 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-serif text-[34px] font-medium text-[#2C2A22]">Content</h1>
-          <p className="mt-2 text-[14px] text-[#5F5C50]">
+          <h1 className="font-serif text-[34px] font-medium text-heading">Content</h1>
+          <p className="mt-2 text-[14px] text-secondary">
             Edit the website&apos;s text, images and video. Changes go live when you save.
           </p>
         </div>
         <div className="flex items-center gap-4">
           {message && (
             <span
-              className={`text-[13px] ${message.kind === 'ok' ? 'text-[#5C6852]' : 'text-[#A05B4C]'}`}
+              className={`text-[13px] ${message.kind === 'ok' ? 'text-success' : 'text-danger'}`}
             >
               {message.text}
             </span>
@@ -87,22 +87,22 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
           <button
             onClick={save}
             disabled={saving}
-            className="cursor-pointer rounded-full bg-[#25241E] px-8 py-3 text-[12px] tracking-[0.18em] text-[#F5F1E9] uppercase disabled:opacity-60"
+            className="cursor-pointer rounded-full bg-ink px-8 py-3 text-[12px] tracking-[0.18em] text-surface uppercase disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
       </div>
 
-      <div className="mt-8 flex flex-wrap gap-2 border-b border-[#D8CFBD] pb-4">
+      <div className="mt-8 flex flex-wrap gap-2 border-b border-border pb-4">
         {SECTIONS.map((s) => (
           <button
             key={s.id}
             onClick={() => setSection(s.id)}
             className={`cursor-pointer rounded-full px-5 py-2 text-[11.5px] tracking-[0.14em] uppercase transition ${
               section === s.id
-                ? 'bg-[#25241E] text-[#F5F1E9]'
-                : 'bg-[#EDE6D6] text-[#5F5C50] hover:bg-[#E2D9C7]'
+                ? 'bg-ink text-surface'
+                : 'bg-card-alt text-secondary hover:bg-card-alt'
             }`}
           >
             {s.label}
@@ -132,10 +132,8 @@ type FieldProps = {
 
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <fieldset className="border border-[#D8CFBD] bg-[#FBF8F1] p-6">
-      <legend className="px-2 text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">
-        {title}
-      </legend>
+    <fieldset className="border border-border bg-raised p-6">
+      <legend className="px-2 text-[11px] tracking-[0.2em] text-accent uppercase">{title}</legend>
       <div className="flex flex-col gap-5">{children}</div>
     </fieldset>
   );
@@ -151,10 +149,10 @@ function Text({
 }: FieldProps & { path: Path; label: string; multiline?: boolean; hint?: string }) {
   const value = String(getDeep(content, path) ?? '');
   const cls =
-    'w-full border-b border-[#D8CFBD] bg-transparent py-2 text-[14px] text-[#25241E] outline-none focus:border-[#7C8A72]';
+    'w-full border-b border-border bg-transparent py-2 text-[14px] text-ink outline-none focus:border-accent';
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-[11px] tracking-[0.16em] text-[#9A917D] uppercase">{label}</span>
+      <span className="text-[11px] tracking-[0.16em] text-label uppercase">{label}</span>
       {multiline ? (
         <textarea
           value={value}
@@ -165,7 +163,7 @@ function Text({
       ) : (
         <input value={value} onChange={(e) => update(path, e.target.value)} className={cls} />
       )}
-      {hint && <span className="text-[12px] text-[#9A917D]">{hint}</span>}
+      {hint && <span className="text-[12px] text-label">{hint}</span>}
     </label>
   );
 }
@@ -201,27 +199,27 @@ function MediaField({
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-[11px] tracking-[0.16em] text-[#9A917D] uppercase">{label}</span>
+      <span className="text-[11px] tracking-[0.16em] text-label uppercase">{label}</span>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         <div className="flex-1">
           <input
             value={value}
             onChange={(e) => update(path, e.target.value)}
             placeholder={kind === 'image' ? 'https://… image URL' : 'https://… video URL (mp4)'}
-            className="w-full border-b border-[#D8CFBD] bg-transparent py-2 text-[13px] text-[#25241E] outline-none focus:border-[#7C8A72]"
+            className="w-full border-b border-border bg-transparent py-2 text-[13px] text-ink outline-none focus:border-accent"
           />
           <div className="mt-2 flex items-center gap-3">
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
               disabled={uploading}
-              className="cursor-pointer rounded-full border border-[#25241E]/40 px-4 py-[6px] text-[10.5px] tracking-[0.14em] text-[#25241E] uppercase hover:bg-[#25241E]/5 disabled:opacity-60"
+              className="cursor-pointer rounded-full border border-ink/40 px-4 py-[6px] text-[10.5px] tracking-[0.14em] text-ink uppercase hover:bg-ink/5 disabled:opacity-60"
             >
               {uploading ? 'Uploading…' : `Upload ${kind}`}
             </button>
-            <span className="text-[11.5px] text-[#9A917D]">or paste a URL above</span>
+            <span className="text-[11.5px] text-label">or paste a URL above</span>
           </div>
-          {error && <p className="mt-2 text-[12px] text-[#A05B4C]">{error}</p>}
+          {error && <p className="mt-2 text-[12px] text-danger">{error}</p>}
           <input
             ref={fileRef}
             type="file"
@@ -240,7 +238,7 @@ function MediaField({
             <img
               src={value}
               alt=""
-              className="h-[72px] w-[110px] shrink-0 border border-[#D8CFBD] object-cover"
+              className="h-[72px] w-[110px] shrink-0 border border-border object-cover"
             />
           ) : (
             <video
@@ -248,7 +246,7 @@ function MediaField({
               muted
               playsInline
               preload="metadata"
-              className="h-[72px] w-[110px] shrink-0 border border-[#D8CFBD] bg-[#25241E] object-cover"
+              className="h-[72px] w-[110px] shrink-0 border border-border bg-ink object-cover"
             />
           ))}
       </div>
@@ -266,7 +264,7 @@ function StringList({
   const items = (getDeep(content, path) as string[] | undefined) ?? [];
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">{label}</div>
+      <div className="text-[11px] tracking-[0.2em] text-accent uppercase">{label}</div>
       {items.map((_, i) => (
         <div key={i} className="grid grid-cols-[1fr_auto] items-end gap-3">
           <Text {...{ content, update }} path={[...path, i]} label={`${itemLabel} ${i + 1}`} />
@@ -294,7 +292,7 @@ function RowButton({ onClick, children }: { onClick: () => void; children: React
     <button
       type="button"
       onClick={onClick}
-      className="cursor-pointer self-start rounded-full border border-[#25241E]/30 px-4 py-[6px] text-[10.5px] tracking-[0.14em] text-[#5F5C50] uppercase hover:bg-[#25241E]/5"
+      className="cursor-pointer self-start rounded-full border border-ink/30 px-4 py-[6px] text-[10.5px] tracking-[0.14em] text-secondary uppercase hover:bg-ink/5"
     >
       {children}
     </button>
@@ -340,7 +338,7 @@ function HomeSection(p: FieldProps) {
 
       <Group title="Testimonials">
         {content.home.testimonials.map((t, i) => (
-          <div key={i} className="flex flex-col gap-4 border-b border-[#EDE6D6] pb-5">
+          <div key={i} className="flex flex-col gap-4 border-b border-card-alt pb-5">
             <Text
               {...p}
               path={['home', 'testimonials', i, 'quote']}
@@ -379,7 +377,7 @@ function HomeSection(p: FieldProps) {
         <Text {...p} path={['home', 'gallery', 'heading']} label="Heading" />
         <Text {...p} path={['home', 'gallery', 'label']} label="Right-side label" />
         {content.home.gallery.images.map((img, i) => (
-          <div key={i} className="flex flex-col gap-3 border-b border-[#EDE6D6] pb-5">
+          <div key={i} className="flex flex-col gap-3 border-b border-card-alt pb-5">
             <MediaField
               {...p}
               path={['home', 'gallery', 'images', i, 'src']}
@@ -437,7 +435,7 @@ function VideoSectionEditor(p: FieldProps) {
       <Text {...p} path={['home', 'video', 'eyebrow']} label="Section label" />
       <Text {...p} path={['home', 'video', 'heading']} label="Heading" />
       <Text {...p} path={['home', 'video', 'caption']} label="Caption" multiline />
-      <p className="text-[12.5px] leading-[1.6] text-[#9A917D]">
+      <p className="text-[12.5px] leading-[1.6] text-label">
         Upload an MP4 (up to 64 MB) or paste a direct video URL. Clearing the video URL hides the
         section on the homepage.
       </p>
@@ -513,22 +511,22 @@ function YatrasSection(p: FieldProps) {
   return (
     <>
       {content.yatras.map((y, i) => (
-        <div key={i} className="border border-[#D8CFBD] bg-[#FBF8F1]">
+        <div key={i} className="border border-border bg-raised">
           <button
             type="button"
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
             className="flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left"
           >
-            <span className="font-serif text-[20px] font-medium text-[#2C2A22]">
+            <span className="font-serif text-[20px] font-medium text-heading">
               {y.n} — {y.name || 'Untitled yatra'}
             </span>
-            <span className="text-[11px] tracking-[0.16em] text-[#9A917D] uppercase">
+            <span className="text-[11px] tracking-[0.16em] text-label uppercase">
               {openIndex === i ? 'Close' : 'Edit'}
             </span>
           </button>
 
           {openIndex === i && (
-            <div className="flex flex-col gap-5 border-t border-[#EDE6D6] p-6">
+            <div className="flex flex-col gap-5 border-t border-card-alt p-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Text {...p} path={['yatras', i, 'name']} label="Name" />
                 <Text
@@ -557,7 +555,7 @@ function YatrasSection(p: FieldProps) {
               <Text {...p} path={['yatras', i, 'overviewLead']} label="Overview lead" multiline />
               <Text {...p} path={['yatras', i, 'overviewBody']} label="Overview body" multiline />
 
-              <div className="mt-2 text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">
+              <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
                 Quick facts
               </div>
               {y.specs.map((s, j) => (
@@ -582,13 +580,13 @@ function YatrasSection(p: FieldProps) {
                 + Add fact
               </RowButton>
 
-              <div className="mt-2 text-[11px] tracking-[0.2em] text-[#7C8A72] uppercase">
+              <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
                 Itinerary
               </div>
               {y.itinerary.map((d, j) => (
                 <div
                   key={j}
-                  className="grid grid-cols-1 gap-4 border-b border-[#EDE6D6] pb-4 sm:grid-cols-[130px_1fr]"
+                  className="grid grid-cols-1 gap-4 border-b border-card-alt pb-4 sm:grid-cols-[130px_1fr]"
                 >
                   <Text {...p} path={['yatras', i, 'itinerary', j, 'day']} label="Day" />
                   <Text {...p} path={['yatras', i, 'itinerary', j, 'place']} label="Place" />
@@ -630,7 +628,7 @@ function YatrasSection(p: FieldProps) {
                 + Add day
               </RowButton>
 
-              <div className="mt-4 border-t border-[#EDE6D6] pt-4">
+              <div className="mt-4 border-t border-card-alt pt-4">
                 <RowButton
                   onClick={() => {
                     if (window.confirm(`Remove "${y.name}" from the website?`)) {
@@ -784,7 +782,7 @@ function ExperienceSection(p: FieldProps) {
 
       <Group title="Frequently Asked Questions">
         {content.experience.faq.map((f, i) => (
-          <div key={i} className="flex flex-col gap-4 border-b border-[#EDE6D6] pb-5">
+          <div key={i} className="flex flex-col gap-4 border-b border-card-alt pb-5">
             <Text {...p} path={['experience', 'faq', i, 'question']} label={`Question ${i + 1}`} />
             <Text {...p} path={['experience', 'faq', i, 'answer']} label="Answer" multiline />
             <RowButton

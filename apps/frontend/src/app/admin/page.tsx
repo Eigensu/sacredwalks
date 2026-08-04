@@ -47,8 +47,8 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="font-serif text-[34px] font-medium text-[#2C2A22]">Dashboard</h1>
-      <p className="mt-2 text-[14px] text-[#5F5C50]">
+      <h1 className="font-serif text-[34px] font-medium text-heading">Dashboard</h1>
+      <p className="mt-2 text-[14px] text-secondary">
         Manage the website&apos;s content and see who has reached out.
       </p>
       <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -56,14 +56,14 @@ export default async function AdminDashboard() {
           <Link
             key={c.href}
             href={c.href}
-            className="group border border-[#D8CFBD] bg-[#FBF8F1] p-6 transition hover:border-[#7C8A72]"
+            className="group border border-border bg-raised p-6 transition hover:border-accent"
           >
-            <div className="text-[11px] tracking-[0.2em] text-[#9A917D] uppercase">{c.label}</div>
-            <div className="mt-3 font-serif text-[40px] leading-none font-medium text-[#2C2A22]">
+            <div className="text-[11px] tracking-[0.2em] text-label uppercase">{c.label}</div>
+            <div className="mt-3 font-serif text-[40px] leading-none font-medium text-heading">
               {c.value}
             </div>
-            <div className="mt-3 text-[12.5px] leading-[1.6] text-[#5F5C50]">{c.sub}</div>
-            <div className="mt-4 text-[11px] tracking-[0.16em] text-[#7C8A72] uppercase group-hover:underline">
+            <div className="mt-3 text-[12.5px] leading-[1.6] text-secondary">{c.sub}</div>
+            <div className="mt-4 text-[11px] tracking-[0.16em] text-accent uppercase group-hover:underline">
               Open →
             </div>
           </Link>

@@ -83,7 +83,7 @@ export default function ExperienceIcon({ name }: { name: string }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="text-[#25241E]"
+      className="text-ink"
       aria-hidden="true"
     >
       {glyph}

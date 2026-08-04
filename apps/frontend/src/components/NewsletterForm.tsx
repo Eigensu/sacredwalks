@@ -34,7 +34,7 @@ export default function NewsletterForm() {
 
   if (status === 'success') {
     return (
-      <p className="text-[13px] leading-[1.7] text-[#7C8A72]">
+      <p className="text-[13px] leading-[1.7] text-accent">
         You&apos;re on the list. We&apos;ll write when a journey opens.
       </p>
     );
@@ -42,7 +42,7 @@ export default function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-      <div className="flex items-center gap-3 border-b border-[#D8CFBD] pb-2 focus-within:border-[#7C8A72]">
+      <div className="flex items-center gap-3 border-b border-border pb-2 focus-within:border-accent">
         {/* 16px on phones stops iOS Safari zooming the page in on focus. */}
         <input
           type="email"
@@ -50,19 +50,19 @@ export default function NewsletterForm() {
           required
           placeholder="you@example.com"
           aria-label="Email address"
-          className="w-full bg-transparent text-[13.5px] text-[#25241E] outline-none placeholder:text-[#B0A992] max-sm:min-h-11 max-sm:text-[16px]"
+          className="w-full bg-transparent text-[13.5px] text-ink outline-none placeholder:text-muted max-sm:min-h-11 max-sm:text-[16px]"
           suppressHydrationWarning
         />
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="shrink-0 cursor-pointer text-[11px] tracking-[0.18em] text-[#25241E] uppercase transition max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:opacity-70 disabled:opacity-50"
+          className="shrink-0 cursor-pointer text-[11px] tracking-[0.18em] text-ink uppercase transition max-sm:inline-flex max-sm:min-h-11 max-sm:items-center hover:opacity-70 disabled:opacity-50"
           suppressHydrationWarning
         >
           {status === 'submitting' ? 'Joining…' : 'Join →'}
         </button>
       </div>
-      {status === 'error' && <p className="text-[12px] text-[#A05B4C]">{error}</p>}
+      {status === 'error' && <p className="text-[12px] text-danger">{error}</p>}
     </form>
   );
 }

@@ -1,9 +1,8 @@
 'use client';
 
-import { useEnquiry } from './EnquiryProvider';
+import { useMembership } from './MembershipProvider';
 
 export default function EnquireButton({
-  yatraName,
   className,
   children,
 }: {
@@ -11,9 +10,9 @@ export default function EnquireButton({
   className: string;
   children: React.ReactNode;
 }) {
-  const { open } = useEnquiry();
+  const { open } = useMembership();
   return (
-    <button onClick={() => open(yatraName)} className={className} suppressHydrationWarning>
+    <button onClick={() => open()} className={className} suppressHydrationWarning>
       {children}
     </button>
   );

@@ -20,15 +20,12 @@ export default function AdminNav() {
   }
 
   return (
-    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#D8CFBD] bg-[#FBF8F1] px-[5vw] py-4">
+    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-border bg-raised px-[5vw] py-4">
       <div className="flex items-center gap-6">
-        <Link
-          href="/"
-          className="font-display text-[13px] tracking-[0.28em] text-[#25241E] uppercase"
-        >
+        <Link href="/" className="font-display text-[13px] tracking-[0.28em] text-ink uppercase">
           Sacred Walks
         </Link>
-        <span className="rounded-full bg-[#7C8A72]/15 px-3 py-1 text-[10px] tracking-[0.2em] text-[#5C6852] uppercase">
+        <span className="rounded-full bg-accent/15 px-3 py-1 text-[10px] tracking-[0.2em] text-success uppercase">
           Admin
         </span>
       </div>
@@ -40,21 +37,19 @@ export default function AdminNav() {
               key={l.href}
               href={l.href}
               className={
-                active
-                  ? 'border-b border-[#25241E] pb-[2px] text-[#25241E]'
-                  : 'text-[#8A8471] hover:text-[#25241E]'
+                active ? 'border-b border-ink pb-[2px] text-ink' : 'text-muted hover:text-ink'
               }
             >
               {l.label}
             </Link>
           );
         })}
-        <Link href="/" target="_blank" className="text-[#8A8471] hover:text-[#25241E]">
+        <Link href="/" target="_blank" className="text-muted hover:text-ink">
           View site ↗
         </Link>
         <button
           onClick={logout}
-          className="cursor-pointer rounded-full border border-[#25241E]/40 px-4 py-[6px] text-[10.5px] tracking-[0.16em] text-[#25241E] uppercase hover:bg-[#25241E]/5"
+          className="cursor-pointer rounded-full border border-ink/40 px-4 py-[6px] text-[10.5px] tracking-[0.16em] text-ink uppercase hover:bg-ink/5"
         >
           Sign out
         </button>

@@ -40,4 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-public
+# large source video assets — not meant to be git-tracked; use the
+# compressed *-web.mp4 versions actually served by the site instead
+/public/IMG_7788.MP4
+/public/DJI_0502.MP4

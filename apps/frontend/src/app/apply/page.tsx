@@ -12,7 +12,7 @@ export default async function ApplyPage() {
   const content = await getSiteContent();
 
   return (
-    <div className="bg-[#F5F1E9]">
+    <div className="bg-surface">
       <Nav
         variant="light"
         whatsappNumber={content.settings.whatsappNumber}
