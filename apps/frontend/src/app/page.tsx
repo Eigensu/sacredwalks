@@ -15,12 +15,20 @@ export default async function Home() {
       {/* HERO */}
       {/* svh keeps the hero from resizing as mobile browser toolbars collapse. */}
       <section className="relative h-[83vh] min-h-[370px] overflow-hidden max-sm:h-[84svh] max-sm:min-h-[330px] sm:min-h-[420px]">
+        <video
+          src="/IMG_7788-web.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 hidden h-full w-full object-cover max-sm:block"
+        />
         <Image
           src={hero.image}
           alt="Kailash peak at first light"
           fill
           priority
-          className="object-cover"
+          className="object-cover max-sm:hidden"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.42)_0%,rgba(24,21,14,.06)_34%,rgba(24,21,14,.62)_100%)]" />
