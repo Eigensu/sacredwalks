@@ -7,7 +7,7 @@ import { getSiteContent, GALLERY_LAYOUT } from '@/lib/content';
 
 export default async function Home() {
   const content = await getSiteContent();
-  const { hero, pilgrimage, philosophy, gallery, cta } = content.home;
+  const { intro, pilgrimage, philosophy, gallery, cta } = content.home;
   const yatras = content.yatras;
 
   return (
@@ -45,11 +45,13 @@ export default async function Home() {
       {/* INTRO STRIP */}
       <div className="flex flex-col items-center gap-3 pt-4 text-center max-sm:gap-5 max-sm:px-6 max-sm:pt-8">
         <p className="max-w-[700px] font-serif text-[clamp(14px,1.6vw,21px)] leading-[1.32] font-normal text-heading">
-          &ldquo;Lorem ipsum dolor sit amet consectetur.&rdquo;
+          <span className="text-label">&ldquo;</span>
+          {intro.quote}
+          <span className="text-label">&rdquo;</span>
         </p>
         <EnquireButton className="group relative cursor-pointer overflow-hidden border border-ink/60 px-5 py-2 text-[9px] tracking-[0.18em] text-ink uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-4 hover:text-surface">
           <span className="absolute inset-0 origin-center scale-x-0 bg-ink transition-transform duration-300 group-hover:scale-x-100" />
-          <span className="relative">Apply Now For Invitation</span>
+          <span className="relative">{intro.buttonText}</span>
         </EnquireButton>
       </div>
 

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { yatras } from '@/lib/yatras';
 import type { SiteContent } from '@/lib/content';
@@ -13,12 +12,10 @@ export default function Footer({ content }: { content: SiteContent }) {
     <>
       <footer className="grid grid-cols-2 gap-10 border-t border-border px-[7vw] py-[36px] text-[13.5px] text-secondary max-sm:gap-y-8 max-sm:py-8 md:grid-cols-[1fr_1fr_1fr_1.4fr] md:gap-8">
         <div className="max-sm:col-span-2 max-sm:flex max-sm:flex-col max-sm:items-center">
-          <Image
-            src="/44-trimmed.png"
-            alt="Sacred Walks"
-            width={190}
-            height={260}
-            className="h-[160px] w-auto object-contain object-left [filter:brightness(0)_saturate(100%)_invert(31%)_sepia(87%)_saturate(1000%)_hue-rotate(147deg)_brightness(94%)_contrast(101%)] max-sm:h-[200px]"
+          <span
+            role="img"
+            aria-label="Sacred Walks"
+            className="block h-[160px] w-[117px] bg-label [mask-image:url(/44-trimmed.png)] [mask-position:left] [mask-repeat:no-repeat] [mask-size:contain] max-sm:h-[200px] max-sm:w-[146px]"
           />
         </div>
         <div className="max-sm:text-center">

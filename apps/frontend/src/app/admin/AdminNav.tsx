@@ -4,10 +4,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 const links = [
-  { href: '/admin', label: 'Dashboard' },
-  { href: '/admin/content', label: 'Content' },
   { href: '/admin/enquiries', label: 'Enquiries' },
-  { href: '/admin/subscribers', label: 'Subscribers' },
+  { href: '/admin/content', label: 'Content' },
 ];
 
 export default function AdminNav() {

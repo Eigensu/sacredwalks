@@ -39,11 +39,6 @@ export type Yatra = {
   itinerary: ItineraryDay[];
 };
 
-export type FutureDestination = {
-  name: string;
-  note?: string;
-};
-
 export const yatras: Yatra[] = [
   {
     n: '01',
@@ -405,27 +400,6 @@ export const yatras: Yatra[] = [
         ],
       },
     ],
-  },
-];
-
-export const futureDestinations: FutureDestination[] = [
-  { name: 'Chidambaram', note: 'Tamil Nadu' },
-  { name: 'Arunachala', note: 'Tamil Nadu' },
-  { name: 'Nepal', note: 'Himalayan Circuit' },
-  { name: 'Kailash', note: 'Tibet' },
-];
-
-export const sideTestimonials = [
-  {
-    name: 'Shivali',
-    from: 'The Two Jyotirlinga Journey',
-    quote:
-      'Seeing all the participants go through the journey with utmost bliss and devotion really touched me.',
-  },
-  {
-    name: 'Sandesh',
-    from: 'The Sacred Walks',
-    quote: 'I am grateful that I got a chance to experience these reverberations in person.',
   },
 ];
 

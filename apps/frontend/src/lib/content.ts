@@ -1,21 +1,9 @@
 import { COLLECTIONS, tryGetDb } from './mongodb';
-import {
-  yatras as defaultYatras,
-  futureDestinations as defaultFutureDestinations,
-  sideTestimonials,
-  Yatra,
-  FutureDestination,
-} from './yatras';
+import { yatras as defaultYatras, Yatra } from './yatras';
 
 export type GalleryImage = {
   src: string;
   alt: string;
-};
-
-export type Testimonial = {
-  name: string;
-  from: string;
-  quote: string;
 };
 
 export type SiteContent = {
@@ -24,13 +12,9 @@ export type SiteContent = {
     whatsappMessage: string;
   };
   home: {
-    hero: {
-      eyebrow: string;
-      titleLine1: string;
-      titleLine2: string;
-      sideText: string;
-      journalLine: string;
-      image: string;
+    intro: {
+      quote: string;
+      buttonText: string;
     };
     pilgrimage: {
       eyebrow: string;
@@ -45,26 +29,6 @@ export type SiteContent = {
       body: string;
       image: string;
     };
-    applyInvite: {
-      eyebrow: string;
-      heading: string;
-      steps: { title: string; body: string }[];
-      ctaText: string;
-    };
-    video: {
-      eyebrow: string;
-      heading: string;
-      caption: string;
-      videoUrl: string;
-      posterImage: string;
-    };
-    quote: {
-      eyebrow: string;
-      text: string;
-      emphasis: string;
-      attribution: string;
-    };
-    testimonials: Testimonial[];
     gallery: {
       heading: string;
       label: string;
@@ -75,13 +39,6 @@ export type SiteContent = {
       heading: string;
       buttonText: string;
     };
-    curateOwn: {
-      eyebrow: string;
-      heading: string;
-      body: string;
-      image: string;
-      ctaText: string;
-    };
   };
   footer: {
     tagline: string;
@@ -89,12 +46,9 @@ export type SiteContent = {
     email: string;
     address: string;
     copyright: string;
-    newsletterHeading: string;
-    newsletterSub: string;
     instagramUrl: string;
   };
   yatras: Yatra[];
-  futureDestinations: FutureDestination[];
   experience: {
     eyebrow: string;
     heading: string;
@@ -148,15 +102,9 @@ export const defaultContent: SiteContent = {
     whatsappMessage: 'Namaskaram, I would like to know more about Sacred Walks yatras.',
   },
   home: {
-    hero: {
-      eyebrow: 'Curated Spiritual Journeys Across Bharat',
-      titleLine1: 'Walk yourself',
-      titleLine2: 'into the divine',
-      sideText:
-        'Three journeys across Bharat — from coastal Mangalore to Himalayan Kedarnath — walked, not toured.',
-      journalLine: "The Pilgrim's Journal · Scroll",
-      image:
-        'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1800&q=80&auto=format&fit=crop',
+    intro: {
+      quote: 'Lorem ipsum dolor sit amet consectetur.',
+      buttonText: 'Apply Now For Invitation',
     },
     pilgrimage: {
       eyebrow: 'About The Journey',
@@ -173,40 +121,6 @@ export const defaultContent: SiteContent = {
       image:
         'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80&auto=format&fit=crop',
     },
-    applyInvite: {
-      eyebrow: 'Apply For An Invite',
-      heading: 'Begin Your Journey',
-      steps: [
-        {
-          title: 'Step 1',
-          body: 'Complete your application.',
-        },
-        {
-          title: 'Step 2',
-          body: 'Our team connects with you to understand your interests and recommend the right Sacred Walk.',
-        },
-        {
-          title: 'Step 3',
-          body: 'Receive your invitation and begin your journey.',
-        },
-      ],
-      ctaText: 'Apply Now',
-    },
-    video: {
-      eyebrow: 'The Film',
-      heading: 'A glimpse of the journey',
-      caption: 'Moments from the trail — the mountain, the lake, and those who walk.',
-      videoUrl: 'https://videos.pexels.com/video-files/2871916/2871916-hd_1920_1080_30fps.mp4',
-      posterImage:
-        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=80&auto=format&fit=crop',
-    },
-    quote: {
-      eyebrow: 'Sharings',
-      text: 'The Sacred Walks — a journey of a lifetime. This experience cannot be put into words;',
-      emphasis: 'it has to be experienced.',
-      attribution: 'Azniv — Kashi',
-    },
-    testimonials: sideTestimonials,
     gallery: {
       heading: 'From the Trail',
       label: 'Gallery',
@@ -246,14 +160,6 @@ export const defaultContent: SiteContent = {
       heading: 'The mountain is waiting for your feet.',
       buttonText: 'Apply for an Invitation',
     },
-    curateOwn: {
-      eyebrow: 'Private Journeys',
-      heading: 'Curate Your Own Sacred Walk',
-      body: "Every journey is personal. Whether you're travelling with family, friends or a private group, we'll thoughtfully curate a Sacred Walk around your intentions, interests and pace.",
-      image:
-        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1400&q=80&auto=format&fit=crop',
-      ctaText: 'Connect On WhatsApp',
-    },
   },
   footer: {
     tagline:
@@ -262,12 +168,9 @@ export const defaultContent: SiteContent = {
     email: 'info@sacredwalks.org',
     address: 'Velliangiri Foothills, Coimbatore',
     copyright: '© 2026 The Sacred Walks',
-    newsletterHeading: 'Stay Connected',
-    newsletterSub: 'Receive news of upcoming yatras and openings.',
     instagramUrl: 'https://instagram.com/sacredwalks',
   },
   yatras: defaultYatras,
-  futureDestinations: defaultFutureDestinations,
   experience: {
     eyebrow: 'The Sacred Walks Experience',
     heading: 'Travel Differently. Journey Meaningfully.',

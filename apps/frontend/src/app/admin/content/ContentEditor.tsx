@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import type { SiteContent } from '@/lib/content';
-import type { Yatra, FutureDestination } from '@/lib/yatras';
+import type { Yatra } from '@/lib/yatras';
 
 type Path = (string | number)[];
 
@@ -25,18 +25,17 @@ function getDeep(obj: unknown, path: Path): unknown {
 
 const SECTIONS = [
   { id: 'home', label: 'Homepage' },
-  { id: 'video', label: 'Video' },
-  { id: 'settings', label: 'WhatsApp' },
-  { id: 'footer', label: 'Footer & Contact' },
   { id: 'yatras', label: 'Yatras' },
-  { id: 'futureDestinations', label: 'Future Destinations' },
   { id: 'experience', label: 'Experience' },
+  { id: 'footer', label: 'Footer & Contact' },
+  { id: 'settings', label: 'WhatsApp' },
 ] as const;
 
 type SectionId = (typeof SECTIONS)[number]['id'];
 
 export default function ContentEditor({ initialContent }: { initialContent: SiteContent }) {
   const [content, setContent] = useState<SiteContent>(initialContent);
+  const [savedContent, setSavedContent] = useState<SiteContent>(initialContent);
   const [section, setSection] = useState<SectionId>('home');
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
@@ -46,17 +45,22 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
     setMessage(null);
   }
 
+  async function persist(next: SiteContent) {
+    const res = await fetch('/api/admin/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: next }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Save failed');
+  }
+
   async function save() {
     setSaving(true);
     setMessage(null);
     try {
-      const res = await fetch('/api/admin/content', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || 'Save failed');
+      await persist(content);
+      setSavedContent(content);
       setMessage({ kind: 'ok', text: 'Saved. The live site now shows this content.' });
     } catch (err) {
       setMessage({ kind: 'err', text: err instanceof Error ? err.message : 'Save failed' });
@@ -76,22 +80,24 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
             Edit the website&apos;s text, images and video. Changes go live when you save.
           </p>
         </div>
-        <div className="flex items-center gap-4">
-          {message && (
-            <span
-              className={`text-[13px] ${message.kind === 'ok' ? 'text-success' : 'text-danger'}`}
+        {section !== 'yatras' && (
+          <div className="flex items-center gap-4">
+            {message && (
+              <span
+                className={`text-[13px] ${message.kind === 'ok' ? 'text-success' : 'text-danger'}`}
+              >
+                {message.text}
+              </span>
+            )}
+            <button
+              onClick={save}
+              disabled={saving}
+              className="cursor-pointer rounded-full bg-ink px-8 py-3 text-[12px] tracking-[0.18em] text-surface uppercase disabled:opacity-60"
             >
-              {message.text}
-            </span>
-          )}
-          <button
-            onClick={save}
-            disabled={saving}
-            className="cursor-pointer rounded-full bg-ink px-8 py-3 text-[12px] tracking-[0.18em] text-surface uppercase disabled:opacity-60"
-          >
-            {saving ? 'Saving…' : 'Save changes'}
-          </button>
-        </div>
+              {saving ? 'Saving…' : 'Save changes'}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-8 flex flex-wrap gap-2 border-b border-border pb-4">
@@ -112,11 +118,18 @@ export default function ContentEditor({ initialContent }: { initialContent: Site
 
       <div className="mt-8 flex flex-col gap-10 pb-24">
         {section === 'home' && <HomeSection {...fieldProps} />}
-        {section === 'video' && <VideoSectionEditor {...fieldProps} />}
         {section === 'settings' && <SettingsSection {...fieldProps} />}
         {section === 'footer' && <FooterSection {...fieldProps} />}
-        {section === 'yatras' && <YatrasSection {...fieldProps} />}
-        {section === 'futureDestinations' && <FutureDestinationsSection {...fieldProps} />}
+        {section === 'yatras' && (
+          <YatrasSection
+            {...fieldProps}
+            savedContent={savedContent}
+            onSaveYatra={async () => {
+              await persist(content);
+              setSavedContent(content);
+            }}
+          />
+        )}
         {section === 'experience' && <ExperienceSection {...fieldProps} />}
       </div>
     </div>
@@ -164,6 +177,32 @@ function Text({
         <input value={value} onChange={(e) => update(path, e.target.value)} className={cls} />
       )}
       {hint && <span className="text-[12px] text-label">{hint}</span>}
+    </label>
+  );
+}
+
+function Select({
+  content,
+  update,
+  path,
+  label,
+  options,
+}: FieldProps & { path: Path; label: string; options: { value: string; label: string }[] }) {
+  const value = String(getDeep(content, path) ?? '');
+  return (
+    <label className="flex flex-col gap-1.5">
+      <span className="text-[11px] tracking-[0.16em] text-label uppercase">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => update(path, e.target.value)}
+        className="w-full border-b border-border bg-transparent py-2 text-[14px] text-ink outline-none focus:border-accent"
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
     </label>
   );
 }
@@ -261,29 +300,29 @@ function StringList({
   label,
   itemLabel,
 }: FieldProps & { path: Path; label: string; itemLabel: string }) {
-  const items = (getDeep(content, path) as string[] | undefined) ?? [];
+  const raw = getDeep(content, path);
+  const items = Array.isArray(raw) ? raw : raw ? [String(raw)] : [];
+  const text = items.join('\n');
   return (
-    <div className="flex flex-col gap-3">
-      <div className="text-[11px] tracking-[0.2em] text-accent uppercase">{label}</div>
-      {items.map((_, i) => (
-        <div key={i} className="grid grid-cols-[1fr_auto] items-end gap-3">
-          <Text {...{ content, update }} path={[...path, i]} label={`${itemLabel} ${i + 1}`} />
-          <RowButton
-            onClick={() =>
-              update(
-                path,
-                items.filter((_, j) => j !== i),
-              )
-            }
-          >
-            Remove
-          </RowButton>
-        </div>
-      ))}
-      <RowButton onClick={() => update(path, [...items, ''])}>
-        + Add {itemLabel.toLowerCase()}
-      </RowButton>
-    </div>
+    <label className="flex flex-col gap-1.5">
+      <span className="text-[11px] tracking-[0.16em] text-label uppercase">{label}</span>
+      <textarea
+        defaultValue={text}
+        rows={Math.min(Math.max(items.length, 3), 14)}
+        placeholder={`One ${itemLabel.toLowerCase()} per line`}
+        onBlur={(e) =>
+          update(
+            path,
+            e.target.value
+              .split('\n')
+              .map((line) => line.trim())
+              .filter(Boolean),
+          )
+        }
+        className="w-full resize-y border-b border-border bg-transparent py-2 text-[14px] leading-[1.7] text-ink outline-none focus:border-accent"
+      />
+      <span className="text-[12px] text-label">One {itemLabel.toLowerCase()} per line.</span>
+    </label>
   );
 }
 
@@ -305,13 +344,15 @@ function HomeSection(p: FieldProps) {
   const { content, update } = p;
   return (
     <>
-      <Group title="Hero">
-        <MediaField {...p} path={['home', 'hero', 'image']} label="Background image" kind="image" />
-        <Text {...p} path={['home', 'hero', 'eyebrow']} label="Small line above title" />
-        <Text {...p} path={['home', 'hero', 'titleLine1']} label="Title — line 1" />
-        <Text {...p} path={['home', 'hero', 'titleLine2']} label="Title — line 2 (italic)" />
-        <Text {...p} path={['home', 'hero', 'sideText']} label="Side text" multiline />
-        <Text {...p} path={['home', 'hero', 'journalLine']} label="Bottom journal line" />
+      <Group title="Intro strip">
+        <Text
+          {...p}
+          path={['home', 'intro', 'quote']}
+          label="Quote"
+          multiline
+          hint="Shown just below the hero video."
+        />
+        <Text {...p} path={['home', 'intro', 'buttonText']} label="Button text" />
       </Group>
 
       <Group title="On Pilgrimage">
@@ -327,50 +368,6 @@ function HomeSection(p: FieldProps) {
         <Text {...p} path={['home', 'philosophy', 'lead']} label="Lead paragraph" multiline />
         <Text {...p} path={['home', 'philosophy', 'body']} label="Body paragraph" multiline />
         <MediaField {...p} path={['home', 'philosophy', 'image']} label="Image" kind="image" />
-      </Group>
-
-      <Group title="Quote / Sharings">
-        <Text {...p} path={['home', 'quote', 'eyebrow']} label="Section label" />
-        <Text {...p} path={['home', 'quote', 'text']} label="Quote text" multiline />
-        <Text {...p} path={['home', 'quote', 'emphasis']} label="Emphasised ending (italic)" />
-        <Text {...p} path={['home', 'quote', 'attribution']} label="Attribution" />
-      </Group>
-
-      <Group title="Testimonials">
-        {content.home.testimonials.map((t, i) => (
-          <div key={i} className="flex flex-col gap-4 border-b border-card-alt pb-5">
-            <Text
-              {...p}
-              path={['home', 'testimonials', i, 'quote']}
-              label={`Quote ${i + 1}`}
-              multiline
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <Text {...p} path={['home', 'testimonials', i, 'name']} label="Name" />
-              <Text {...p} path={['home', 'testimonials', i, 'from']} label="From / journey" />
-            </div>
-            <RowButton
-              onClick={() =>
-                update(
-                  ['home', 'testimonials'],
-                  content.home.testimonials.filter((_, j) => j !== i),
-                )
-              }
-            >
-              Remove testimonial
-            </RowButton>
-          </div>
-        ))}
-        <RowButton
-          onClick={() =>
-            update(
-              ['home', 'testimonials'],
-              [...content.home.testimonials, { name: '', from: '', quote: '' }],
-            )
-          }
-        >
-          + Add testimonial
-        </RowButton>
       </Group>
 
       <Group title="Gallery">
@@ -422,27 +419,6 @@ function HomeSection(p: FieldProps) {
   );
 }
 
-function VideoSectionEditor(p: FieldProps) {
-  return (
-    <Group title="Landing page video">
-      <MediaField {...p} path={['home', 'video', 'videoUrl']} label="Video file" kind="video" />
-      <MediaField
-        {...p}
-        path={['home', 'video', 'posterImage']}
-        label="Poster image (shown before play)"
-        kind="image"
-      />
-      <Text {...p} path={['home', 'video', 'eyebrow']} label="Section label" />
-      <Text {...p} path={['home', 'video', 'heading']} label="Heading" />
-      <Text {...p} path={['home', 'video', 'caption']} label="Caption" multiline />
-      <p className="text-[12.5px] leading-[1.6] text-label">
-        Upload an MP4 (up to 64 MB) or paste a direct video URL. Clearing the video URL hides the
-        section on the homepage.
-      </p>
-    </Group>
-  );
-}
-
 function SettingsSection(p: FieldProps) {
   return (
     <Group title="WhatsApp">
@@ -475,17 +451,32 @@ function FooterSection(p: FieldProps) {
         <Text {...p} path={['footer', 'email']} label="Email" />
         <Text {...p} path={['footer', 'address']} label="Address" />
       </Group>
-      <Group title="Newsletter box">
-        <Text {...p} path={['footer', 'newsletterHeading']} label="Heading" />
-        <Text {...p} path={['footer', 'newsletterSub']} label="Sub-text" multiline />
-      </Group>
     </>
   );
 }
 
-function YatrasSection(p: FieldProps) {
-  const { content, update } = p;
+function YatrasSection(
+  p: FieldProps & { savedContent: SiteContent; onSaveYatra: () => Promise<void> },
+) {
+  const { content, update, savedContent, onSaveYatra } = p;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [savingIndex, setSavingIndex] = useState<number | null>(null);
+  const [savedFlashIndex, setSavedFlashIndex] = useState<number | null>(null);
+  const [errorIndex, setErrorIndex] = useState<number | null>(null);
+
+  async function saveYatra(i: number) {
+    setSavingIndex(i);
+    setErrorIndex(null);
+    try {
+      await onSaveYatra();
+      setSavedFlashIndex(i);
+      setTimeout(() => setSavedFlashIndex((cur) => (cur === i ? null : cur)), 2000);
+    } catch {
+      setErrorIndex(i);
+    } finally {
+      setSavingIndex(null);
+    }
+  }
 
   function addYatra() {
     const next: Yatra = {
@@ -495,14 +486,20 @@ function YatrasSection(p: FieldProps) {
       days: '7 Days',
       region: '',
       route: '',
+      status: 'opening-soon',
       heroImage: '',
       heroPlaceholder: '',
       featureImage: '',
       featurePlaceholder: '',
       overviewLead: '',
       overviewBody: '',
+      whyVisitQuote: '',
+      whyVisit: [],
+      highlights: [],
+      highlightsOptional: [],
+      stays: [],
       specs: [{ k: 'Duration', v: '7 Days' }],
-      itinerary: [{ day: 'Day 01', place: '', note: '' }],
+      itinerary: [{ day: 'Day 01', place: '', note: [] }],
     };
     update(['yatras'], [...content.yatras, next]);
     setOpenIndex(content.yatras.length);
@@ -510,176 +507,305 @@ function YatrasSection(p: FieldProps) {
 
   return (
     <>
-      {content.yatras.map((y, i) => (
-        <div key={i} className="border border-border bg-raised">
-          <button
-            type="button"
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className="flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left"
-          >
-            <span className="font-serif text-[20px] font-medium text-heading">
-              {y.n} — {y.name || 'Untitled yatra'}
-            </span>
-            <span className="text-[11px] tracking-[0.16em] text-label uppercase">
-              {openIndex === i ? 'Close' : 'Edit'}
-            </span>
-          </button>
-
-          {openIndex === i && (
-            <div className="flex flex-col gap-5 border-t border-card-alt p-6">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Text {...p} path={['yatras', i, 'name']} label="Name" />
-                <Text
-                  {...p}
-                  path={['yatras', i, 'slug']}
-                  label="URL slug"
-                  hint="Lowercase with hyphens; changing it changes the page address."
-                />
-                <Text {...p} path={['yatras', i, 'n']} label="Number (e.g. 01)" />
-                <Text {...p} path={['yatras', i, 'days']} label="Duration (e.g. 14 Days)" />
-                <Text {...p} path={['yatras', i, 'region']} label="Region" />
-                <Text {...p} path={['yatras', i, 'route']} label="Route line" />
-              </div>
-              <MediaField
-                {...p}
-                path={['yatras', i, 'heroImage']}
-                label="Hero image"
-                kind="image"
-              />
-              <MediaField
-                {...p}
-                path={['yatras', i, 'featureImage']}
-                label="Feature image"
-                kind="image"
-              />
-              <Text {...p} path={['yatras', i, 'overviewLead']} label="Overview lead" multiline />
-              <Text {...p} path={['yatras', i, 'overviewBody']} label="Overview body" multiline />
-
-              <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
-                Quick facts
-              </div>
-              {y.specs.map((s, j) => (
-                <div key={j} className="grid grid-cols-[1fr_1fr_auto] items-end gap-4">
-                  <Text {...p} path={['yatras', i, 'specs', j, 'k']} label="Label" />
-                  <Text {...p} path={['yatras', i, 'specs', j, 'v']} label="Value" />
-                  <RowButton
-                    onClick={() =>
-                      update(
-                        ['yatras', i, 'specs'],
-                        y.specs.filter((_, k) => k !== j),
-                      )
-                    }
-                  >
-                    Remove
-                  </RowButton>
-                </div>
-              ))}
-              <RowButton
-                onClick={() => update(['yatras', i, 'specs'], [...y.specs, { k: '', v: '' }])}
+      {content.yatras.map((y, i) => {
+        const isDirty = JSON.stringify(y) !== JSON.stringify(savedContent.yatras[i]);
+        return (
+          <div key={i} className="relative border border-border bg-raised">
+            <div className="flex w-full items-center justify-between px-6 py-4">
+              <button
+                type="button"
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="flex flex-1 cursor-pointer items-center gap-2.5 text-left font-serif text-[20px] font-medium text-heading"
               >
-                + Add fact
-              </RowButton>
-
-              <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
-                Itinerary
-              </div>
-              {y.itinerary.map((d, j) => (
-                <div
-                  key={j}
-                  className="grid grid-cols-1 gap-4 border-b border-card-alt pb-4 sm:grid-cols-[130px_1fr]"
+                {y.n} — {y.name || 'Untitled yatra'}
+                {isDirty && (
+                  <span
+                    className="h-2 w-2 shrink-0 rounded-full bg-accent"
+                    title="Unsaved changes"
+                    aria-label="Unsaved changes"
+                  />
+                )}
+              </button>
+              <div className="flex shrink-0 items-center -space-x-1">
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  aria-label={openIndex === i ? 'Close editor' : 'Edit yatra'}
+                  title={openIndex === i ? 'Close editor' : 'Edit yatra'}
+                  className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-label transition hover:bg-card-alt hover:text-ink"
                 >
-                  <Text {...p} path={['yatras', i, 'itinerary', j, 'day']} label="Day" />
-                  <Text {...p} path={['yatras', i, 'itinerary', j, 'place']} label="Place" />
-                  <div className="sm:col-span-2">
-                    <Text
-                      {...p}
-                      path={['yatras', i, 'itinerary', j, 'note']}
-                      label="Note"
-                      multiline
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M4 20h4L18.5 9.5a2.12 2.12 0 0 0-3-3L5 17v3Z"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
-                  </div>
-                  <RowButton
-                    onClick={() =>
-                      update(
-                        ['yatras', i, 'itinerary'],
-                        y.itinerary.filter((_, k) => k !== j),
-                      )
-                    }
-                  >
-                    Remove day
-                  </RowButton>
-                </div>
-              ))}
-              <RowButton
-                onClick={() =>
-                  update(
-                    ['yatras', i, 'itinerary'],
-                    [
-                      ...y.itinerary,
-                      {
-                        day: `Day ${String(y.itinerary.length + 1).padStart(2, '0')}`,
-                        place: '',
-                        note: '',
-                      },
-                    ],
-                  )
-                }
-              >
-                + Add day
-              </RowButton>
-
-              <div className="mt-4 border-t border-card-alt pt-4">
-                <RowButton
+                  </svg>
+                </button>
+                <button
+                  type="button"
                   onClick={() => {
-                    if (window.confirm(`Remove "${y.name}" from the website?`)) {
+                    if (window.confirm(`Remove "${y.name || 'this yatra'}" from the website?`)) {
                       update(
                         ['yatras'],
                         content.yatras.filter((_, j) => j !== i),
                       );
-                      setOpenIndex(null);
+                      if (openIndex === i) setOpenIndex(null);
                     }
                   }}
+                  aria-label="Delete yatra"
+                  title="Delete yatra"
+                  className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-danger transition hover:bg-danger/10"
                 >
-                  Remove this yatra
-                </RowButton>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-.7 12.1a2 2 0 0 1-2 1.9H8.7a2 2 0 0 1-2-1.9L6 7h12ZM10 11v6M14 11v6"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
-          )}
-        </div>
-      ))}
+
+            {openIndex === i && (
+              <div className="flex flex-col gap-5 border-t border-card-alt p-6 pb-24">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <Text {...p} path={['yatras', i, 'name']} label="Name" />
+                  <Text
+                    {...p}
+                    path={['yatras', i, 'slug']}
+                    label="URL slug"
+                    hint="Lowercase with hyphens; changing it changes the page address."
+                  />
+                  <Text {...p} path={['yatras', i, 'n']} label="Number (e.g. 01)" />
+                  <Text {...p} path={['yatras', i, 'days']} label="Duration (e.g. 14 Days)" />
+                  <Text {...p} path={['yatras', i, 'region']} label="Region" />
+                  <Text {...p} path={['yatras', i, 'route']} label="Route line" />
+                  <Select
+                    {...p}
+                    path={['yatras', i, 'status']}
+                    label="Availability status"
+                    options={[
+                      { value: 'open', label: 'Open for Registrations' },
+                      { value: 'opening-soon', label: 'Coming Soon' },
+                      { value: 'closed', label: 'Registrations Closed' },
+                    ]}
+                  />
+                </div>
+                <MediaField
+                  {...p}
+                  path={['yatras', i, 'heroImage']}
+                  label="Hero image"
+                  kind="image"
+                />
+                <Text
+                  {...p}
+                  path={['yatras', i, 'heroPlaceholder']}
+                  label="Hero image description"
+                  hint="Used as alt text for accessibility and while the image loads."
+                />
+                <MediaField
+                  {...p}
+                  path={['yatras', i, 'featureImage']}
+                  label="Feature image"
+                  kind="image"
+                />
+                <Text
+                  {...p}
+                  path={['yatras', i, 'featurePlaceholder']}
+                  label="Feature image description"
+                  hint="Used as alt text for accessibility and while the image loads."
+                />
+                <Text {...p} path={['yatras', i, 'overviewLead']} label="Overview lead" multiline />
+                <Text {...p} path={['yatras', i, 'overviewBody']} label="Overview body" multiline />
+
+                <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
+                  Why visit
+                </div>
+                <Text
+                  {...p}
+                  path={['yatras', i, 'whyVisitQuote']}
+                  label="Why-visit quote"
+                  multiline
+                />
+                <StringList
+                  {...p}
+                  path={['yatras', i, 'whyVisit']}
+                  label="Why-visit paragraphs"
+                  itemLabel="Paragraph"
+                />
+
+                <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
+                  Highlights
+                </div>
+                <StringList
+                  {...p}
+                  path={['yatras', i, 'highlights']}
+                  label="Highlights"
+                  itemLabel="Highlight"
+                />
+                <StringList
+                  {...p}
+                  path={['yatras', i, 'highlightsOptional']}
+                  label="Optional highlights"
+                  itemLabel="Highlight"
+                />
+
+                <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">Stays</div>
+                {(y.stays ?? []).map((stay, j) => (
+                  <div key={j} className="flex flex-col gap-3 border-b border-card-alt pb-4">
+                    <div className="grid grid-cols-[1fr_auto] items-end gap-3">
+                      <Text {...p} path={['yatras', i, 'stays', j, 'place']} label="Place" />
+                      <RowButton
+                        onClick={() =>
+                          update(
+                            ['yatras', i, 'stays'],
+                            (y.stays ?? []).filter((_, k) => k !== j),
+                          )
+                        }
+                      >
+                        Remove stay
+                      </RowButton>
+                    </div>
+                    <StringList
+                      {...p}
+                      path={['yatras', i, 'stays', j, 'options']}
+                      label="Accommodation options"
+                      itemLabel="Option"
+                    />
+                  </div>
+                ))}
+                <RowButton
+                  onClick={() =>
+                    update(['yatras', i, 'stays'], [...(y.stays ?? []), { place: '', options: [] }])
+                  }
+                >
+                  + Add stay
+                </RowButton>
+
+                <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
+                  Quick facts
+                </div>
+                {y.specs.map((s, j) => (
+                  <div key={j} className="grid grid-cols-[1fr_1fr_auto] items-end gap-4">
+                    <Text {...p} path={['yatras', i, 'specs', j, 'k']} label="Label" />
+                    <Text {...p} path={['yatras', i, 'specs', j, 'v']} label="Value" />
+                    <RowButton
+                      onClick={() =>
+                        update(
+                          ['yatras', i, 'specs'],
+                          y.specs.filter((_, k) => k !== j),
+                        )
+                      }
+                    >
+                      Remove
+                    </RowButton>
+                  </div>
+                ))}
+                <RowButton
+                  onClick={() => update(['yatras', i, 'specs'], [...y.specs, { k: '', v: '' }])}
+                >
+                  + Add fact
+                </RowButton>
+
+                <div className="mt-2 text-[11px] tracking-[0.2em] text-accent uppercase">
+                  Itinerary
+                </div>
+                {y.itinerary.map((d, j) => (
+                  <div
+                    key={j}
+                    className="grid grid-cols-1 gap-4 border-b border-card-alt pb-4 sm:grid-cols-[130px_1fr]"
+                  >
+                    <Text {...p} path={['yatras', i, 'itinerary', j, 'day']} label="Day" />
+                    <Text {...p} path={['yatras', i, 'itinerary', j, 'place']} label="Place" />
+                    <div className="sm:col-span-2">
+                      <StringList
+                        {...p}
+                        path={['yatras', i, 'itinerary', j, 'note']}
+                        label="Points"
+                        itemLabel="Point"
+                      />
+                    </div>
+                    <RowButton
+                      onClick={() =>
+                        update(
+                          ['yatras', i, 'itinerary'],
+                          y.itinerary.filter((_, k) => k !== j),
+                        )
+                      }
+                    >
+                      Remove day
+                    </RowButton>
+                  </div>
+                ))}
+                <RowButton
+                  onClick={() =>
+                    update(
+                      ['yatras', i, 'itinerary'],
+                      [
+                        ...y.itinerary,
+                        {
+                          day: `Day ${String(y.itinerary.length + 1).padStart(2, '0')}`,
+                          place: '',
+                          note: [],
+                        },
+                      ],
+                    )
+                  }
+                >
+                  + Add day
+                </RowButton>
+
+                <div className="mt-4 border-t border-card-alt pt-4">
+                  <RowButton
+                    onClick={() => {
+                      if (window.confirm(`Remove "${y.name}" from the website?`)) {
+                        update(
+                          ['yatras'],
+                          content.yatras.filter((_, j) => j !== i),
+                        );
+                        setOpenIndex(null);
+                      }
+                    }}
+                  >
+                    Remove this yatra
+                  </RowButton>
+                </div>
+
+                {(isDirty || savedFlashIndex === i || errorIndex === i) && (
+                  <div className="sticky bottom-4 z-10 flex justify-end">
+                    <div className="flex items-center gap-3 rounded-full border border-border bg-raised px-3 py-2 shadow-[0_8px_28px_rgba(20,18,12,.16)]">
+                      {errorIndex === i && (
+                        <span className="pl-2 text-[12.5px] text-danger">Save failed</span>
+                      )}
+                      {savedFlashIndex === i && (
+                        <span className="pl-2 text-[12.5px] text-success">Saved</span>
+                      )}
+                      {isDirty && (
+                        <button
+                          type="button"
+                          onClick={() => saveYatra(i)}
+                          disabled={savingIndex === i}
+                          className="cursor-pointer rounded-full bg-ink px-6 py-[10px] text-[11.5px] tracking-[0.16em] text-surface uppercase disabled:opacity-60"
+                        >
+                          {savingIndex === i ? 'Saving…' : `Save ${y.name || 'this yatra'}`}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
       <RowButton onClick={addYatra}>+ Add yatra</RowButton>
     </>
-  );
-}
-
-function FutureDestinationsSection(p: FieldProps) {
-  const { content, update } = p;
-  return (
-    <Group title="Future Destinations">
-      {content.futureDestinations.map((d: FutureDestination, i: number) => (
-        <div key={i} className="grid grid-cols-1 items-end gap-4 sm:grid-cols-[1fr_1fr_auto]">
-          <Text {...p} path={['futureDestinations', i, 'name']} label="Name" />
-          <Text {...p} path={['futureDestinations', i, 'note']} label="Note (optional)" />
-          <RowButton
-            onClick={() =>
-              update(
-                ['futureDestinations'],
-                content.futureDestinations.filter((_, j) => j !== i),
-              )
-            }
-          >
-            Remove
-          </RowButton>
-        </div>
-      ))}
-      <RowButton
-        onClick={() =>
-          update(['futureDestinations'], [...content.futureDestinations, { name: '', note: '' }])
-        }
-      >
-        + Add destination
-      </RowButton>
-    </Group>
   );
 }
 

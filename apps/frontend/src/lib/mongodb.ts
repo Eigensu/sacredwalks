@@ -45,6 +45,5 @@ export async function getMediaBucket(): Promise<GridFSBucket> {
 
 export const COLLECTIONS = {
   enquiries: 'enquiries',
-  subscribers: 'subscribers',
   content: 'content',
 } as const;
