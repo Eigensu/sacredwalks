@@ -184,8 +184,14 @@ export default function Nav({
             <>
               <div className="fixed inset-0 z-30" onClick={() => setUserDropdownOpen(false)} />
               <div className="absolute top-full right-0 z-40 mt-3 min-w-[160px] rounded-[4px] bg-ink px-4 py-3 text-surface shadow-[0_8px_28px_rgba(20,18,12,.28)]">
-                <div className="mb-3 truncate text-[12.5px] font-medium tracking-[0.04em]">
+                <div className="mb-1 truncate text-[12.5px] font-medium tracking-[0.04em]">
                   {user.name}
+                </div>
+                <div className="mb-3 text-[10px] uppercase tracking-[0.1em] opacity-80">
+                  {user.membershipStatus === 'ACCEPTED' && 'Member'}
+                  {user.membershipStatus === 'PENDING' && 'Pending Review'}
+                  {user.membershipStatus === 'REJECTED' && 'Application Rejected'}
+                  {(!user.membershipStatus || user.membershipStatus === 'NONE') && 'No Application'}
                 </div>
                 <button
                   type="button"

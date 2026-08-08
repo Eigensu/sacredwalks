@@ -7,6 +7,7 @@ export type User = {
   name: string;
   email: string;
   picture?: string;
+  membershipStatus?: string;
 };
 
 type UserAuthContextType = {

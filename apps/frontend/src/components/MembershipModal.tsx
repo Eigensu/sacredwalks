@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useUserAuth } from './UserAuthProvider';
 
 type Props = {
   onClose: () => void;
@@ -21,6 +22,7 @@ const GENDERS = ['Female', 'Male', 'Other', 'Prefer not to say'];
 const TRAVELLER_COUNTS = ['Solo', 'Couple', 'Family', 'Friends', 'Group'];
 
 export default function MembershipModal({ onClose }: Props) {
+  const { user } = useUserAuth();
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
@@ -58,7 +60,7 @@ export default function MembershipModal({ onClose }: Props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.get('name'),
-          email: formData.get('email'),
+          email: user?.email || formData.get('email'),
           phone: `${countryCode} ${formData.get('phone') ?? ''}`.trim(),
           yatra: 'Membership',
           message: details,
@@ -168,7 +170,9 @@ export default function MembershipModal({ onClose }: Props) {
                       name="email"
                       required
                       placeholder="you@example.com"
-                      className="scw-mem-input"
+                      defaultValue={user?.email || ''}
+                      readOnly={!!user?.email}
+                      className="scw-mem-input read-only:opacity-60 read-only:cursor-not-allowed"
                     />
                   </Field>
 

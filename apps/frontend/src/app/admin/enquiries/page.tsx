@@ -1,12 +1,5 @@
 import { COLLECTIONS, tryGetDb } from '@/lib/mongodb';
-
-function formatDate(value: unknown): string {
-  if (!value) return '—';
-  return new Date(value as string).toLocaleString('en-IN', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  });
-}
+import EnquiryRow from './EnquiryRow';
 
 export default async function AdminEnquiriesPage() {
   const db = await tryGetDb();
@@ -46,28 +39,15 @@ export default async function AdminEnquiriesPage() {
                 <th className="px-4 py-3 font-normal">Name</th>
                 <th className="px-4 py-3 font-normal">Email</th>
                 <th className="px-4 py-3 font-normal">Phone</th>
-                <th className="px-4 py-3 font-normal">Yatra</th>
+                <th className="px-4 py-3 font-normal">Yatra / Status</th>
                 <th className="px-4 py-3 font-normal">Message</th>
+                <th className="px-4 py-3 font-normal">Actions</th>
               </tr>
             </thead>
             <tbody>
               {enquiries.map((e) => (
-                <tr key={String(e._id)} className="border-b border-card-alt align-top">
-                  <td className="px-4 py-3 whitespace-nowrap text-muted">
-                    {formatDate(e.createdAt)}
-                  </td>
-                  <td className="px-4 py-3 font-medium text-heading">{String(e.name ?? '')}</td>
-                  <td className="px-4 py-3">
-                    <a href={`mailto:${e.email}`} className="text-success underline">
-                      {String(e.email ?? '')}
-                    </a>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap">{String(e.phone ?? '') || '—'}</td>
-                  <td className="px-4 py-3">{String(e.yatra ?? '')}</td>
-                  <td className="max-w-[340px] px-4 py-3 leading-[1.6] text-secondary">
-                    {String(e.message ?? '') || '—'}
-                  </td>
-                </tr>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                <EnquiryRow key={String(e._id)} enquiry={e as any} />
               ))}
             </tbody>
           </table>

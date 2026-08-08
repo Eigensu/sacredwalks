@@ -5,6 +5,9 @@ import EnquireButton from '@/components/EnquireButton';
 import Footer from '@/components/Footer';
 import YatraConstantSections, { SacredWalksExperience } from '@/components/YatraConstantSections';
 import { getSiteContent } from '@/lib/content';
+import { getCurrentUserMembershipStatus } from '@/lib/membership';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -22,6 +25,8 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
   const content = await getSiteContent();
   const yatra = content.yatras.find((y) => y.slug === slug);
   if (!yatra) notFound();
+
+  const { status: membershipStatus } = await getCurrentUserMembershipStatus();
 
   return (
     <div className="bg-surface text-ink">
@@ -59,180 +64,213 @@ export default async function YatraDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      {/* ROUTE STRIP */}
-      <div className="px-[7vw] pt-6 sm:pt-8">
-        <div className="font-serif text-[clamp(24px,3.4vw,44px)] font-semibold tracking-[0.1em] text-ink uppercase max-sm:text-[20px] max-sm:tracking-[0.01em]">
-          {yatra.route.replace(/·/g, '•')}
-        </div>
-      </div>
-
-      {/* OVERVIEW + SPECS */}
-      <section className="grid grid-cols-1 gap-12 px-[7vw] pt-4 pb-20 sm:pt-6 sm:pb-[120px] md:grid-cols-[1.3fr_0.7fr] md:gap-[7vw]">
-        <div>
-          <div className="mb-7 text-[11.5px] tracking-[0.28em] text-accent uppercase">
-            The Journey
-          </div>
-          <blockquote className="border-l-4 border-accent pl-6 font-serif text-[clamp(24px,3.2vw,38px)] leading-[1.45] font-normal text-heading">
-            <span className="text-label">&ldquo;</span>
-            {yatra.overviewLead}
-            <span className="text-label">&rdquo;</span>
-          </blockquote>
-          <p className="mt-7 max-w-[600px] text-[15.5px] leading-[1.85] text-secondary">
-            {yatra.overviewBody}
+      {/* ACCESS CONTROL */}
+      {membershipStatus !== 'ACCEPTED' && (
+        <div className="px-[7vw] py-20 text-center max-w-[800px] mx-auto">
+          <h2 className="font-serif text-[32px] text-heading mb-6">
+            {membershipStatus === 'PENDING'
+              ? 'Application Under Review'
+              : membershipStatus === 'REJECTED'
+                ? 'Application Not Approved'
+                : 'Membership Required'}
+          </h2>
+          <p className="text-secondary text-[16px] leading-[1.8] mb-8">
+            {membershipStatus === 'PENDING'
+              ? 'Your membership application is currently under review. Our Journey Curator will contact you once your application has been reviewed.'
+              : membershipStatus === 'REJECTED'
+                ? 'We are sorry, but your membership application has not been approved at this time.'
+                : 'Detailed journey itineraries, exclusive stays, and sacred highlights are available only to approved Sacred Walks members.'}
           </p>
-
-          {yatra.whyVisit && yatra.whyVisit.length > 0 && (
-            <div className="mt-16">
-              <div className="mb-7 text-[11.5px] tracking-[0.28em] text-accent uppercase">
-                Why Visit?
-              </div>
-              {yatra.whyVisitQuote && (
-                <blockquote className="mb-10 border-l-4 border-accent pl-6 font-serif text-[clamp(24px,3.2vw,38px)] leading-[1.45] font-normal text-heading">
-                  <span className="text-label">&ldquo;</span>
-                  {yatra.whyVisitQuote}
-                  <span className="text-label">&rdquo;</span>
-                </blockquote>
-              )}
-              <div className="flex flex-col gap-6">
-                {yatra.whyVisit.map((p, i) => (
-                  <p key={i} className="text-[15.5px] leading-[1.85] text-secondary">
-                    {p}
-                  </p>
-                ))}
-              </div>
+          {membershipStatus === 'NONE' && (
+            <div className="flex gap-4 justify-center">
+              <EnquireButton className="bg-accent text-white px-8 py-3 text-[12px] tracking-[0.16em] uppercase hover:bg-ink transition">
+                Apply for an Invitation
+              </EnquireButton>
             </div>
           )}
         </div>
-        <div className="border-t border-ink pt-6">
-          {yatra.specs.map((s) => (
-            <div
-              key={s.k}
-              className="flex justify-between border-b border-card-alt py-4 text-[13.5px]"
-            >
-              <span className="text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
-                {s.k}
-              </span>
-              <span className="text-right font-medium text-accent">{s.v}</span>
-            </div>
-          ))}
-
-          {yatra.stays && yatra.stays.length > 0 && (
-            <div className="mt-8 mb-1 text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
-              Handpicked Stays
-            </div>
-          )}
-          {yatra.stays?.map((group) => (
-            <div
-              key={group.place}
-              className="flex justify-between border-b border-card-alt py-4 text-[13.5px]"
-            >
-              <span className="text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
-                {group.place}
-              </span>
-              <span className="flex flex-col items-end gap-1 text-right font-medium text-accent">
-                {group.options.map((option) => (
-                  <span key={option}>• {option}</span>
-                ))}
-              </span>
-            </div>
-          ))}
-
-          <div className="mt-[30px] text-center">
-            <EnquireButton
-              yatraName={yatra.name}
-              className="inline-block cursor-pointer bg-accent px-[30px] py-[14px] text-[12px] tracking-[0.16em] text-white uppercase"
-            >
-              Apply for an Invitation
-            </EnquireButton>
-          </div>
-        </div>
-      </section>
-
-      {/* JOURNEY HIGHLIGHTS */}
-      {yatra.highlights && yatra.highlights.length > 0 && (
-        <section className="bg-ink px-[7vw] py-10 text-card sm:py-12">
-          <div className="mb-3 border-b border-surface/16 pb-4">
-            <h2 className="font-serif text-[clamp(24px,3.2vw,40px)] font-medium">
-              Journey Highlights
-            </h2>
-          </div>
-          <div className="mt-5 grid grid-cols-1 gap-x-10 gap-y-2 sm:grid-cols-2">
-            {yatra.highlights.map((item) => (
-              <div key={item} className="py-2.5 text-[14.5px] text-muted">
-                • {item}
-              </div>
-            ))}
-          </div>
-
-          {yatra.highlightsOptional && yatra.highlightsOptional.length > 0 && (
-            <>
-              <p className="mt-6 text-[13px] tracking-[0.06em] text-muted uppercase">Optional</p>
-              <div className="mt-3 flex flex-wrap gap-3">
-                {yatra.highlightsOptional.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-surface/30 px-4 py-2 text-[13px] text-muted"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </>
-          )}
-        </section>
       )}
 
-      <SacredWalksExperience />
-
-      {/* FEATURE IMAGE */}
-      <div className="relative mx-auto mt-8 mb-10 h-[42vh] w-[92vw] max-w-[1280px] sm:mt-10 sm:mb-14 sm:h-[62vh] sm:w-[86vw]">
-        <Image
-          src={yatra.featureImage}
-          alt={yatra.featurePlaceholder}
-          fill
-          className="object-cover"
-          sizes="(min-width: 640px) 86vw, 92vw"
-        />
-      </div>
-
-      {/* ITINERARY */}
-      <section className="px-[7vw] pb-16 sm:pb-20">
-        <div className="mb-3 flex items-end justify-between gap-4 border-b border-border pb-6">
-          <h2 className="font-serif text-[clamp(28px,4vw,56px)] font-medium">The Itinerary</h2>
-          <div className="text-right text-[10px] tracking-[0.2em] text-accent uppercase sm:text-[11.5px] sm:tracking-[0.26em]">
-            Day by Day
+      {membershipStatus === 'ACCEPTED' && (
+        <>
+          {/* ROUTE STRIP */}
+          <div className="px-[7vw] pt-6 sm:pt-8">
+            <div className="font-serif text-[clamp(24px,3.4vw,44px)] font-semibold tracking-[0.1em] text-ink uppercase max-sm:text-[20px] max-sm:tracking-[0.01em]">
+              {yatra.route.replace(/·/g, '•')}
+            </div>
           </div>
-        </div>
-        {yatra.itinerary.map((d, i) => (
-          <div
-            key={d.day}
-            className={`grid grid-cols-1 items-start gap-2 py-5 sm:grid-cols-[120px_220px_1fr] sm:gap-[30px] sm:py-6 ${
-              i < yatra.itinerary.length - 1 ? 'border-b border-card-alt' : ''
-            }`}
-          >
-            <div className="font-serif text-[24px] text-accent sm:text-[30px]">{d.day}</div>
-            <div className="font-display text-[17px] text-label sm:text-[19px]">{d.place}</div>
-            {Array.isArray(d.note) ? (
-              <ul className="flex flex-col gap-2 text-[14px] leading-[1.7] text-secondary sm:text-[15px]">
-                {d.note.map((line, i) => (
-                  <li key={i} className="flex gap-2.5">
-                    <span className="mt-[7px] block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" />
-                    <span>{line}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="text-[14px] leading-[1.7] text-secondary sm:text-[15px]">
-                {d.note}
+
+          {/* OVERVIEW + SPECS */}
+          <section className="grid grid-cols-1 gap-12 px-[7vw] pt-4 pb-20 sm:pt-6 sm:pb-[120px] md:grid-cols-[1.3fr_0.7fr] md:gap-[7vw]">
+            <div>
+              <div className="mb-7 text-[11.5px] tracking-[0.28em] text-accent uppercase">
+                The Journey
               </div>
-            )}
+              <blockquote className="border-l-4 border-accent pl-6 font-serif text-[clamp(24px,3.2vw,38px)] leading-[1.45] font-normal text-heading">
+                <span className="text-label">&ldquo;</span>
+                {yatra.overviewLead}
+                <span className="text-label">&rdquo;</span>
+              </blockquote>
+              <p className="mt-7 max-w-[600px] text-[15.5px] leading-[1.85] text-secondary">
+                {yatra.overviewBody}
+              </p>
+
+              {yatra.whyVisit && yatra.whyVisit.length > 0 && (
+                <div className="mt-16">
+                  <div className="mb-7 text-[11.5px] tracking-[0.28em] text-accent uppercase">
+                    Why Visit?
+                  </div>
+                  {yatra.whyVisitQuote && (
+                    <blockquote className="mb-10 border-l-4 border-accent pl-6 font-serif text-[clamp(24px,3.2vw,38px)] leading-[1.45] font-normal text-heading">
+                      <span className="text-label">&ldquo;</span>
+                      {yatra.whyVisitQuote}
+                      <span className="text-label">&rdquo;</span>
+                    </blockquote>
+                  )}
+                  <div className="flex flex-col gap-6">
+                    {yatra.whyVisit.map((p, i) => (
+                      <p key={i} className="text-[15.5px] leading-[1.85] text-secondary">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="border-t border-ink pt-6">
+              {yatra.specs.map((s) => (
+                <div
+                  key={s.k}
+                  className="flex justify-between border-b border-card-alt py-4 text-[13.5px]"
+                >
+                  <span className="text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
+                    {s.k}
+                  </span>
+                  <span className="text-right font-medium text-accent">{s.v}</span>
+                </div>
+              ))}
+
+              {yatra.stays && yatra.stays.length > 0 && (
+                <div className="mt-8 mb-1 text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
+                  Handpicked Stays
+                </div>
+              )}
+              {yatra.stays?.map((group) => (
+                <div
+                  key={group.place}
+                  className="flex justify-between border-b border-card-alt py-4 text-[13.5px]"
+                >
+                  <span className="text-[11.5px] font-bold tracking-[0.14em] text-label uppercase">
+                    {group.place}
+                  </span>
+                  <span className="flex flex-col items-end gap-1 text-right font-medium text-accent">
+                    {group.options.map((option) => (
+                      <span key={option}>• {option}</span>
+                    ))}
+                  </span>
+                </div>
+              ))}
+
+              <div className="mt-[30px] text-center">
+                <EnquireButton
+                  yatraName={yatra.name}
+                  className="inline-block cursor-pointer bg-accent px-[30px] py-[14px] text-[12px] tracking-[0.16em] text-white uppercase"
+                >
+                  Apply for an Invitation
+                </EnquireButton>
+              </div>
+            </div>
+          </section>
+
+          {/* JOURNEY HIGHLIGHTS */}
+          {yatra.highlights && yatra.highlights.length > 0 && (
+            <section className="bg-ink px-[7vw] py-10 text-card sm:py-12">
+              <div className="mb-3 border-b border-surface/16 pb-4">
+                <h2 className="font-serif text-[clamp(24px,3.2vw,40px)] font-medium">
+                  Journey Highlights
+                </h2>
+              </div>
+              <div className="mt-5 grid grid-cols-1 gap-x-10 gap-y-2 sm:grid-cols-2">
+                {yatra.highlights.map((item) => (
+                  <div key={item} className="py-2.5 text-[14.5px] text-muted">
+                    • {item}
+                  </div>
+                ))}
+              </div>
+
+              {yatra.highlightsOptional && yatra.highlightsOptional.length > 0 && (
+                <>
+                  <p className="mt-6 text-[13px] tracking-[0.06em] text-muted uppercase">
+                    Optional
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {yatra.highlightsOptional.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-surface/30 px-4 py-2 text-[13px] text-muted"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </section>
+          )}
+
+          <SacredWalksExperience />
+
+          {/* FEATURE IMAGE */}
+          <div className="relative mx-auto mt-8 mb-10 h-[42vh] w-[92vw] max-w-[1280px] sm:mt-10 sm:mb-14 sm:h-[62vh] sm:w-[86vw]">
+            <Image
+              src={yatra.featureImage}
+              alt={yatra.featurePlaceholder}
+              fill
+              className="object-cover"
+              sizes="(min-width: 640px) 86vw, 92vw"
+            />
           </div>
-        ))}
-      </section>
 
-      <YatraConstantSections yatraName={yatra.name} />
+          {/* ITINERARY */}
+          <section className="px-[7vw] pb-16 sm:pb-20">
+            <div className="mb-3 flex items-end justify-between gap-4 border-b border-border pb-6">
+              <h2 className="font-serif text-[clamp(28px,4vw,56px)] font-medium">The Itinerary</h2>
+              <div className="text-right text-[10px] tracking-[0.2em] text-accent uppercase sm:text-[11.5px] sm:tracking-[0.26em]">
+                Day by Day
+              </div>
+            </div>
+            {yatra.itinerary.map((d, i) => (
+              <div
+                key={d.day}
+                className={`grid grid-cols-1 items-start gap-2 py-5 sm:grid-cols-[120px_220px_1fr] sm:gap-[30px] sm:py-6 ${
+                  i < yatra.itinerary.length - 1 ? 'border-b border-card-alt' : ''
+                }`}
+              >
+                <div className="font-serif text-[24px] text-accent sm:text-[30px]">{d.day}</div>
+                <div className="font-display text-[17px] text-label sm:text-[19px]">{d.place}</div>
+                {Array.isArray(d.note) ? (
+                  <ul className="flex flex-col gap-2 text-[14px] leading-[1.7] text-secondary sm:text-[15px]">
+                    {d.note.map((line, i) => (
+                      <li key={i} className="flex gap-2.5">
+                        <span className="mt-[7px] block h-1.5 w-1.5 shrink-0 rotate-45 bg-accent" />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="text-[14px] leading-[1.7] text-secondary sm:text-[15px]">
+                    {d.note}
+                  </div>
+                )}
+              </div>
+            ))}
+          </section>
 
-      <Footer content={content} />
+          <YatraConstantSections yatraName={yatra.name} />
+
+          <Footer content={content} />
+        </>
+      )}
     </div>
   );
 }
