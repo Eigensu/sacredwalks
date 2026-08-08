@@ -9,7 +9,7 @@ export function GET(request: Request) {
   }
 
   const url = new URL(request.url);
-  const redirectUri = `${url.origin}/api/auth/google/callback`;
+  const redirectUri = `${url.origin}/api/auth/callback/google`;
 
   const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   const state = randomBytes(16).toString('hex');

@@ -76,14 +76,16 @@ export default async function Home() {
             </p>
           ))}
         </div>
-        <div className="relative aspect-square w-full max-w-[420px] justify-self-center overflow-hidden md:justify-self-end">
-          <Image
-            src={pilgrimage.image}
-            alt="Pilgrim on the trail"
-            fill
-            className="object-cover"
-            sizes="(min-width: 768px) 40vw, 100vw"
-          />
+        <div className="relative aspect-square w-full max-w-[420px] justify-self-center overflow-hidden md:justify-self-end bg-surface">
+          {pilgrimage.image && (
+            <Image
+              src={pilgrimage.image}
+              alt="Pilgrim on the trail"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 40vw, 100vw"
+            />
+          )}
         </div>
       </section>
 
@@ -93,14 +95,16 @@ export default async function Home() {
         className="grid scroll-mt-24 grid-cols-1 items-center gap-10 px-[7vw] pt-6 pb-12 sm:gap-[7vw] sm:pt-8 sm:pb-16 md:grid-cols-[0.85fr_1.15fr]"
       >
         {/* On phones the copy leads, so the two section photos aren't back to back. */}
-        <div className="relative aspect-square w-full max-w-[420px] overflow-hidden max-sm:order-2 md:order-1">
-          <Image
-            src={philosophy.image}
-            alt="A quiet moment on the path"
-            fill
-            className="object-cover"
-            sizes="(min-width: 768px) 40vw, 100vw"
-          />
+        <div className="relative aspect-square w-full max-w-[420px] overflow-hidden max-sm:order-2 md:order-1 bg-surface">
+          {philosophy.image && (
+            <Image
+              src={philosophy.image}
+              alt="A quiet moment on the path"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 40vw, 100vw"
+            />
+          )}
         </div>
         <div className="max-sm:order-1 md:order-2">
           <div className="mb-[30px] text-[11.5px] tracking-[0.28em] text-accent uppercase">
@@ -151,14 +155,16 @@ export default async function Home() {
                 href={`/yatras/${y.slug}`}
                 className="group block w-full cursor-pointer"
               >
-                <div className="relative aspect-[3/4] w-full overflow-hidden">
-                  <Image
-                    src={y.heroImage}
-                    alt={y.heroPlaceholder || y.name}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                  />
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-card-alt">
+                  {y.heroImage && (
+                    <Image
+                      src={y.heroImage}
+                      alt={y.heroPlaceholder || y.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,21,14,.15)_0%,rgba(24,21,14,.05)_35%,rgba(24,21,14,.85)_100%)]" />
 
                   <div className="absolute top-4 right-4 text-[13px] font-medium text-surface max-sm:top-2.5 max-sm:right-2.5 max-sm:text-[11px]">
@@ -208,13 +214,15 @@ export default async function Home() {
               key={`${img.src}-${i}`}
               className={`relative ${GALLERY_LAYOUT[i % GALLERY_LAYOUT.length]} max-sm:aspect-[4/5] max-sm:w-[74%] max-sm:shrink-0 max-sm:snap-start`}
             >
-              <Image
-                src={img.src}
-                alt={img.alt}
-                fill
-                className="object-cover"
-                sizes="(min-width: 640px) 33vw, 74vw"
-              />
+              {img.src && (
+                <Image
+                  src={img.src}
+                  alt={img.alt || 'Gallery image'}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 640px) 33vw, 74vw"
+                />
+              )}
             </div>
           ))}
         </div>

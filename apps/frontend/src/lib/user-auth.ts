@@ -58,11 +58,12 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
   return verifyUserSessionToken(store.get(USER_COOKIE)?.value);
 }
 
-export function userSessionCookieOptions() {
+export function userSessionCookieOptions(secureOverride?: boolean) {
+  const isSecure = secureOverride ?? process.env.NODE_ENV === 'production';
   return {
     httpOnly: true,
     sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecure,
     path: '/',
     maxAge: SESSION_TTL_MS / 1000,
   };

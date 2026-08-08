@@ -33,7 +33,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL('/?error=server_error', request.url));
   }
 
-  const redirectUri = `${url.origin}/api/auth/google/callback`;
+  const redirectUri = `${url.origin}/api/auth/callback/google`;
 
   try {
     // 1. Exchange code for tokens
@@ -127,13 +127,15 @@ export async function GET(request: Request) {
       user = { _id: result.insertedId };
     }
 
+    const isSecure = process.env.NODE_ENV === 'production' && url.protocol === 'https:';
+
     // 4. Set session cookie and redirect
     const response = NextResponse.redirect(new URL('/', request.url));
     response.cookies.delete('scw_oauth_state');
     response.cookies.set(
       USER_COOKIE,
       createUserSessionToken(user._id.toString()),
-      userSessionCookieOptions(),
+      userSessionCookieOptions(isSecure),
     );
 
     return response;

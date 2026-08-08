@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb, COLLECTIONS } from '@/lib/mongodb';
 import { getAuthenticatedUserId } from '@/lib/user-auth';
+import { getCurrentUserMembershipStatus } from '@/lib/membership';
 import { ObjectId } from 'mongodb';
 
 export async function GET() {
@@ -19,12 +20,15 @@ export async function GET() {
       return NextResponse.json({ user: null }, { status: 401 });
     }
 
+    const membership = await getCurrentUserMembershipStatus();
+
     return NextResponse.json({
       user: {
         id: user._id.toString(),
         name: user.name,
         email: user.email,
         picture: user.picture,
+        membershipStatus: membership.status,
       },
     });
   } catch (error) {

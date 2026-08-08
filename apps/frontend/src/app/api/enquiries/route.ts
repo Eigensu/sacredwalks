@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { COLLECTIONS, tryGetDb } from '@/lib/mongodb';
+import { getAuthenticatedUserId } from '@/lib/user-auth';
+import { ObjectId } from 'mongodb';
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -30,14 +32,30 @@ export async function POST(request: Request) {
     );
   }
 
-  await db.collection(COLLECTIONS.enquiries).insertOne({
+  // If user is authenticated, override the submitted email with their verified Google email
+  const userId = await getAuthenticatedUserId();
+  let finalEmail = email;
+  if (userId) {
+    const user = await db.collection(COLLECTIONS.users).findOne({ _id: new ObjectId(userId) });
+    if (user && user.email) {
+      finalEmail = String(user.email);
+    }
+  }
+
+  const insertData: Record<string, unknown> = {
     name,
-    email,
+    email: finalEmail,
     phone,
     yatra: yatra || 'General application',
     message,
     createdAt: new Date(),
-  });
+  };
+
+  if (insertData.yatra === 'Membership') {
+    insertData.status = 'PENDING';
+  }
+
+  await db.collection(COLLECTIONS.enquiries).insertOne(insertData);
 
   return NextResponse.json({ ok: true });
 }
