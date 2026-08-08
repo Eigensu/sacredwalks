@@ -22,9 +22,21 @@ function getClientPromise(): Promise<MongoClient> {
   return global._scwMongoClientPromise;
 }
 
+let _indexesCreated = false;
+
 export async function getDb(): Promise<Db> {
   const client = await getClientPromise();
-  return client.db(dbName);
+  const db = client.db(dbName);
+
+  if (!_indexesCreated) {
+    _indexesCreated = true;
+    db.collection(COLLECTIONS.users)
+      .createIndex({ googleId: 1 }, { unique: true, sparse: true })
+      .catch(console.error);
+    db.collection(COLLECTIONS.users).createIndex({ email: 1 }).catch(console.error);
+  }
+
+  return db;
 }
 
 /** Returns the db, or null when MongoDB is not configured or unreachable. */
@@ -46,4 +58,5 @@ export async function getMediaBucket(): Promise<GridFSBucket> {
 export const COLLECTIONS = {
   enquiries: 'enquiries',
   content: 'content',
+  users: 'users',
 } as const;

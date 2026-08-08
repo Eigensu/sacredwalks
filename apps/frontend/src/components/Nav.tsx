@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useMembership } from './MembershipProvider';
 import { yatras } from '@/lib/yatras';
+import { useUserAuth } from './UserAuthProvider';
+import { LoginModal } from './LoginModal';
 
 const menuItems: { label: string; href: string }[] = [
   { label: 'About the Journey', href: '/#about-the-journey' },
@@ -31,6 +33,9 @@ export default function Nav({
   logoImage?: string;
 }) {
   const { open } = useMembership();
+  const { user, loading, logout } = useUserAuth();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const waDigits = whatsappNumber?.replace(/[^\d]/g, '');
   const whatsappUrl = waDigits
     ? `https://wa.me/${waDigits}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`
@@ -149,6 +154,54 @@ export default function Nav({
             )}
           </div>
         )}
+
+        <div className="relative flex shrink-0 items-center">
+          <button
+            type="button"
+            onClick={() =>
+              user ? setUserDropdownOpen(!userDropdownOpen) : setLoginModalOpen(true)
+            }
+            aria-label="User Profile"
+            className="flex shrink-0 cursor-pointer items-center justify-center p-2 opacity-90 transition-opacity hover:opacity-100"
+            suppressHydrationWarning
+          >
+            {user?.picture ? (
+              <img src={user.picture} alt="" className="h-5 w-5 rounded-full object-cover" />
+            ) : (
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
+            )}
+          </button>
+
+          {userDropdownOpen && user && (
+            <>
+              <div className="fixed inset-0 z-30" onClick={() => setUserDropdownOpen(false)} />
+              <div className="absolute top-full right-0 z-40 mt-3 min-w-[160px] rounded-[4px] bg-ink px-4 py-3 text-surface shadow-[0_8px_28px_rgba(20,18,12,.28)]">
+                <div className="mb-3 truncate text-[12.5px] font-medium tracking-[0.04em]">
+                  {user.name}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUserDropdownOpen(false);
+                    logout();
+                  }}
+                  className="w-full cursor-pointer text-left text-[11px] uppercase tracking-[0.15em] opacity-80 transition-opacity hover:opacity-100"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
         <button
           onClick={() => open()}
           className={`group relative shrink-0 cursor-pointer overflow-hidden border ${borderColor} px-4 py-2 text-[10.5px] tracking-[0.18em] uppercase transition-colors duration-300 max-sm:min-h-11 max-sm:px-3 max-sm:text-[9.5px] max-sm:tracking-[0.08em] hover:text-ink sm:px-5 sm:py-[9px] sm:text-[11.5px]`}
@@ -158,6 +211,8 @@ export default function Nav({
           <span className="relative">Apply Now</span>
         </button>
       </div>
+
+      <LoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
 
       {menuOpen && (
         <div className="fixed inset-0 z-30 flex">
