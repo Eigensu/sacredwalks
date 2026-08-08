@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Marcellus, Hanken_Grotesk } from 'next/font/google';
 import { MembershipProvider } from '@/components/MembershipProvider';
+import { UserAuthProvider } from '@/components/UserAuthProvider';
 import './globals.css';
 
 // Content is editable through /admin, so every page renders fresh.
@@ -42,7 +43,9 @@ export default function RootLayout({
       className={`${cormorantGaramond.variable} ${marcellus.variable} ${hankenGrotesk.variable}`}
     >
       <body className="bg-surface font-sans text-ink antialiased">
-        <MembershipProvider>{children}</MembershipProvider>
+        <UserAuthProvider>
+          <MembershipProvider>{children}</MembershipProvider>
+        </UserAuthProvider>
       </body>
     </html>
   );
